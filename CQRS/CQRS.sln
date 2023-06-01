@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRS", "CQRS\CQRS.csproj", "{44672BBF-68CA-4B37-91BF-8919B12356CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.CQRS.Api", "CQRS\Holtz.CQRS.Api.csproj", "{44672BBF-68CA-4B37-91BF-8919B12356CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.Model", "..\Holtz.Model\Holtz.Model.csproj", "{C0CCC296-81C1-4AC2-826F-A3A0983B0D3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{44672BBF-68CA-4B37-91BF-8919B12356CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44672BBF-68CA-4B37-91BF-8919B12356CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44672BBF-68CA-4B37-91BF-8919B12356CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0CCC296-81C1-4AC2-826F-A3A0983B0D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0CCC296-81C1-4AC2-826F-A3A0983B0D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0CCC296-81C1-4AC2-826F-A3A0983B0D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0CCC296-81C1-4AC2-826F-A3A0983B0D3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
