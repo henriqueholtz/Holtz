@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.CQRS.Api", "Holtz.CQRS.Api\Holtz.CQRS.Api.csproj", "{44672BBF-68CA-4B37-91BF-8919B12356CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.Model", "..\Holtz.Model\Holtz.Model.csproj", "{C0CCC296-81C1-4AC2-826F-A3A0983B0D3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.Domain", "..\Holtz.Domain\Holtz.Domain.csproj", "{C0CCC296-81C1-4AC2-826F-A3A0983B0D3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.CQRS.Application", "Holtz.CQRS.Application\Holtz.CQRS.Application.csproj", "{7B78A8F9-5DD2-4343-8048-FEC463A06756}"
 EndProject
