@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["CQRS/Holtz.CQRS.Api.csproj", "CQRS/"]
-RUN dotnet restore "CQRS/Holtz.CQRS.Api.csproj"
+COPY ["Holtz.CQRS/Holtz.CQRS.Api.csproj", "Holtz.CQRS/"]
+RUN dotnet restore "Holtz.CQRS/Holtz.CQRS.Api.csproj"
 COPY . .
-WORKDIR "/src/CQRS"
+WORKDIR "/src/Holtz.CQRS"
 RUN dotnet build "Holtz.CQRS.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
