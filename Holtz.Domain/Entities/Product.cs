@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Holtz.Domain
+namespace Holtz.Domain.Entities
 {
     internal class Product
     {
