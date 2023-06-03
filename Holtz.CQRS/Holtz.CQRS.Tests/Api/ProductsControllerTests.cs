@@ -12,19 +12,20 @@ namespace Holtz.CQRS.Tests.Api
     /// </summary>
     public class ProductsControllerTests
     {
+        private readonly IMediator _mediator;
+        public ProductsControllerTests(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [Fact]
         public async Task GetProducts()
         {
             // Arrange
-            ServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddMediatR(sfg => sfg.RegisterServicesFromAssembly(typeof(GetProductsQueryHandler).GetTypeInfo().Assembly));
-            ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-            IMediator mediator = serviceProvider.GetService<IMediator>();
-            ProductsController? controller = new ProductsController(mediator);
+            ProductsController? controller = new ProductsController(_mediator);
 
             // Act
             OkObjectResult result = (OkObjectResult)await controller.Index(new GetProductsQuery());
-
 
             // Assert
             Assert.True(result.StatusCode == 200);
