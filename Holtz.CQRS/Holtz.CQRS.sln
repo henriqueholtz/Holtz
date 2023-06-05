@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.CQRS.Application", "H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.CQRS.Tests", "Holtz.CQRS.Tests\Holtz.CQRS.Tests.csproj", "{D491AA70-1DC4-4713-B8E2-E94B45B6229F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.CQRS.Infraestructure", "Holtz.CQRS.Infraestructure\Holtz.CQRS.Infraestructure.csproj", "{B77E2ACB-73AB-435F-BF33-7C6AC7920303}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D491AA70-1DC4-4713-B8E2-E94B45B6229F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D491AA70-1DC4-4713-B8E2-E94B45B6229F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D491AA70-1DC4-4713-B8E2-E94B45B6229F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77E2ACB-73AB-435F-BF33-7C6AC7920303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77E2ACB-73AB-435F-BF33-7C6AC7920303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77E2ACB-73AB-435F-BF33-7C6AC7920303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77E2ACB-73AB-435F-BF33-7C6AC7920303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

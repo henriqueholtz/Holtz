@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Holtz.Domain.Entities
+﻿namespace Holtz.Domain.Entities
 {
-    internal class Product
+    public class Product
     {
-        public long Id { get; set; }
+        public Product(string name, string description, double price )
+        {
+            this.Id = Guid.NewGuid();
+            this.Description = description;
+            this.Name = name;
+            this.Price = price;
+        }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
