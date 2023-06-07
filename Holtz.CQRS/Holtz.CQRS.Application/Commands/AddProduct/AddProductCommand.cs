@@ -5,7 +5,7 @@ namespace Holtz.CQRS.Application.Commands.AddProduct
     /// <summary>
     /// <see cref="AddProductCommandHandler"/>
     /// </summary>
-    public class AddProductCommand : IRequest<long>
+    public class AddProductCommand : IRequest<Guid>
     {
         public string Name { get; set; }
         public string Description { get; set; }

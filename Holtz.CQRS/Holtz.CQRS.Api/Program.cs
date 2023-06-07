@@ -1,10 +1,19 @@
-using Holtz.CQRS.Application.Interfaces;
+using Holtz.CQRS.Api;
 using Holtz.CQRS.Application.Queries.GetProducts;
 using Holtz.CQRS.Infraestructure.Persistence;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Build a config object, using env vars and JSON providers.
+IConfiguration config = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .AddEnvironmentVariables()
+    .Build();
+
+// Get values from the config given their key and their target type.
+string connectionString = config?.GetRequiredSection("ConnectionStrings:ApplicationContext")?.Get<string>() ?? "";
 
 // Add services to the container.
 
@@ -19,7 +28,9 @@ builder.Services.AddMediatR(sfg => sfg.RegisterServicesFromAssembly(typeof(GetPr
 builder.Services.AddSwaggerGen();
 
 // Add data base context
-builder.Services.AddSingleton<IApplicationContext, ApplicationContext>();
+builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseSqlite(config?.GetConnectionString("ApplicationContext")));
+
+builder.Services.InjectRepositories();
 
 var app = builder.Build();
 

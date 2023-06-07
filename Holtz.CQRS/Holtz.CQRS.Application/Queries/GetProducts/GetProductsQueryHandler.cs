@@ -5,14 +5,15 @@ namespace Holtz.CQRS.Application.Queries.GetProducts
 {
     public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IList<Product>>
     {
-        private readonly IApplicationContext _context;
-        public GetProductsQueryHandler(IApplicationContext context)
+        private readonly IProductsQueryRepository _repository;
+        public GetProductsQueryHandler(IProductsQueryRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
-        public Task<IList<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+        public async Task<IList<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_context.Products);
+            // TODO: map to DTOs
+            return await _repository.GetProductsAsync();
         }
     }
 }

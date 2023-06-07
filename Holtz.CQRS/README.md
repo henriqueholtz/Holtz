@@ -1,5 +1,14 @@
 # CQRS & MediatR Pattern
 
+## Requirements
+
+- .NET 7+
+
+### Migrations
+
+Generate: `dotnet ef migrations add message -o Data` (from `Holtz.CQRS.Infraestructure` folder)
+Apply: `dotnet ef database update`
+
 ### TO DO list
 
 - Add Middleware

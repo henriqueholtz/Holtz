@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Holtz.Domain.Entities;
 
 namespace Holtz.CQRS.Application.Interfaces
 {
     public interface IProductsCommandRepository
     {
-        Task<long> AddProductAsync(); 
+        Task<Guid> AddProductAsync(Product product); 
     }
 }

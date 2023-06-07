@@ -1,13 +1,19 @@
-﻿using MediatR;
+﻿using Holtz.CQRS.Application.Interfaces;
+using Holtz.Domain.Entities;
+using MediatR;
 
 namespace Holtz.CQRS.Application.Commands.AddProduct
 {
-    internal class AddProductCommandHandler : IRequestHandler<AddProductCommand, long>
+    internal class AddProductCommandHandler : IRequestHandler<AddProductCommand, Guid>
     {
-        public Task<long> Handle(AddProductCommand request, CancellationToken cancellationToken)
+        private readonly IProductsCommandRepository _repository;
+        public AddProductCommandHandler(IProductsCommandRepository repository)
         {
-            //throw new NotImplementedException();
-            return Task.FromResult<long>(1);
+            _repository = repository;
+        }
+        public async Task<Guid> Handle(AddProductCommand request, CancellationToken cancellationToken)
+        {
+            return await _repository.AddProductAsync(new Product(request.Name, request.Description, request.Price));
         }
     }
 }
