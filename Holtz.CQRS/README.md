@@ -1,13 +1,17 @@
 # CQRS & MediatR Pattern
 
+- .NET 7
+- Code First & EntityFrameworkCore
+- SQLite
+
 ## Requirements
 
 - .NET 7+
 
 ### Migrations
 
-Generate: `dotnet ef migrations add message -o Data` (from `Holtz.CQRS.Infraestructure` folder)
-Apply: `dotnet ef database update`
+Generate: `dotnet ef migrations add message -o Migrations` (from `Holtz.CQRS.Infraestructure` folder)
+Apply: `dotnet ef database update` (from `Holtz.CQRS.Api` folder)
 
 ### TO DO list
 
