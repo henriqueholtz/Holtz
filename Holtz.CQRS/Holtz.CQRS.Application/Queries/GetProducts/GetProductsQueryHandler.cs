@@ -1,19 +1,21 @@
-﻿using Holtz.CQRS.Application.Interfaces;
+﻿using Holtz.CQRS.Application.DTOs.Products;
+using Holtz.CQRS.Application.Interfaces;
 using Holtz.Domain.Entities;
 
 namespace Holtz.CQRS.Application.Queries.GetProducts
 {
-    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IList<Product>>
+    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IList<ProductDto>>
     {
         private readonly IProductsQueryRepository _repository;
         public GetProductsQueryHandler(IProductsQueryRepository repository)
         {
             _repository = repository;
         }
-        public async Task<IList<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+
+        public async Task<IList<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            // TODO: map to DTOs
-            return await _repository.GetProductsAsync();
+            IList<Product> products = await _repository.GetProductsAsync();
+            return products.Select(p => new ProductDto(p)).ToList();
         }
     }
 }
