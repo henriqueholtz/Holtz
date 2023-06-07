@@ -16,10 +16,10 @@ Apply: `dotnet ef database update` (from `Holtz.CQRS.Api` folder)
 
 ### TO DO list
 
-- Add Middleware
 - Add Unit tests
 - Add integration tests
 - Add support to Windows container
 - Add swagger annotations
 - Add notification
-- Add FluentValidation
+- Add FluentValidation (include swagger)
+- Add Mappers

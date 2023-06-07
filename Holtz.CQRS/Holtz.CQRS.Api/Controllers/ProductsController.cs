@@ -36,7 +36,8 @@ namespace Holtz.CQRS.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(Guid))]
-        public async Task<IActionResult> AddProduct([FromQuery] AddProductCommand command)
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> AddProduct([FromBody] AddProductCommand command)
         {
             Guid result = await _mediator.Send(command);
             return Ok(result);

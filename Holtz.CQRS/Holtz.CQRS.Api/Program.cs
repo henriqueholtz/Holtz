@@ -3,6 +3,7 @@ using Holtz.CQRS.Api.Middlewares;
 using Holtz.CQRS.Application.Queries.GetProducts;
 using Holtz.CQRS.Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using NLog.Extensions.Logging;
 using System.Reflection;
 
@@ -27,7 +28,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddMediatR(sfg => sfg.RegisterServicesFromAssembly(typeof(GetProductsQueryHandler).GetTypeInfo().Assembly));
 
 // Swagger
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Holtz.CQRS API",
+        Version = "v1",
+        Description = ".NET API using CQRS pattern"
+    });
+});
 
 // Add data base context
 builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseSqlite(config?.GetConnectionString("ApplicationContext")));
