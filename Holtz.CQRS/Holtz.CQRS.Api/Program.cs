@@ -1,7 +1,9 @@
 using Holtz.CQRS.Api;
+using Holtz.CQRS.Api.Middlewares;
 using Holtz.CQRS.Application.Queries.GetProducts;
 using Holtz.CQRS.Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using NLog.Extensions.Logging;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,13 @@ builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseSqlite(config?.G
 
 builder.Services.InjectRepositories();
 
+// Logging
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.SetMinimumLevel(LogLevel.Debug);
+    loggingBuilder.AddNLog(config);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,6 +53,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
