@@ -23,7 +23,11 @@ namespace Holtz.CQRS.Tests
             productsQueryRepositoryMock.Setup(x => x.GetProductsAsync()).ReturnsAsync(new List<Product> { new Product("Product 1", "Desc 1", 15), new Product("Product 2", "Desc 2", 12) });
             services.AddTransient<IProductsQueryRepository>(x => productsQueryRepositoryMock.Object);
 
-#endregion
+            var productsCommandRepositoryMock = new Mock<IProductsCommandRepository>();
+            productsCommandRepositoryMock.Setup(x => x.AddProductAsync(It.IsAny<Product>())).ReturnsAsync(Guid.NewGuid);
+            services.AddTransient<IProductsCommandRepository>(x => productsCommandRepositoryMock.Object);
+
+            #endregion
         }
     }
 }

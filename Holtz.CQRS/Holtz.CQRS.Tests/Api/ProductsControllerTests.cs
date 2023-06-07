@@ -1,4 +1,5 @@
 ﻿using Holtz.CQRS.Api.Controllers;
+using Holtz.CQRS.Application.Commands.AddProduct;
 using Holtz.CQRS.Application.DTOs.Products;
 using Holtz.CQRS.Application.Interfaces;
 using Holtz.CQRS.Application.Queries.GetProducts;
@@ -15,15 +16,13 @@ namespace Holtz.CQRS.Tests.Api
     public class ProductsControllerTests
     {
         private readonly IMediator _mediator;
-        private readonly Mock<IProductsQueryRepository> _repositoryMock = new();
         public ProductsControllerTests(IMediator mediator)
         {
             _mediator = mediator;
-            _repositoryMock.Setup(x => x.GetProductsAsync()).ReturnsAsync(new List<Product> { new Product("Product 1", "Desc 1", 15) });
         }
 
         [Fact]
-        public async Task GetProductsAsync()
+        public async Task Should_GetProductsAsync()
         {
             // Arrange
             ProductsController? controller = new ProductsController(_mediator);
@@ -33,6 +32,20 @@ namespace Holtz.CQRS.Tests.Api
 
             // Assert
             Assert.True(result.Value is IList<ProductDto>);
+            Assert.True(result.StatusCode == 200);
+        }
+
+        [Fact]
+        public async Task Should_AddProductAsync()
+        {
+            // Arrange
+            ProductsController? controller = new ProductsController(_mediator);
+
+            // Act
+            OkObjectResult result = (OkObjectResult)await controller.AddProductAsync(new AddProductCommand { Name = "Product 1", Description = "Description", Price = 8 });
+
+            // Assert
+            Assert.True(result.Value is Guid);
             Assert.True(result.StatusCode == 200);
         }
     }
