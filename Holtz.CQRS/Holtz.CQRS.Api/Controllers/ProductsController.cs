@@ -25,7 +25,7 @@ namespace Holtz.CQRS.Api.Controllers
         [ProducesResponseType(200, Type = typeof(List<ProductDto>))]
         public async Task<IActionResult> Index([FromQuery] GetProductsQuery query)
         {
-            var result = await _mediator.Send(query);
+            IList<ProductDto> result = await _mediator.Send(query);
             return Ok(result);
         }
 

@@ -1,7 +1,7 @@
+using Holtz.CQRS.Application.DTOs.Products;
 using Holtz.CQRS.Application.Interfaces;
 using Holtz.CQRS.Application.Queries.GetProducts;
 using Holtz.Domain.Entities;
-using MediatR;
 using Moq;
 
 namespace Holtz.CQRS.Tests.Application.Queries
@@ -18,7 +18,7 @@ namespace Holtz.CQRS.Tests.Application.Queries
         {
             var query = new GetProductsQuery();
             GetProductsQueryHandler handler = new GetProductsQueryHandler(_repositoryMock.Object);
-            IList<Product> products = await handler.Handle(query, default);
+            IList<ProductDto> products = await handler.Handle(query, default);
 
             _repositoryMock.Verify(x => x.GetProductsAsync(), Times.Once);
             Assert.True(products.Any());
