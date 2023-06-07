@@ -1,0 +1,29 @@
+using Holtz.CQRS.Application.Interfaces;
+using Holtz.CQRS.Application.Queries.GetProducts;
+using Holtz.Domain.Entities;
+using MediatR;
+using Moq;
+
+namespace Holtz.CQRS.Tests.Application.Queries
+{
+    public class GetProductsQueryHandlerTests
+    {
+        private readonly Mock<IProductsQueryRepository> _repositoryMock = new();
+        private readonly IMediator _mediator;
+        public GetProductsQueryHandlerTests(IMediator mediator)
+        {
+            _mediator = mediator;
+            _repositoryMock.Setup(x => x.GetProductsAsync()).ReturnsAsync(new List<Product> { new Product("Mock", "Desc", 15) });
+        }
+        [Fact]
+        public async Task Should_Call_Get_Method_Once()
+        {
+            var query = new GetProductsQuery();
+            GetProductsQueryHandler handler = new GetProductsQueryHandler(_repositoryMock.Object);
+            IList<Product> products = await handler.Handle(query, default);
+
+            _repositoryMock.Verify(x => x.GetProductsAsync(), Times.Once);
+            Assert.True(products.Any());
+        }
+    }
+}

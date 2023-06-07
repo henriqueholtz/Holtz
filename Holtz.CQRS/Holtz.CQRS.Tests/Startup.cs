@@ -2,6 +2,7 @@
 using Holtz.CQRS.Application.Queries.GetProducts;
 using Holtz.CQRS.Infraestructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using System.Reflection;
 
 namespace Holtz.CQRS.Tests
@@ -14,7 +15,7 @@ namespace Holtz.CQRS.Tests
         public void ConfigureServices(IServiceCollection services) 
         {
             services.AddMediatR(sfg => sfg.RegisterServicesFromAssembly(typeof(GetProductsQueryHandler).GetTypeInfo().Assembly));
-            services.AddSingleton<IApplicationContext, ApplicationContext>();
+            //services.AddTransient<IProductsQueryRepository>(x => new Mock<IProductsQueryRepository>().Object);
         }
     }
 }
