@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Holtz.CQRS.Application.Commands.AddProduct
 {
-    internal class AddProductCommandHandler : IRequestHandler<AddProductCommand, Guid>
+    public class AddProductCommandHandler : IRequestHandler<AddProductCommand, Guid>
     {
         private readonly IProductsCommandRepository _repository;
         public AddProductCommandHandler(IProductsCommandRepository repository)

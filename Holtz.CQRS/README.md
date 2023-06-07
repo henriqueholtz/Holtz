@@ -3,6 +3,7 @@
 - .NET 7
 - Code First & EntityFrameworkCore
 - SQLite
+- Unit tests using Moq;
 
 ## Requirements
 
@@ -19,7 +20,6 @@ Apply: `dotnet ef database update` (from `Holtz.CQRS.Api` folder)
 - Add Unit tests
 - Add integration tests
 - Add support to Windows container
-- Add support to SQLite
 - Add swagger annotations
 - Add notification
 - Add FluentValidation

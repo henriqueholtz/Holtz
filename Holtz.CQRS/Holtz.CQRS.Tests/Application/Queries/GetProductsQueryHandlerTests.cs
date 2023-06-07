@@ -9,10 +9,8 @@ namespace Holtz.CQRS.Tests.Application.Queries
     public class GetProductsQueryHandlerTests
     {
         private readonly Mock<IProductsQueryRepository> _repositoryMock = new();
-        private readonly IMediator _mediator;
-        public GetProductsQueryHandlerTests(IMediator mediator)
+        public GetProductsQueryHandlerTests()
         {
-            _mediator = mediator;
             _repositoryMock.Setup(x => x.GetProductsAsync()).ReturnsAsync(new List<Product> { new Product("Mock", "Desc", 15) });
         }
         [Fact]
