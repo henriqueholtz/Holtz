@@ -15,7 +15,7 @@ namespace Holtz.CQRS.Tests
         public void ConfigureServices(IServiceCollection services) 
         {
             services.AddMediatR(sfg => sfg.RegisterServicesFromAssembly(typeof(GetProductsQueryHandler).GetTypeInfo().Assembly));
-            //services.AddTransient<IProductsQueryRepository>(x => new Mock<IProductsQueryRepository>().Object);
+            services.AddTransient<IProductsQueryRepository>(x => new Mock<IProductsQueryRepository>().Object);
         }
     }
 }
