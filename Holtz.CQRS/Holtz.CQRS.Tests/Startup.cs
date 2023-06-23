@@ -1,4 +1,7 @@
-﻿using Holtz.CQRS.Application.Interfaces;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Holtz.CQRS.Application.Commands.AddProduct;
+using Holtz.CQRS.Application.Interfaces;
 using Holtz.CQRS.Application.Queries.GetProducts;
 using Holtz.CQRS.Infraestructure.Persistence;
 using Holtz.Domain.Entities;
@@ -16,6 +19,7 @@ namespace Holtz.CQRS.Tests
         public void ConfigureServices(IServiceCollection services) 
         {
             services.AddMediatR(sfg => sfg.RegisterServicesFromAssembly(typeof(GetProductsQueryHandler).GetTypeInfo().Assembly));
+            services.AddValidatorsFromAssemblyContaining<AddProductCommandValidator>();
 
 #region Dependency Injection to "Holtz.CQRS.Tests.Api"
 

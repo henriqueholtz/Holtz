@@ -1,13 +1,7 @@
 ﻿using Holtz.CQRS.Application.Commands.AddProduct;
 using Holtz.CQRS.Application.Interfaces;
-using Holtz.CQRS.Application.Queries.GetProducts;
 using Holtz.Domain.Entities;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Holtz.CQRS.Tests.Application.Commands
 {
