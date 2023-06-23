@@ -3,10 +3,10 @@ using RabbitMQ.Client;
 using System.Text;
 using Holtz.RabbitMQ.SimpleConsole.Core;
 
-Console.WriteLine("Starting RabbitMQ Consumer!");
+Console.WriteLine("Starting RabbitMQ Consumer...");
+Console.WriteLine();
 
-
-var factory = new ConnectionFactory { HostName = HoltzRabbitMQ.HostName };
+var factory = new ConnectionFactory { HostName = HoltzRabbitMQ.HostName, UserName = HoltzRabbitMQ.User, Password = HoltzRabbitMQ.Password };
 using var connection = factory.CreateConnection();
 using var channel = connection.CreateModel();
 
