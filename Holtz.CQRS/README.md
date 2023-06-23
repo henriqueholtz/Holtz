@@ -1,13 +1,24 @@
 # CQRS & MediatR Pattern
 
-- .NET 7
-- Code First & EntityFrameworkCore
-- SQLite
+Command Query Responsibility Segregation & MediatR pattern using:
+
+- .NET 7;
+- CQRS;
+- MediatR;
+- Code First & EntityFrameworkCore;
+- SQLite;
 - Unit tests using Moq;
+- Middleware;
+- FluentValidation;
 
 ## Requirements
 
 - .NET 7+
+
+## How to run
+
+- **Using Visual Studio (2022+):** Just select the type like `IIS Express` or `Docker` and hit the play button
+- **dotnet cli**: `dotnet run --project ./Holtz.CQRS.Api --urls="https://localhost:32768" --watch`
 
 ### Migrations
 

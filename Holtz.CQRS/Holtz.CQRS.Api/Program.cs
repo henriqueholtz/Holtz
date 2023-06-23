@@ -1,5 +1,8 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Holtz.CQRS.Api;
 using Holtz.CQRS.Api.Middlewares;
+using Holtz.CQRS.Application.Commands.AddProduct;
 using Holtz.CQRS.Application.Queries.GetProducts;
 using Holtz.CQRS.Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +22,13 @@ IConfiguration config = new ConfigurationBuilder()
 string connectionString = config?.GetRequiredSection("ConnectionStrings:ApplicationContext")?.Get<string>() ?? "";
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+// Add FluentValidation (https://github.com/FluentValidation/FluentValidation/issues/1965)
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<AddProductCommandValidator>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -42,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
 // Add data base context
 builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseSqlite(config?.GetConnectionString("ApplicationContext")));
 
+// Dependency Injection of repositories
 builder.Services.InjectRepositories();
 
 // Logging
