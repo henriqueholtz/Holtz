@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.WebSockets", "Holtz.WebSockets\Holtz.WebSockets.csproj", "{80AF3A02-4ABE-44F3-83DC-6AB73BD8D83C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.WebSockets", "Holtz.WebSockets\Holtz.WebSockets.csproj", "{80AF3A02-4ABE-44F3-83DC-6AB73BD8D83C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.WebSockets.Consumer", "Holtz.WebSockets.Consumer\Holtz.WebSockets.Consumer.csproj", "{B6B6DAEE-2A8C-492A-A487-EC06D6402A92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{80AF3A02-4ABE-44F3-83DC-6AB73BD8D83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80AF3A02-4ABE-44F3-83DC-6AB73BD8D83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80AF3A02-4ABE-44F3-83DC-6AB73BD8D83C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B6DAEE-2A8C-492A-A487-EC06D6402A92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B6DAEE-2A8C-492A-A487-EC06D6402A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B6DAEE-2A8C-492A-A487-EC06D6402A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B6DAEE-2A8C-492A-A487-EC06D6402A92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
