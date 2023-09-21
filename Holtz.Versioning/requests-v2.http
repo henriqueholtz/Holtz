@@ -1,0 +1,5 @@
+
+GET https://localhost:32768/api/Health HTTP/1.1
+x-api-version: 2.0
+
+### 
