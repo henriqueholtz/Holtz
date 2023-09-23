@@ -1,6 +1,12 @@
+using Holtz.Catalog.Microservices.DAL.CatalogContext;
+using Holtz.Catalog.Microservices.DAL.Interfaces;
+using Holtz.Catalog.Microservices.DAL.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<ICatalogContext, CatalogContext>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

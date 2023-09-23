@@ -1,7 +1,7 @@
 ﻿using Holtz.Catalog.Microservices.DAL.Entities;
 using MongoDB.Driver;
 
-namespace Holtz.Catalog.Microservices.DAL
+namespace Holtz.Catalog.Microservices.DAL.CatalogContext
 {
     public class CatalogContextSeed
     {

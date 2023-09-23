@@ -6,7 +6,7 @@ namespace Holtz.Catalog.Microservices.DAL.Entities
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         [BsonElement("Name")]
         public string Name { get; set; } = null!;

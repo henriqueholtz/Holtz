@@ -3,7 +3,7 @@ using Holtz.Catalog.Microservices.DAL.Interfaces;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-namespace Holtz.Catalog.Microservices.DAL
+namespace Holtz.Catalog.Microservices.DAL.CatalogContext
 {
     public class CatalogContext : ICatalogContext
     {
