@@ -18,7 +18,7 @@ namespace Holtz.Catalog.Microservices.DAL.CatalogContext
             {
                 new Product
                 {
-                    Id = "1",
+                    Id = "507f1f77bcf86cd799439011",
                     Name = "Product 1",
                     Description = "Desc 1",
                     Category = "Category 1",
@@ -27,7 +27,7 @@ namespace Holtz.Catalog.Microservices.DAL.CatalogContext
                 },
                 new Product
                 {
-                    Id = "2",
+                    Id = "507f1f77bcf86cd799439022",
                     Name = "Product 2",
                     Description = "Desc 2",
                     Category = "Category 2",
@@ -36,7 +36,7 @@ namespace Holtz.Catalog.Microservices.DAL.CatalogContext
                 },
                 new Product
                 {
-                    Id = "3",
+                    Id = "507f1f77bcf86cd799439033",
                     Name = "Product 3",
                     Description = "Desc 3",
                     Category = "Category 3",
@@ -45,7 +45,7 @@ namespace Holtz.Catalog.Microservices.DAL.CatalogContext
                 },
                 new Product
                 {
-                    Id = "4",
+                    Id = "507f1f77bcf86cd799439044",
                     Name = "Product 4",
                     Description = "Desc 4",
                     Category = "Category 4",
@@ -54,7 +54,7 @@ namespace Holtz.Catalog.Microservices.DAL.CatalogContext
                 },
                 new Product
                 {
-                    Id = "5",
+                    Id = "507f1f77bcf86cd799439055",
                     Name = "Product 5",
                     Description = "Desc 5",
                     Category = "Category 5",
