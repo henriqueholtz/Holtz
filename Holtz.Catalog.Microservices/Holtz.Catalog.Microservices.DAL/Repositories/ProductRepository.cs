@@ -17,12 +17,12 @@ namespace Holtz.Catalog.Microservices.DAL.Repositories
             _catalogContext = catalogContext;
         }
 
-        public async Task CreateProduct(Product product)
+        public async Task CreateProductAsync(Product product)
         {
             await _catalogContext.Products.InsertOneAsync(product);
         }
 
-        public async Task<bool> DeleteProduct(string id)
+        public async Task<bool> DeleteProductAsync(string id)
         {
             DeleteResult result = await _catalogContext.Products.DeleteOneAsync(p => p.Id == id);
             return result.IsAcknowledged && result.DeletedCount == 1;
@@ -49,7 +49,7 @@ namespace Holtz.Catalog.Microservices.DAL.Repositories
             return await _catalogContext.Products.Find(p => p.Name == name).ToListAsync();
         }
 
-        public async Task<bool> UpdateProduct(Product product)
+        public async Task<bool> UpdateProductAsync(Product product)
         {
             ReplaceOneResult result = await _catalogContext.Products.ReplaceOneAsync(p => p.Id == product.Id, product);
             return result.IsAcknowledged && result.ModifiedCount == 1;

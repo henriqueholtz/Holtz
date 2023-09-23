@@ -9,3 +9,5 @@ Each isolated project has an isolated README.
 - [Holtz.CQRS](/Holtz.CQRS)
 - [Holtz.RabbitMQ.SimpleConsole](/Holtz.RabbitMQ.SimpleConsole/)
 - [Holtz.WebSockets](/Holtz.WebSockets)
+- [Holtz.Versioning.Api](/Holtz.Versioning.Api)
+- [Holtz.Catalog.Microservices](/Holtz.Catalog.Microservices)
