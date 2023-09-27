@@ -3,8 +3,8 @@
     public abstract class Pizza
     {
         public string Name { get; set; } = null!;
-        public abstract void Prepare();
-        public abstract void Bake();
-        public abstract void Pack();
+        public abstract string Prepare();
+        public abstract string Bake();
+        public abstract string Pack();
     }
 }

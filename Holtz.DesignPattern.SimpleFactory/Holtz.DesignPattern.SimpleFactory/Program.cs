@@ -7,15 +7,15 @@ Console.WriteLine("You can choose your pizza between the following options: ");
 Console.WriteLine("=> BACON");
 Console.WriteLine("=> PEPPERONI");
 Console.Write("Please type you chosen: ");
-Console.WriteLine();
 
 string? type = Console.ReadLine();
+Console.WriteLine();
 try
 {
     Pizza pizza = PizzaSimpleFactory.CreatePizza(type ?? "");
-    pizza.Prepare();
-    pizza.Bake();
-    pizza.Pack();
+    Console.WriteLine(pizza.Prepare());
+    Console.WriteLine(pizza.Bake());
+    Console.WriteLine(pizza.Pack());
     Console.WriteLine($"{pizza.Name} ready!");
 }
 catch(Exception ex)

@@ -6,19 +6,19 @@
         {
             Name = "Bacon Pizza";
         }
-        public override void Bake()
+        public override string Bake()
         {
-            Console.WriteLine("Baking a bacon pizza...");
+            return "Baking a bacon pizza...";
         }
 
-        public override void Pack()
+        public override string Pack()
         {
-            Console.WriteLine("Packing a bacon pizza...");
+            return "Packing a bacon pizza...";
         }
 
-        public override void Prepare()
+        public override string Prepare()
         {
-            Console.WriteLine("Preparing a bacon pizza...");
+            return "Preparing a bacon pizza...";
         }
     }
 }
