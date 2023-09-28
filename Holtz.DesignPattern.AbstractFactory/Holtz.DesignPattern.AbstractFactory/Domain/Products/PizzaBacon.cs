@@ -4,9 +4,10 @@ namespace Holtz.DesignPattern.AbstractFactory.Domain.Products
 {
     public sealed class PizzaBacon : Pizza
     {
-        public PizzaBacon() : base("Pizza of Bacon", EnumDough.Pizza)
+        public PizzaBacon() : base("Pizza of bacon", EnumDough.Pizza)
         {
             Ingredients.Add("Bacon");
+            Ingredients.Add("Dough");
         }
     }
 }
