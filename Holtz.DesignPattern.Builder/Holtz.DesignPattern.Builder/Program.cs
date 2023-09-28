@@ -14,7 +14,7 @@ pizzaPepperoni.ShowContent();
 
 var pizzeriaDirectorForBacon = new PizzeriaDirector(new PizzaBacon());
 pizzeriaDirectorForBacon.MountPizza();
-var pizzaBacon = pizzeriaDirectorForPepperoni.GetPizza();
+var pizzaBacon = pizzeriaDirectorForBacon.GetPizza();
 pizzaBacon.ShowContent();
 
 Console.ReadLine();
