@@ -1,11 +1,6 @@
 ﻿using Holtz.DesignPattern.Adapter.Adaptee;
 using Holtz.DesignPattern.Adapter.Domain;
 using Holtz.DesignPattern.Adapter.Target;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Holtz.DesignPattern.Adapter.Adapter
 {

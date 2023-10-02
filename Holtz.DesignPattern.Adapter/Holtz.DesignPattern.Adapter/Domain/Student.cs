@@ -1,5 +1,4 @@
-﻿
-namespace Holtz.DesignPattern.Adapter.Domain
+﻿namespace Holtz.DesignPattern.Adapter.Domain
 {
     public class Student
     {
