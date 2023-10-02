@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.DesignPattern.Bridge", "Holtz.DesignPattern.Bridge\Holtz.DesignPattern.Bridge.csproj", "{B1280298-101B-4B2B-9590-178C6948F159}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.DesignPattern.Bridge", "Holtz.DesignPattern.Bridge\Holtz.DesignPattern.Bridge.csproj", "{B1280298-101B-4B2B-9590-178C6948F159}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.DesignPattern.Bridge.Tests", "Holtz.DesignPattern.Bridge.Tests\Holtz.DesignPattern.Bridge.Tests.csproj", "{99EB5CFF-4881-433A-8F37-D98DF767EE81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B1280298-101B-4B2B-9590-178C6948F159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1280298-101B-4B2B-9590-178C6948F159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1280298-101B-4B2B-9590-178C6948F159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99EB5CFF-4881-433A-8F37-D98DF767EE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99EB5CFF-4881-433A-8F37-D98DF767EE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99EB5CFF-4881-433A-8F37-D98DF767EE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99EB5CFF-4881-433A-8F37-D98DF767EE81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
