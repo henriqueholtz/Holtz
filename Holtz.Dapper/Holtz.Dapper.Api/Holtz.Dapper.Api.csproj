@@ -6,12 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>85a4d8ed-ad9d-4369-8db2-cf0e4a031077</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Holtz.Dapper.Persistence\Holtz.Dapper.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

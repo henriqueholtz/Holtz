@@ -5,6 +5,12 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.Dapper.Api", "Holtz.Dapper.Api\Holtz.Dapper.Api.csproj", "{BF4DB93B-C7B5-454F-87BD-6D89440D700C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.Dapper.Persistence", "Holtz.Dapper.Persistence\Holtz.Dapper.Persistence.csproj", "{286A6A4D-9882-4781-8B88-3039A60E9561}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.Dapper.Domain", "Holtz.Dapper.Domain\Holtz.Dapper.Domain.csproj", "{ACE8D7CB-C7BD-4FC4-8079-3495DCE8D243}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{09A8EB4C-B475-4EBE-AE5A-22E6D4360C06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{BF4DB93B-C7B5-454F-87BD-6D89440D700C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF4DB93B-C7B5-454F-87BD-6D89440D700C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF4DB93B-C7B5-454F-87BD-6D89440D700C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{286A6A4D-9882-4781-8B88-3039A60E9561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{286A6A4D-9882-4781-8B88-3039A60E9561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{286A6A4D-9882-4781-8B88-3039A60E9561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{286A6A4D-9882-4781-8B88-3039A60E9561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACE8D7CB-C7BD-4FC4-8079-3495DCE8D243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACE8D7CB-C7BD-4FC4-8079-3495DCE8D243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACE8D7CB-C7BD-4FC4-8079-3495DCE8D243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACE8D7CB-C7BD-4FC4-8079-3495DCE8D243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09A8EB4C-B475-4EBE-AE5A-22E6D4360C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09A8EB4C-B475-4EBE-AE5A-22E6D4360C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09A8EB4C-B475-4EBE-AE5A-22E6D4360C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09A8EB4C-B475-4EBE-AE5A-22E6D4360C06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
