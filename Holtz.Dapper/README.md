@@ -13,7 +13,7 @@ USE HoltzDapper;
 GO
 
 CREATE TABLE dbo.Students (
-    Id int PRIMARY KEY,
+    Id int PRIMARY KEY IDENTITY(1,1),
 	FullName NVARCHAR(MAX) NOT NULL,
     IsActive BIT NOT NULL,
     BirthDate datetime NULL
