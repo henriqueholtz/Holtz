@@ -20,6 +20,12 @@ Command Query Responsibility Segregation & MediatR pattern using:
 - **Using Visual Studio (2022+):** Just select the type like `IIS Express` or `Docker` and hit the play button
 - **dotnet cli**: `dotnet run --project ./Holtz.CQRS.Api --urls="https://localhost:32768" --watch`
 
+## How to test
+
+```
+dotnet test
+```
+
 ### Migrations
 
 Generate: `dotnet ef migrations add message -o Migrations` (from `Holtz.CQRS.Infraestructure` folder)
