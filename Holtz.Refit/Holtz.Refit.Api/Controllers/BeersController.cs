@@ -6,20 +6,20 @@ namespace Holtz.Refit.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController(IRandomDataApi randomDataApi) : ControllerBase
+    public class BeersController(IRandomDataApi randomDataApi) : ControllerBase
     {
         private readonly IRandomDataApi _randomDataApi = randomDataApi;
 
         /// <summary>
-        /// Get the list of users
+        /// Get the list of beers
         /// </summary>
         /// <param name="limit">Minimum supported by https://random-data-api.com/ 2.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetUsersAsync([FromQuery] int limit = 5)
+        public async Task<IActionResult> GetBeersAsync([FromQuery] int limit = 5)
         {
-            List<User> users = await _randomDataApi.GetUsersAsync(limit);
-            return Ok(users);
+            List<Beer> beers = await _randomDataApi.GetBeersAsync(limit);
+            return Ok(beers);
         }
     }
 }
