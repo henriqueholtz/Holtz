@@ -13,11 +13,16 @@ builder.Services.AddSwaggerGen();
 
 // Refit
 string? randomDataApiUrl = builder.Configuration.GetSection("Refit:RandomDataApiUrl").Get<string>();
+int? timeoutInMilliseconds = builder.Configuration.GetSection("Refit:TimeoutInMilliseconds").Get<int>();
 if (randomDataApiUrl == null)
     throw new Exception("Invalid 'RandomDataApiUrl' from configuration file");
 
 builder.Services.AddRefitClient<IRandomDataApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri(randomDataApiUrl));
+    .ConfigureHttpClient(c =>
+    {
+        c.BaseAddress = new Uri(randomDataApiUrl);
+        c.Timeout = TimeSpan.FromMilliseconds(timeoutInMilliseconds ?? 1 * 1000);
+    });
 
 var app = builder.Build();
 

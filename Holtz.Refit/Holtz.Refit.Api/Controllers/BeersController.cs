@@ -1,6 +1,8 @@
 ﻿using Holtz.Refit.Domain;
 using Holtz.Refit.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Refit;
+using System.Net;
 
 namespace Holtz.Refit.Api.Controllers
 {
@@ -16,10 +18,15 @@ namespace Holtz.Refit.Api.Controllers
         /// <param name="limit">Minimum supported by https://random-data-api.com/ 2.</param>
         /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<Beer>))]
+        [ProducesResponseType(500, Type = typeof(ApiException))]
         public async Task<IActionResult> GetBeersAsync([FromQuery] int limit = 5)
         {
-            List<Beer> beers = await _randomDataApi.GetBeersAsync(limit);
-            return Ok(beers);
+            ApiResponse<List<Beer>> response = await _randomDataApi.GetBeersAsync(limit);
+            if (response.IsSuccessStatusCode)
+                return Ok(response.Content);
+
+            return StatusCode((int)HttpStatusCode.InternalServerError, response.Error);
         }
     }
 }
