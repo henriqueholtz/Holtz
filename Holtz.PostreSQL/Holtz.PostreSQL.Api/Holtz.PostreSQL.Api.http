@@ -1,0 +1,6 @@
+@Holtz.PostreSQL.Api_HostAddress = http://localhost:5263
+
+GET {{Holtz.PostreSQL.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
