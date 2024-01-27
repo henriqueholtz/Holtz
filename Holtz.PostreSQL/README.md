@@ -10,4 +10,4 @@
 
 - Install the EF tool using dotnet: `dotnet tool install --global dotnet-ef`
 - Create a new migration: `dotnet ef migrations add <nameForYourMigration>` (can be needed to add the arg `--project`)
-- Apply a migration: ``
+- Apply a migration: `dotnet ef database update --project Holtz.PostreSQL.Api/Holtz.PostreSQL.Api.csproj`
