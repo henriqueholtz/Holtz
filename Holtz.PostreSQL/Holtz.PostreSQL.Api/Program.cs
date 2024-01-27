@@ -1,3 +1,6 @@
+using Holtz.PostreSQL.Api.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// PostgreSQL
+var Configuration = builder.Configuration;
+builder.Services.AddDbContext<HoltzPostgreSqlContext>(options =>
+        options.UseNpgsql(Configuration.GetConnectionString("Holtz.PostreSQL.Api")));
 
 var app = builder.Build();
 
