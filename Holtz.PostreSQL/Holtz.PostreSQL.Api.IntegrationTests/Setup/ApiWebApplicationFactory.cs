@@ -11,13 +11,12 @@ namespace Holtz.PostreSQL.Api.IntegrationTests.Setup
     public class ApiWebApplicationFactory : WebApplicationFactory<ProgramApiMarker>, IAsyncLifetime
     {
         private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
-            .WithImage("postgres")
-            .WithPassword("Holtz@Postgres!") //Same of Holtz.PostreSQL.Api/appsettings.json
-            .Build();
+        .Build();
 
-        public Task InitializeAsync()
+        public async Task InitializeAsync()
         {
-            return _dbContainer.StartAsync();
+            await _dbContainer.StartAsync()
+                .ConfigureAwait(false);
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -32,12 +31,21 @@ namespace Holtz.PostreSQL.Api.IntegrationTests.Setup
 
                 services.AddDbContext<HoltzPostgreSqlContext>(options =>
                         options.UseNpgsql(_dbContainer.GetConnectionString()));
+
+                // Ensure schema gets created
+                var serviceProvider = services.BuildServiceProvider();
+
+                using var scope = serviceProvider.CreateScope();
+                var scopedServices = scope.ServiceProvider;
+                var context = scopedServices.GetRequiredService<HoltzPostgreSqlContext>();
+                context.Database.EnsureCreated();
             });
         }
 
-        Task IAsyncLifetime.DisposeAsync()
+        async Task IAsyncLifetime.DisposeAsync()
         {
-            return _dbContainer.StopAsync();
+            await _dbContainer.StopAsync()
+                .ConfigureAwait(false);
         }
     }
 }

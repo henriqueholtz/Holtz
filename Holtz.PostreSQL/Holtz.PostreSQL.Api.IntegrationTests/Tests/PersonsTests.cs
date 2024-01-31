@@ -3,15 +3,14 @@ using System.Net;
 
 namespace Holtz.PostreSQL.Api.IntegrationTests.Tests
 {
-    public class HomeTests : IntegrationTest
+    public class PersonsTests : IntegrationTest
     {
-        public HomeTests(ApiWebApplicationFactory fixture) : base(fixture) { }
-
+        public PersonsTests(ApiWebApplicationFactory fixture) : base(fixture) { }
         [Fact]
-        public async Task GET_Home_ShouldBeOk()
+        public async Task GET_Persons_ShouldBeOk()
         {
             // Act
-            var response = await _client.GetAsync("/api/home");
+            var response = await _client.GetAsync("/api/persons");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
