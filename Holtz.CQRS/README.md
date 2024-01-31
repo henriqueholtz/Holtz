@@ -2,14 +2,16 @@
 
 Command Query Responsibility Segregation & MediatR pattern using:
 
-- .NET 7;
-- CQRS;
-- MediatR;
-- Code First & EntityFrameworkCore;
-- SQLite;
-- Unit tests using Moq;
-- Middleware;
-- FluentValidation;
+- :heavy_check_mark: **.NET 7**
+- :heavy_check_mark: **CQRS**
+- :heavy_check_mark: **MediatR**
+- :heavy_check_mark: **Code First**
+- :heavy_check_mark: **Entity Framework Core**
+- :heavy_check_mark: **SQLite**
+- :heavy_check_mark: **Unit tests using Moq**
+- :heavy_check_mark: **Middleware**
+- :heavy_check_mark: **FluentValidation**
+- :heavy_check_mark: **Docker support**
 
 ## Requirements
 

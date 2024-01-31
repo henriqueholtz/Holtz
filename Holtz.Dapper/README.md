@@ -1,5 +1,9 @@
 # Dapper
 
+- :heavy_check_mark: **.NET 7**
+- :heavy_check_mark: **Dapper**
+- :heavy_check_mark: **Docker support**
+
 ###### SQL command used to create the database and table
 
 ```
