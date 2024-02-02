@@ -2,7 +2,10 @@
 using Holtz.PostreSQL.Api.IntegrationTests.Extensions;
 using Holtz.PostreSQL.Api.IntegrationTests.Setup;
 using Holtz.PostreSQL.Api.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Holtz.PostreSQL.Api.IntegrationTests.Tests
 {
@@ -30,6 +33,42 @@ namespace Holtz.PostreSQL.Api.IntegrationTests.Tests
 
             // Assert
             response.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async Task POST_AddSinglePerson_ShouldBeOk()
+        {
+            // Arranje
+            using (var scope = _factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<HoltzPostgreSqlContext>();
+                
+                // Cleaning the database
+                await db.People.ExecuteDeleteAsync();
+                await db.SaveChangesAsync();
+            }
+            Person person = new Person { FirstName = "Testing Name", LastName = "Included" };
+            StringContent stringContent =  new StringContent(JsonConvert.SerializeObject(person), Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PostAsync("/api/persons", stringContent);
+
+            // Assert
+            response.Should().NotBeNull();
+            response.IsSuccessStatusCode.Should().BeTrue();
+
+            using (var scope = _factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<HoltzPostgreSqlContext>();
+
+                // Cleaning the database
+                Person? personDb = await db.People.FirstOrDefaultAsync(p => p.FirstName.Equals("Testing Name"));
+                personDb.Should().NotBeNull();
+                personDb?.FirstName.Should().Be("Testing Name");
+                personDb?.LastName.Should().Be("Included");
+            }
         }
     }
 }
