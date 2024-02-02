@@ -70,5 +70,32 @@ namespace Holtz.PostreSQL.Api.IntegrationTests.Tests
                 personDb?.LastName.Should().Be("Included");
             }
         }
+
+        [Fact]
+        public async Task GET_SinglePerson_ShouldBeOk()
+        {
+            // Arranje
+            using (var scope = _factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<HoltzPostgreSqlContext>();
+
+                // Cleaning the database
+                await db.People.ExecuteDeleteAsync();
+
+                Person person = new Person { Id = 555, FirstName = "Jhon", LastName = "Doe" };
+                db.People.Add(person);
+                await db.SaveChangesAsync();
+            }
+
+            // Act
+            var response = await _client.GetAndDeserializeAsync<Person>("/api/persons/555");
+
+            // Assert
+            response.Should().NotBeNull();
+            response?.Id.Should().Be(555);
+            response?.FirstName.Should().Be("Jhon");
+            response?.LastName.Should().Be("Doe");
+        }
     }
 }
