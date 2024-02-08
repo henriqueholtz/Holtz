@@ -1,11 +1,13 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var apiservice = builder.AddProject<Projects.Holtz_AspireStarter_ApiService>("apiservice");
-var rabbitMQ = builder.AddRabbitMQContainer("message_with_rabbitMQ", password: "rabbitmqpass");
+string rabbitMqName = "holtz-rabbitmq"; // Needs to be the same in ApiService
+var rabbitMQ = builder.AddRabbitMQContainer(rabbitMqName, password: "rabbitmqpass");
 
+var apiservice = builder.AddProject<Projects.Holtz_AspireStarter_ApiService>("apiservice")
+    .WithReference(rabbitMQ);
 
 builder.AddProject<Projects.Holtz_AspireStarter_Web>("webfrontend")
-    .WithReference(apiservice)
-    .WithReference(rabbitMQ);
+    .WithReference(apiservice);
+
 
 builder.Build().Run();

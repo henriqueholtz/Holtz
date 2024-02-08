@@ -1,7 +1,13 @@
+using RabbitMQ.Client;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
+string rabbitMqName = "holtz-rabbitmq"; // Needs to be the same in AppHost
+builder.AddRabbitMQ(rabbitMqName);
+
 // Add service defaults & Aspire components.
-builder.AddServiceDefaults();
+builder.AddServiceDefaults(); 
 
 // Add services to the container.
 builder.Services.AddProblemDetails();
@@ -27,6 +33,16 @@ app.MapGet("/weatherforecast", () =>
         ))
         .ToArray();
     return forecast;
+});
+
+app.MapGet("/post-message", (IConnection connection) =>
+{
+    var queueName = "test-queue";
+    using var channel = connection.CreateModel();
+    channel.QueueDeclare(queueName, exclusive: false, durable: true);
+    channel.BasicPublish(exchange: "", queueName, null, body: JsonSerializer.SerializeToUtf8Bytes(new { Title = "Book01", Description = "Description of Book01" }));
+
+    return "Message sent to RabbitMQ Queue";
 });
 
 app.MapDefaultEndpoints();
