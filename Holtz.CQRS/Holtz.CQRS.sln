@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.CQRS.Api", "Holtz.CQR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.Domain", "..\Holtz.Domain\Holtz.Domain.csproj", "{C0CCC296-81C1-4AC2-826F-A3A0983B0D3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.CQRS.Application", "Holtz.CQRS.Application\Holtz.CQRS.Application.csproj", "{7B78A8F9-5DD2-4343-8048-FEC463A06756}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.CQRS.Application", "Holtz.CQRS.Application\Holtz.CQRS.Application.csproj", "{7B78A8F9-5DD2-4343-8048-FEC463A06756}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.CQRS.Tests", "Holtz.CQRS.Tests\Holtz.CQRS.Tests.csproj", "{D491AA70-1DC4-4713-B8E2-E94B45B6229F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.CQRS.Infraestructure", "Holtz.CQRS.Infraestructure\Holtz.CQRS.Infraestructure.csproj", "{B77E2ACB-73AB-435F-BF33-7C6AC7920303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.CQRS.Infraestructure", "Holtz.CQRS.Infraestructure\Holtz.CQRS.Infraestructure.csproj", "{B77E2ACB-73AB-435F-BF33-7C6AC7920303}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.CQRS.Api.IntegrationTests", "Holtz.CQRS.Api.IntegrationTests\Holtz.CQRS.Api.IntegrationTests.csproj", "{3A5DE5D4-F9A5-4ACA-8B23-DCEBE49E4D5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B77E2ACB-73AB-435F-BF33-7C6AC7920303}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B77E2ACB-73AB-435F-BF33-7C6AC7920303}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B77E2ACB-73AB-435F-BF33-7C6AC7920303}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A5DE5D4-F9A5-4ACA-8B23-DCEBE49E4D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A5DE5D4-F9A5-4ACA-8B23-DCEBE49E4D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A5DE5D4-F9A5-4ACA-8B23-DCEBE49E4D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A5DE5D4-F9A5-4ACA-8B23-DCEBE49E4D5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
