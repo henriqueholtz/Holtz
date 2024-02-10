@@ -4,6 +4,7 @@ namespace Holtz.CQRS.Application.Interfaces
 {
     public interface IProductsQueryRepository
     {
-        Task<IList<Product>> GetProductsAsync(); 
+        Task<IList<Product>> GetProductsAsync();
+        Task<Product?> GetProductByIdAsync(Guid id);
     }
 }

@@ -11,6 +11,12 @@ namespace Holtz.CQRS.Infraestructure.Persistence.Products
         {
             _context = context;
         }
+
+        public async Task<Product?> GetProductByIdAsync(Guid id)
+        {
+            return await _context.Products.FirstOrDefaultAsync(p => p.Id.Equals(id));
+        }
+
         public async Task<IList<Product>> GetProductsAsync()
         {
             return await _context.Products.ToListAsync();

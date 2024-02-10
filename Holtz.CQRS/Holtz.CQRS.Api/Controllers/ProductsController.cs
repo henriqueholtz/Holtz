@@ -1,5 +1,6 @@
 ﻿using Holtz.CQRS.Application.Commands.AddProduct;
 using Holtz.CQRS.Application.DTOs.Products;
+using Holtz.CQRS.Application.Queries.GetProduct;
 using Holtz.CQRS.Application.Queries.GetProducts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,23 @@ namespace Holtz.CQRS.Api.Controllers
         {
             IList<ProductDto> result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+        /// <summary>
+        /// Get a product from its id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(ProductDto))]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetProductAsync([FromRoute] GetProductQuery query)
+        {
+            ProductDto? dto = await _mediator.Send(query);
+            if (dto == null)
+                return NotFound();
+
+            return Ok(dto);
         }
 
         /// <summary>
