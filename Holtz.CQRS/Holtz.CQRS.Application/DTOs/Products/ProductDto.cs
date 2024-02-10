@@ -1,10 +1,10 @@
 ﻿using Holtz.Domain.Entities;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Holtz.CQRS.Application.DTOs.Products
 {
     public class ProductDto
     {
+        public ProductDto() { }
         public ProductDto(Product product)
         {
             this.Id = product.Id;

@@ -5,6 +5,7 @@ using Holtz.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace Holtz.CQRS.Api.IntegrationTests
 {
@@ -45,6 +46,49 @@ namespace Holtz.CQRS.Api.IntegrationTests
             responseAsProductsList.Should().HaveCount(2);
             responseAsProductsList.Should().ContainSingle(p => p.Price.Equals(8759.90));
             responseAsProductsList.Should().ContainSingle(p => p.Price.Equals(9659.80));
+        }
+
+        [Fact]
+        public async Task Get_Product_Successfully()
+        {
+            // Arranje
+            Guid? productId;
+            using (var scope = _factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<ApplicationContext>();
+
+                // Cleaning the database
+                await db.Products.ExecuteDeleteAsync();
+
+                Product product = new Product("Laptop", "Portable", 5721.99);
+                productId = product.Id;
+                db.Products.Add(product);
+                await db.SaveChangesAsync();
+            }
+
+            // Act
+            var response = await _client.GetAsync($"/api/products/{productId}");
+
+            // Assert
+            response.Should().NotBeNull();
+            response.IsSuccessStatusCode.Should().BeTrue();
+            ProductDto? responseAsProduct = JsonConvert.DeserializeObject<ProductDto>(await response.Content.ReadAsStringAsync() ?? "");
+            responseAsProduct.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task Get_NonexistentProduct_NotFound()
+        {
+            // Arranje
+            Guid? productId = Guid.Empty;
+
+            // Act
+            var response = await _client.GetAsync($"/api/products/{productId}");
+
+            // Assert
+            response.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }
