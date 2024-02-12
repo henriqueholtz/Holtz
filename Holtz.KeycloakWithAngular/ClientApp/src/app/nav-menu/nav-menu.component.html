@@ -20,6 +20,15 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
+          <li *ngIf="!givenName">
+            <button class="btn btn-default" (click)="login()">Login</button>
+          </li>
+          <li *ngIf="givenName">
+            <h1>Hello, {{ givenName }}</h1>
+          </li>
+          <li *ngIf="givenName">
+            <button class="btn btn-default" (click)="logout()">Logout</button>
+          </li>
           <li
             class="nav-item"
             [routerLinkActive]="['link-active']"
