@@ -1,5 +1,11 @@
 # Holtz.KeycloakWithAngular
 
+- :heavy_check_mark: **.NET 8**
+- :heavy_check_mark: **OpenID Connect**
+- :heavy_check_mark: **Angular**
+- :heavy_check_mark: **Keycloak**
+- :heavy_check_mark: **Implicit Flow** (deprecated)
+
 ## Setup environment
 
 1. Run keycloak as a docker container:
