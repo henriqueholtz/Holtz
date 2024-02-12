@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "Holtz.KeycloakWithAngular"
+  "defaultProject": "Holtz.KeycloakWithAngular",
+  "cli": {
+    "analytics": false
+  }
 }
