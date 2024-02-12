@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,18 @@ builder.Services.AddAuthentication(options =>
 {
     o.Authority = builder.Configuration["Jwt:Authority"];
     o.Audience = builder.Configuration["Jwt:Audience"]; // Client Id
+#if DEBUG
+    o.TokenValidationParameters.ValidateIssuer = false;
+    o.TokenValidationParameters.ValidateAudience = false;
+    o.TokenValidationParameters.ValidateIssuerSigningKey = false;
+    o.TokenValidationParameters.SignatureValidator = delegate (string token, TokenValidationParameters parameters)
+    {
+        var jwt = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(token);
+
+        return jwt;
+    };
+    o.RequireHttpsMetadata = false;
+#endif
     o.Events = new JwtBearerEvents()
     {
         OnAuthenticationFailed = c =>
