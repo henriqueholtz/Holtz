@@ -21,7 +21,7 @@ namespace Holtz.CQRS.Api.IntegrationTests
         [Fact]
         public async Task Get_Products_Successfully()
         {
-            // Arranje
+            // Arrange
             using (var scope = _factory.Services.CreateScope())
             {
                 var scopedServices = scope.ServiceProvider;
@@ -51,7 +51,7 @@ namespace Holtz.CQRS.Api.IntegrationTests
         [Fact]
         public async Task Get_Product_Successfully()
         {
-            // Arranje
+            // Arrange
             Guid? productId;
             using (var scope = _factory.Services.CreateScope())
             {
@@ -78,9 +78,9 @@ namespace Holtz.CQRS.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task Get_NonexistentProduct_NotFound()
+        public async Task Get_NotExistentProduct_NotFound()
         {
-            // Arranje
+            // Arrange
             Guid? productId = Guid.Empty;
 
             // Act
