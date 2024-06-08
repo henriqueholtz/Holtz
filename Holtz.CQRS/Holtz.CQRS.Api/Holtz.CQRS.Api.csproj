@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Holtz.CQRS.Application\Holtz.CQRS.Application.csproj" />
     <ProjectReference Include="..\Holtz.CQRS.Infraestructure\Holtz.CQRS.Infraestructure.csproj" />
+    <ProjectReference Include="..\Holtz.CQRS.ServiceDefaults\Holtz.CQRS.ServiceDefaults.csproj" />
   </ItemGroup>
 
   <ItemGroup>
