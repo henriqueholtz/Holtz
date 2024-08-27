@@ -5,6 +5,10 @@ VisualStudioVersion = 17.11.35017.193
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.FusionCache.Api", "Holtz.FusionCache.Api\Holtz.FusionCache.Api.csproj", "{178F5352-7AD4-4DA0-889F-1E40516D7AE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.FusionCache.AppHost", "Holtz.FusionCache.AppHost\Holtz.FusionCache.AppHost.csproj", "{F375CCA8-43D7-44B4-B830-AC77FA8881F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.FusionCache.ServiceDefaults", "Holtz.FusionCache.ServiceDefaults\Holtz.FusionCache.ServiceDefaults.csproj", "{B13B2A69-00D6-4721-AC7D-FCBA8527D088}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{178F5352-7AD4-4DA0-889F-1E40516D7AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{178F5352-7AD4-4DA0-889F-1E40516D7AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{178F5352-7AD4-4DA0-889F-1E40516D7AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F375CCA8-43D7-44B4-B830-AC77FA8881F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F375CCA8-43D7-44B4-B830-AC77FA8881F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F375CCA8-43D7-44B4-B830-AC77FA8881F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F375CCA8-43D7-44B4-B830-AC77FA8881F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B13B2A69-00D6-4721-AC7D-FCBA8527D088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B13B2A69-00D6-4721-AC7D-FCBA8527D088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B13B2A69-00D6-4721-AC7D-FCBA8527D088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B13B2A69-00D6-4721-AC7D-FCBA8527D088}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
