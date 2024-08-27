@@ -11,9 +11,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.9.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="ZiggyCreatures.FusionCache" Version="1.3.0" />
+    <PackageReference Include="ZiggyCreatures.FusionCache.OpenTelemetry" Version="1.3.0" />
     <PackageReference Include="ZiggyCreatures.FusionCache.Serialization.NewtonsoftJson" Version="1.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Holtz.FusionCache.ServiceDefaults\Holtz.FusionCache.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
