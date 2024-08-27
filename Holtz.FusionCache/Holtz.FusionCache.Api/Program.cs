@@ -16,36 +16,43 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddOpenTelemetry()
-  // SETUP TRACES
-  .WithTracing(tracing => tracing
-        .AddFusionCacheInstrumentation()
-        .AddConsoleExporter()
-  )
-   // SETUP METRICS
-   .WithMetrics(metrics =>
-   {
-       metrics.AddFusionCacheInstrumentation();
-       metrics.AddConsoleExporter();
-   }
-   );
+#region FusionCache + OpenTelemetry
 
 string channelPrefix = "holtz-";
+
+// Add Redis
+builder.Services.AddStackExchangeRedisCache((redisCacheOptions) =>
+{
+    redisCacheOptions.ConfigurationOptions = new ConfigurationOptions
+    {
+        EndPoints = { { "127.0.0.1", 6379 } },
+        SslHost = "127.0.0.1",
+        AbortOnConnectFail = false,
+        ChannelPrefix = RedisChannel.Pattern(channelPrefix)
+    };
+    redisCacheOptions.InstanceName = channelPrefix;
+    }
+);
+
+// Add FusionCache
 builder.Services.AddFusionCache()
     .WithSerializer(new FusionCacheNewtonsoftJsonSerializer())
-    .WithDistributedCache(
-        new RedisCache(new RedisCacheOptions
-        {
-            ConfigurationOptions = new ConfigurationOptions
-            {
-                EndPoints = { { "127.0.0.1", 6379 } },
-                SslHost = "127.0.0.1",
-                AbortOnConnectFail = false,
-                ChannelPrefix = RedisChannel.Pattern(channelPrefix)
-            },
-            InstanceName = channelPrefix
-        })
-    );
+    .WithRegisteredDistributedCache(); // Injected by ".AddStackExchangeRedisCache(...)"
+
+// Add OpenTelemetry
+builder.Services.AddOpenTelemetry()
+    // SETUP TRACES
+    .WithTracing(tracing => tracing
+        .AddFusionCacheInstrumentation()
+        .AddConsoleExporter()
+    )
+    // SETUP METRICS
+    .WithMetrics(metrics =>
+    {
+        metrics.AddFusionCacheInstrumentation();
+        metrics.AddConsoleExporter();
+    });
+#endregion
 
 var app = builder.Build();
 
