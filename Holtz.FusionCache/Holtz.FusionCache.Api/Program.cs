@@ -49,7 +49,12 @@ builder.Services.AddOpenTelemetry()
     // SETUP METRICS
     .WithMetrics(metrics =>
     {
-        metrics.AddFusionCacheInstrumentation();
+        metrics.AddFusionCacheInstrumentation(o =>
+        {
+            o.IncludeMemoryLevel = true;
+            o.IncludeDistributedLevel = true;
+            o.IncludeBackplane = true;
+        });
         metrics.AddConsoleExporter();
     });
 #endregion
