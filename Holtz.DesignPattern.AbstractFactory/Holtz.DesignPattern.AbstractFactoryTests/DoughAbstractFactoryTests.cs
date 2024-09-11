@@ -1,7 +1,6 @@
 using Holtz.DesignPattern.AbstractFactory.Domain.Enums;
 using Holtz.DesignPattern.AbstractFactory.Domain.Products;
 using Holtz.DesignPattern.AbstractFactory.Factory.AbstractFactory;
-using NuGet.Frameworks;
 
 namespace Holtz.DesignPattern.AbstractFactoryTests
 {
