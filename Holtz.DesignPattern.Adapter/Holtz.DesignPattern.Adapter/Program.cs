@@ -2,7 +2,7 @@
 using Holtz.DesignPattern.Adapter.Adapter;
 using Holtz.DesignPattern.Adapter.Target;
 
-Console.WriteLine("Hello, Starting...");
+Console.WriteLine("Hello, Starting app...");
 
 string[,] studentsArray = new string[5, 4]
 {
