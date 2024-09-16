@@ -11,3 +11,8 @@ Each isolated project has an isolated README.
 - [Holtz.WebSockets](/Holtz.WebSockets)
 - [Holtz.Versioning.Api](/Holtz.Versioning.Api)
 - [Holtz.Catalog.Microservices](/Holtz.Catalog.Microservices)
+
+### TODOs
+
+- Add gihub actions to run test a specific project when its path changes
+- Add Docker support
