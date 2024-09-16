@@ -1,0 +1,24 @@
+name: Holtz_DesignPattern_Adapter_Tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - Holtz.DesignPattern.Adapter
+  pull_request:
+    branches: [master]
+    paths:
+      - Holtz.DesignPattern.Adapter
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+      - name: Tests
+        run: dotnet test Holtz.DesignPattern.Adapter/Holtz.DesignPattern.Adapter.Tests/Holtz.DesignPattern.Adapter.Tests.csproj
