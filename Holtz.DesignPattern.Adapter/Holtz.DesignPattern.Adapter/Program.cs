@@ -17,5 +17,5 @@ ITarget target = new StudentAdapter();
 
 target.ProccessTuitionCalc(studentsArray);
 
-Console.WriteLine();
+Console.WriteLine("Ending app...");
 Console.ReadLine();
