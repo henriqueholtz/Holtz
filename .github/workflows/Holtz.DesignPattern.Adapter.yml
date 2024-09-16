@@ -4,11 +4,11 @@ on:
   push:
     branches: [master]
     paths:
-      - Holtz.DesignPattern.Adapter
+      - 'Holtz.DesignPattern.Adapter/**'
   pull_request:
     branches: [master]
     paths:
-      - Holtz.DesignPattern.Adapter
+      - 'Holtz.DesignPattern.Adapter/**'
 
 jobs:
   test:
