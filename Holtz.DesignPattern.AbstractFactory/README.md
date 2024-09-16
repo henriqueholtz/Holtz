@@ -1,6 +1,6 @@
 # Abstract Factory
 
-- .NET 7
+- .NET 8
 - XUnit
 
 ### How to start

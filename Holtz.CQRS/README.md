@@ -2,7 +2,7 @@
 
 Command Query Responsibility Segregation & MediatR pattern using:
 
-- :heavy_check_mark: **.NET 7**
+- :heavy_check_mark: **.NET 8**
 - :heavy_check_mark: **CQRS**
 - :heavy_check_mark: **MediatR**
 - :heavy_check_mark: **Code First**
@@ -16,7 +16,7 @@ Command Query Responsibility Segregation & MediatR pattern using:
 
 ## Requirements
 
-- .NET 7+
+- .NET 8+
 
 ## How to run
 

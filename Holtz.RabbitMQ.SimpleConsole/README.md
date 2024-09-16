@@ -2,7 +2,7 @@
 
 ### Requirements
 
-- .NET 7
+- .NET 8
 - Docker (to run the RabbitMq)
 
 ### Commands

@@ -1,6 +1,6 @@
 # Dapper
 
-- :heavy_check_mark: **.NET 7**
+- :heavy_check_mark: **.NET 8**
 - :heavy_check_mark: **Dapper**
 - :heavy_check_mark: **Docker support**
 

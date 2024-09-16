@@ -1,6 +1,6 @@
 # Holtz.Catalog.Microservices
 
-- .NET 7
+- .NET 8
 - MongoDB
 - Docker + Docker Compose
 
