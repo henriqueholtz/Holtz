@@ -2,6 +2,7 @@
 
 - .NET 8
 - XUnit
+- CI: Running unit tests through github actions
 
 ### How to start
 
