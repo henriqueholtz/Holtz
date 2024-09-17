@@ -1,6 +1,6 @@
 # Builder Design Pattern
 
-- 8
+- .NET 8
 - XUnit
 
 ### How to start
