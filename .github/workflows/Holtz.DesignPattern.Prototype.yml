@@ -1,0 +1,24 @@
+name: Holtz.DesignPattern.Prototype.Tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'Holtz.DesignPattern.Prototype/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'Holtz.DesignPattern.Prototype/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+      - name: Tests
+        run: dotnet test Holtz.DesignPattern.Prototype/Holtz.DesignPattern.Prototype.Tests/Holtz.DesignPattern.Prototype.Tests.csproj
