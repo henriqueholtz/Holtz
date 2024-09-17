@@ -1,4 +1,4 @@
-name: Holtz_DesignPattern_AbstractFactory_Tests
+name: Holtz.DesignPattern.AbstractFactory.Tests
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Holtz_DesignPattern_Adapter_Tests
+name: Holtz.DesignPattern.Adapter.Tests
 
 on:
   push:
