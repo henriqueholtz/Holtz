@@ -26,11 +26,11 @@ namespace Holtz.DesignPattern.Adapter.Tests
 
             //assert
             string output = stringWriter.ToString();
-            Assert.Contains($"Student Maria - Tuition value R$ 1000\r\n", output);
-            Assert.Contains($"Student Pedro - Tuition value R$ 2000\r\n", output);
-            Assert.Contains($"Student Bianca - Tuition value R$ 3000\r\n", output);
-            Assert.Contains($"Student Pamela - Tuition value R$ 4000\r\n", output);
-            Assert.Contains($"Student Sergio - Tuition value R$ 5000\r\n", output);
+            Assert.Contains($"Student Maria - Tuition value R$ 1000", output);
+            Assert.Contains($"Student Pedro - Tuition value R$ 2000", output);
+            Assert.Contains($"Student Bianca - Tuition value R$ 3000", output);
+            Assert.Contains($"Student Pamela - Tuition value R$ 4000", output);
+            Assert.Contains($"Student Sergio - Tuition value R$ 5000", output);
         }
     }
 }
