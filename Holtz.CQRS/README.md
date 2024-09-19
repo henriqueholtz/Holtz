@@ -10,6 +10,7 @@ Command Query Responsibility Segregation & MediatR pattern using:
 - :heavy_check_mark: **SQLite**
 - :heavy_check_mark: **Unit tests using Moq**
 - :heavy_check_mark: **Integration tests**
+- :heavy_check_mark: **Arch tests**
 - :heavy_check_mark: **Middleware**
 - :heavy_check_mark: **FluentValidation**
 - :heavy_check_mark: **Docker support**
