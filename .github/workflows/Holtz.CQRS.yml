@@ -1,0 +1,30 @@
+name: Holtz.CQRS.Tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'Holtz.CQRS/**'
+      - 'Holtz.Domain/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'Holtz.CQRS/**'
+      - 'Holtz.Domain/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+      - name: Unit Tests
+        run: dotnet test Holtz.CQRS/Holtz.CQRS.Tests/Holtz.CQRS.Tests.csproj
+      - name: Arch Tests
+        run: dotnet test Holtz.CQRS/Holtz.CQRS.Tests.Arch/Holtz.CQRS.Tests.Arch.csproj
+      - name: Integration Tests
+        run: dotnet test Holtz.CQRS/Holtz.CQRS.Api.IntegrationTests/Holtz.CQRS.Api.IntegrationTests.csproj
