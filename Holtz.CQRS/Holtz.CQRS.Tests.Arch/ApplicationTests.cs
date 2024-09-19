@@ -23,4 +23,40 @@ public class ApplicationTests
         Assert.Empty(result.FailingTypes);
         Assert.True(result.IsSuccessful);
     }
+    [Fact]
+    public void MediatRRequestsShouldHaveNameEndingWithQueryOrCommand()
+    {
+
+        var result = Types.InAssembly(ApplicationLayerAssembly)
+                          .That()
+                          .ImplementInterface(typeof(IRequest<>))
+                          .Should()
+                          .HaveNameEndingWith("Query")
+                          .Or()
+                          .HaveNameEndingWith("Command")
+                          .GetResult();
+
+        Assert.NotNull(result);
+        Assert.Empty(result.FailingTypes);
+        Assert.True(result.IsSuccessful);
+    }
+
+    [Fact]
+    public void ApplicationShouldNotHaveDependenciesOf()
+    {
+        var result = Types.InAssembly(ApplicationLayerAssembly)
+                .That()
+                .ResideInNamespace("Holtz.CQRS.Application")
+                .Should()
+                .NotHaveDependencyOnAny(
+                    "Holtz.CQRS.Infraestructure",
+                    "Holtz.CQRS.Tests",
+                    "Holtz.CQRS.Tests.Arch"
+                    )
+                .GetResult();
+
+        Assert.NotNull(result);
+        Assert.Empty(result.FailingTypes);
+        Assert.True(result.IsSuccessful);
+    }
 }
