@@ -1,8 +1,20 @@
 # Holtz
 
-This is my main repository. Here I have some isolated projects in the same repository using c#.
+This is my main repository. Here I have some personal projects using c#. Each project has its own README.
 
-Each isolated project has an isolated README.
+## Main items
+
+- [Github Actions](./.github/workflows/): mostly to run unit, arch and/or integration tests
+- Design Patterns
+  - [Holtz.DesignPattern.AbstractFactory](./Holtz.DesignPattern.AbstractFactory)
+  - [Holtz.DesignPattern.Adapter](./Holtz.DesignPattern.Adapter)
+  - [Holtz.DesignPattern.Bridge](./Holtz.DesignPattern.Bridge)
+  - [Holtz.DesignPattern.Builder](./Holtz.DesignPattern.Builder)
+  - [Holtz.DesignPattern.Prototype](./Holtz.DesignPattern.Prototype)
+  - [Holtz.DesignPattern.SimpleFactory](./Holtz.DesignPattern.SimpleFactory)
+- Useful Nuget packages
+  - [Refit](./Holtz.Refit/)
+  - [FusionCache](./Holtz.FusionCache/)
 
 ### Projects
 
