@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.CQRS.AppHost", "Holtz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holtz.CQRS.ServiceDefaults", "Holtz.CQRS.ServiceDefaults\Holtz.CQRS.ServiceDefaults.csproj", "{75FD9EA3-238A-403F-818D-94FA558A99C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.CQRS.Tests.Arch", "Holtz.CQRS.Tests.Arch\Holtz.CQRS.Tests.Arch.csproj", "{0514121E-189C-4DF7-B621-6DCE9C8E92BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{75FD9EA3-238A-403F-818D-94FA558A99C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75FD9EA3-238A-403F-818D-94FA558A99C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75FD9EA3-238A-403F-818D-94FA558A99C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0514121E-189C-4DF7-B621-6DCE9C8E92BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0514121E-189C-4DF7-B621-6DCE9C8E92BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0514121E-189C-4DF7-B621-6DCE9C8E92BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0514121E-189C-4DF7-B621-6DCE9C8E92BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
