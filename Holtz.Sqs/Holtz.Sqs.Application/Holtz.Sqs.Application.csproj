@@ -2,6 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Holtz.Sqs.Domain\Holtz.Sqs.Domain.csproj" />
+    <ProjectReference Include="..\Holtz.Sqs.Shared\Holtz.Sqs.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
   </ItemGroup>
 
   <PropertyGroup>
