@@ -1,6 +1,6 @@
 namespace Holtz.Sqs.Shared.Messages;
 
-public record CustomerCreated
+public class CustomerUpdated
 {
     public required Guid Id { get; init; }
     public required string Name { get; init; }
