@@ -1,6 +1,7 @@
+
 using Dapper;
 
-namespace Holtz.Sqs.Infraestructure.Database;
+namespace Holtz.Sqs.Api.SqlTypeHandlers;
 
 public class GuidTypeHandler : SqlMapper.TypeHandler<Guid>
 {
