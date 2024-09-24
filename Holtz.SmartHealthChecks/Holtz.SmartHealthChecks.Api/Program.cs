@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 string? connectionString = builder.Configuration.GetConnectionString("Holtz.SmartHealthChecks.Api");
-var Configuration = builder.Configuration;
+
 builder.Services.AddDbContext<HoltzSmartHealthChecksContext>(options =>
         options.UseSqlServer(connectionString));
 
