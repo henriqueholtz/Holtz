@@ -1,4 +1,4 @@
-namespace Holtz.Sqs.Publisher.Messages;
+namespace Holtz.Sqs.Shared.Messages;
 
 public class CustomerCreated
 {

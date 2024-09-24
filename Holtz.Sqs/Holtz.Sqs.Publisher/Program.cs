@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Amazon.SQS;
 using Amazon.SQS.Model;
-using Holtz.Sqs.Publisher.Messages;
+using Holtz.Sqs.Shared.Messages;
 
 Console.WriteLine("Starting Holtz.Sqs.Publisher...");
 
