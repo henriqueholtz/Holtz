@@ -61,7 +61,7 @@ public static class Mappers
         {
             Id = customer.Id,
             Email = customer.Email,
-            GitHubUsername = customer.GithubUsername,
+            GitHubUsername = customer.GitHubUsername,
             FullName = customer.FullName,
             BirthDate = customer.BirthDate
         };
@@ -72,7 +72,7 @@ public static class Mappers
         {
             Id = customerDto.Id,
             Email = customerDto.Email,
-            GithubUsername = customerDto.GitHubUsername,
+            GitHubUsername = customerDto.GitHubUsername,
             FullName = customerDto.FullName,
             BirthDate = customerDto.BirthDate
         };

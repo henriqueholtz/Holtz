@@ -11,10 +11,10 @@ var sqsClient = new AmazonSQSClient();
 var customer = new CustomerCreated
 {
     Id = Guid.NewGuid(),
-    Name = "Henrique Holtz",
+    FullName = "Henrique Holtz",
     Email = "henrique_holtz@hotmail.com",
     BirthDate = new DateTime(1999, 10, 07),
-    GithubUsername = "henriqueholtz"
+    GitHubUsername = "henriqueholtz"
 };
 
 var queueUrlResponse = await sqsClient.GetQueueUrlAsync("customers");
