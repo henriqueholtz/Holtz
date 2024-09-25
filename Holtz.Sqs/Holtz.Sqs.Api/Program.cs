@@ -2,7 +2,12 @@ using Dapper;
 using FluentValidation.AspNetCore;
 using Holtz.Sqs.Api.Middlewares;
 using Holtz.Sqs.Api.SqlTypeHandlers;
+using Holtz.Sqs.Application;
+using Holtz.Sqs.Application.Interfaces;
+using Holtz.Sqs.Domain.Interfaces;
 using Holtz.Sqs.Infraestructure.Database;
+using Holtz.Sqs.Infraestructure.Repositories;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +25,22 @@ SqlMapper.RemoveTypeMap(typeof(Guid?));
 builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
     new SqliteConnectionFactory(builder.Configuration.GetValue<string>("Database:ConnectionString")!));
 
+builder.Services.AddSingleton<DatabaseInitializer>();
+
+builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
+builder.Services.AddSingleton<ICustomerService, CustomerService>();
+builder.Services.AddSingleton<IGitHubService, GitHubService>();
+
+
+builder.Services.AddHttpClient("GitHub", httpClient =>
+{
+    httpClient.BaseAddress = new Uri(builder.Configuration.GetValue<string>("GitHub:ApiBaseUrl")!);
+    httpClient.DefaultRequestHeaders.Add(
+        HeaderNames.Accept, "application/vnd.github.v3+json");
+    httpClient.DefaultRequestHeaders.Add(
+        HeaderNames.UserAgent, $"Course-{Environment.MachineName}");
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -35,10 +56,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
-app.Run();
+var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();
+await databaseInitializer.InitializeAsync();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+await app.RunAsync();
