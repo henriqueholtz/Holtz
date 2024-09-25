@@ -16,7 +16,7 @@ public class CustomersController : ControllerBase
         _customerService = customerService;
     }
 
-    [HttpPost("customers")]
+    [HttpPost]
     public async Task<IActionResult> Create([FromBody] CustomerRequestDto request, CancellationToken cancellationToken)
     {
         var customer = request.ToCustomerDto();
@@ -28,7 +28,7 @@ public class CustomersController : ControllerBase
         return CreatedAtAction("Get", new { customerResponse.Id }, customerResponse);
     }
 
-    [HttpGet("customers/{id:guid}")]
+    [HttpGet("{id:guid}")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
         var customer = await _customerService.GetAsync(id);
@@ -42,7 +42,7 @@ public class CustomersController : ControllerBase
         return Ok(customerResponse);
     }
 
-    [HttpGet("customers")]
+    [HttpGet]
     public async Task<IActionResult> GetAll()
     {
         var customers = await _customerService.GetAllAsync();
@@ -50,7 +50,7 @@ public class CustomersController : ControllerBase
         return Ok(customersResponse);
     }
 
-    [HttpPut("customers/{id:guid}")]
+    [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(
         [FromMultiSource] UpdateCustomerRequestDto request, CancellationToken cancellationToken)
     {
@@ -68,7 +68,7 @@ public class CustomersController : ControllerBase
         return Ok(customerResponse);
     }
 
-    [HttpDelete("customers/{id:guid}")]
+    [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var deleted = await _customerService.DeleteAsync(id, cancellationToken);
