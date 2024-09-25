@@ -3,6 +3,10 @@
 - .NET 8
 - Amazon SQS
 - Terraform
+- Dapper
+- SQLite
+- FluentValidation
+- Middleware
 
 ### Requirements
 
