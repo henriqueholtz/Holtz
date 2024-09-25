@@ -1,5 +1,6 @@
 using Holtz.Sqs.Application.DTOs;
 using Holtz.Sqs.Domain;
+using Holtz.Sqs.Shared.Messages;
 
 namespace Holtz.Sqs.Application.Mappings;
 
@@ -75,6 +76,30 @@ public static class Mappers
             GitHubUsername = customerDto.GitHubUsername,
             FullName = customerDto.FullName,
             BirthDate = customerDto.BirthDate
+        };
+    }
+
+    public static CustomerCreated ToCustomerCreatedMessage(this Customer customer)
+    {
+        return new CustomerCreated
+        {
+            Id = customer.Id,
+            Email = customer.Email,
+            FullName = customer.FullName,
+            GitHubUsername = customer.GitHubUsername,
+            BirthDate = customer.BirthDate
+        };
+    }
+
+    public static CustomerUpdated ToCustomerUpdatedMessage(this Customer customer)
+    {
+        return new CustomerUpdated
+        {
+            Id = customer.Id,
+            Email = customer.Email,
+            FullName = customer.FullName,
+            GitHubUsername = customer.GitHubUsername,
+            BirthDate = customer.BirthDate
         };
     }
 }

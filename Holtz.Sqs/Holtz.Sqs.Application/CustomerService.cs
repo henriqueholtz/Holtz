@@ -11,15 +11,17 @@ public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IGitHubService _gitHubService;
+    private readonly ISqsMessenger _sqsMessenger;
 
     public CustomerService(ICustomerRepository customerRepository,
-        IGitHubService gitHubService)
+        IGitHubService gitHubService, ISqsMessenger sqsMessenger)
     {
         _customerRepository = customerRepository;
         _gitHubService = gitHubService;
+        _sqsMessenger = sqsMessenger;
     }
 
-    public async Task<bool> CreateAsync(CustomerDto customerDto)
+    public async Task<bool> CreateAsync(CustomerDto customerDto, CancellationToken cancellationToken)
     {
         var existingUser = await _customerRepository.GetAsync(customerDto.Id);
         if (existingUser is not null)
@@ -36,7 +38,11 @@ public class CustomerService : ICustomerService
         }
 
         var customer = customerDto.ToCustomer();
-        return await _customerRepository.CreateAsync(customer);
+        var response = await _customerRepository.CreateAsync(customer);
+        if (response)
+            await _sqsMessenger.SendMessageAsync(customer.ToCustomerCreatedMessage(), cancellationToken);
+
+        return response;
     }
 
     public async Task<CustomerDto?> GetAsync(Guid id)
@@ -55,11 +61,11 @@ public class CustomerService : ICustomerService
     {
         var customer = customerDto.ToCustomer();
 
-        var isValidGitHubUser = await _gitHubService.IsValidGitHubUserAsync(customer.GithubUsername);
+        var isValidGitHubUser = await _gitHubService.IsValidGitHubUserAsync(customer.GitHubUsername);
         if (!isValidGitHubUser)
         {
-            var message = $"There is no GitHub user with username {customer.GithubUsername}";
-            throw new ValidationException(message, GenerateValidationError(nameof(customer.GithubUsername), message));
+            var message = $"There is no GitHub user with username {customer.GitHubUsername}";
+            throw new ValidationException(message, GenerateValidationError(nameof(customer.GitHubUsername), message));
         }
 
         return await _customerRepository.UpdateAsync(customer);

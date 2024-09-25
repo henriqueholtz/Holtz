@@ -7,6 +7,7 @@
 - SQLite
 - FluentValidation
 - Middleware
+- Cancellation Tokens
 
 ### Requirements
 
