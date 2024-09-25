@@ -1,6 +1,5 @@
 ﻿using Amazon.SQS;
 using Amazon.SQS.Model;
-using Holtz.Sqs.Shared.Messages;
 
 var cancellationTokenSource = new CancellationTokenSource();
 Console.WriteLine("Starting Holtz.Sqs.Consumer...");

@@ -1,6 +1,7 @@
 using Amazon.SQS;
 using Dapper;
 using FluentValidation.AspNetCore;
+using Holtz.Sqs.Api.BackgroundServices;
 using Holtz.Sqs.Api.Middlewares;
 using Holtz.Sqs.Api.SqlTypeHandlers;
 using Holtz.Sqs.Application;
@@ -36,6 +37,7 @@ builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddSingleton<IGitHubService, GitHubService>();
 
+builder.Services.AddHostedService<AwsSqsConsumerService>();
 
 builder.Services.AddHttpClient("GitHub", httpClient =>
 {

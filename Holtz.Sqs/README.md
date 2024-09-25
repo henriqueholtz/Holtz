@@ -8,10 +8,12 @@
 - FluentValidation
 - Middleware
 - Cancellation Tokens
+- BackgroundService
 
 ### Requirements
 
 - AWS CLI
+- AWS Account
 - .NET 8
 - Terraform
 
