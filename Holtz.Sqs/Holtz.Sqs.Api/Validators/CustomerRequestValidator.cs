@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using FluentValidation;
-using Holtz.Sqs.Api.DTOs;
+using Holtz.Sqs.Application.DTOs;
 
 namespace Holtz.Sqs.Api.Validators;
 

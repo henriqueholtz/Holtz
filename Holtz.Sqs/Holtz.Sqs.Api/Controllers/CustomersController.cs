@@ -1,6 +1,6 @@
 using Holtz.Sqs.Api.Attributes;
-using Holtz.Sqs.Api.DTOs;
-using Holtz.Sqs.Api.Mappings;
+using Holtz.Sqs.Application.DTOs;
+using Holtz.Sqs.Application.Mappings;
 using Holtz.Sqs.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

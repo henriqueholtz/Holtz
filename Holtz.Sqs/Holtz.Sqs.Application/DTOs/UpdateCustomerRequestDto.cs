@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Holtz.Sqs.Api.DTOs;
+namespace Holtz.Sqs.Application.DTOs;
 
 public class UpdateCustomerRequestDto
 {

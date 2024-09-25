@@ -1,7 +1,7 @@
-using Holtz.Sqs.Api.DTOs;
 using Holtz.Sqs.Application.DTOs;
+using Holtz.Sqs.Domain;
 
-namespace Holtz.Sqs.Api.Mappings;
+namespace Holtz.Sqs.Application.Mappings;
 
 public static class Mappers
 {
@@ -53,6 +53,28 @@ public static class Mappers
                 FullName = x.FullName,
                 BirthDate = x.BirthDate
             })
+        };
+    }
+    public static CustomerDto ToCustomerDto(this Customer customer)
+    {
+        return new CustomerDto
+        {
+            Id = customer.Id,
+            Email = customer.Email,
+            GitHubUsername = customer.GithubUsername,
+            FullName = customer.FullName,
+            BirthDate = customer.BirthDate
+        };
+    }
+    public static Customer ToCustomer(this CustomerDto customerDto)
+    {
+        return new Customer
+        {
+            Id = customerDto.Id,
+            Email = customerDto.Email,
+            GithubUsername = customerDto.GitHubUsername,
+            FullName = customerDto.FullName,
+            BirthDate = customerDto.BirthDate
         };
     }
 }

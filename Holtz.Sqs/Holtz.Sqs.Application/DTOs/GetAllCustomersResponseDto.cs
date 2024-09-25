@@ -1,4 +1,4 @@
-namespace Holtz.Sqs.Api.DTOs;
+namespace Holtz.Sqs.Application.DTOs;
 
 public class GetAllCustomersResponseDto
 {
