@@ -26,7 +26,7 @@ public class SqsMessenger : ISqsMessenger
         if (_queueUrl is not null)
             return _queueUrl;
 
-        var queueUrlResponse = await _sqs.GetQueueUrlAsync(_queueSettings.Value.QueueName, cancellationToken);
+        var queueUrlResponse = await _sqs.GetQueueUrlAsync(_queueSettings.Value.Name, cancellationToken);
         _queueUrl = queueUrlResponse.QueueUrl;
         return _queueUrl;
     }

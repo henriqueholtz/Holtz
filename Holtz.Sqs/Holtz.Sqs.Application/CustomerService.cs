@@ -4,6 +4,7 @@ using Holtz.Sqs.Domain.Interfaces;
 using FluentValidation;
 using FluentValidation.Results;
 using Holtz.Sqs.Application.Mappings;
+using Holtz.Sqs.Shared.Messages;
 
 namespace Holtz.Sqs.Application;
 
@@ -57,7 +58,7 @@ public class CustomerService : ICustomerService
         return customers.Select(c => c.ToCustomerDto());
     }
 
-    public async Task<bool> UpdateAsync(CustomerDto customerDto)
+    public async Task<bool> UpdateAsync(CustomerDto customerDto, CancellationToken cancellationToken)
     {
         var customer = customerDto.ToCustomer();
 
@@ -68,12 +69,25 @@ public class CustomerService : ICustomerService
             throw new ValidationException(message, GenerateValidationError(nameof(customer.GitHubUsername), message));
         }
 
-        return await _customerRepository.UpdateAsync(customer);
+        var response = await _customerRepository.UpdateAsync(customer);
+        if (response)
+            await _sqsMessenger.SendMessageAsync(customer.ToCustomerUpdatedMessage(), cancellationToken);
+
+        return response;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _customerRepository.DeleteAsync(id);
+        var response = await _customerRepository.DeleteAsync(id);
+        if (response)
+            await _sqsMessenger.SendMessageAsync(
+                new CustomerDeleted
+                {
+                    Id = id,
+                },
+                cancellationToken
+            );
+        return response;
     }
 
     private static ValidationFailure[] GenerateValidationError(string paramName, string message)

@@ -52,7 +52,7 @@ public class CustomersController : ControllerBase
 
     [HttpPut("customers/{id:guid}")]
     public async Task<IActionResult> Update(
-        [FromMultiSource] UpdateCustomerRequestDto request)
+        [FromMultiSource] UpdateCustomerRequestDto request, CancellationToken cancellationToken)
     {
         var existingCustomer = await _customerService.GetAsync(request.Id);
 
@@ -62,16 +62,16 @@ public class CustomersController : ControllerBase
         }
 
         var customer = request.ToCustomerDto();
-        await _customerService.UpdateAsync(customer);
+        await _customerService.UpdateAsync(customer, cancellationToken);
 
         var customerResponse = customer.ToCustomerResponseDto();
         return Ok(customerResponse);
     }
 
     [HttpDelete("customers/{id:guid}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var deleted = await _customerService.DeleteAsync(id);
+        var deleted = await _customerService.DeleteAsync(id, cancellationToken);
         if (!deleted)
             return NotFound();
 

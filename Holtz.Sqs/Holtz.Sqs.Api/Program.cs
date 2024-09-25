@@ -1,3 +1,4 @@
+using Amazon.SQS;
 using Dapper;
 using FluentValidation.AspNetCore;
 using Holtz.Sqs.Api.Middlewares;
@@ -7,6 +8,7 @@ using Holtz.Sqs.Application.Interfaces;
 using Holtz.Sqs.Domain.Interfaces;
 using Holtz.Sqs.Infraestructure.Database;
 using Holtz.Sqs.Infraestructure.Repositories;
+using Holtz.Sqs.Shared;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,8 +27,11 @@ SqlMapper.RemoveTypeMap(typeof(Guid?));
 builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
     new SqliteConnectionFactory(builder.Configuration.GetValue<string>("Database:ConnectionString")!));
 
-builder.Services.AddSingleton<DatabaseInitializer>();
+builder.Services.Configure<QueueSettings>(builder.Configuration.GetSection(QueueSettings.Key));
 
+builder.Services.AddSingleton<DatabaseInitializer>();
+builder.Services.AddSingleton<IAmazonSQS, AmazonSQSClient>();
+builder.Services.AddSingleton<ISqsMessenger, SqsMessenger>();
 builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddSingleton<IGitHubService, GitHubService>();
