@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Holtz.Sqs.Domain\Holtz.Sqs.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
