@@ -1,0 +1,33 @@
+GET http://localhost:5095/api/customers HTTP/1.1
+
+### 
+
+GET http://localhost:5095/api/customers/bcebd5d6-381b-457c-9c2f-93b7c37e589a HTTP/1.1
+
+###
+
+POST http://localhost:5095/api/customers HTTP/1.1
+content-type: application/json
+
+{
+  "gitHubUsername": "henriqueholtz",
+  "fullName": "Henrique Holtz",
+  "email": "henrique_holtz@hotmail.com",
+  "birthDate": "1999-01-01T22:35:57.210Z"
+}
+
+###
+
+PUT http://localhost:5095/api/customers/bcebd5d6-381b-457c-9c2f-93b7c37e589a HTTP/1.1
+content-type: application/json
+
+{
+  "gitHubUsername": "henriqueholtz",
+  "fullName": "Henrique Holtz Updated",
+  "email": "henrique_holtz@hotmail.com",
+  "birthDate": "1999-01-01T22:35:57.210Z"
+}
+
+###
+
+DELETE http://localhost:5095/api/customers/62015670-aaad-4f71-9f0a-92fe2d20d52d HTTP/1.1
