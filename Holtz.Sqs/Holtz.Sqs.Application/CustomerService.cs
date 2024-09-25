@@ -28,7 +28,7 @@ public class CustomerService : ICustomerService
             throw new ValidationException(message, GenerateValidationError(nameof(CustomerDto), message));
         }
 
-        var isValidGitHubUser = await _gitHubService.IsValidGitHubUser(customerDto.GitHubUsername);
+        var isValidGitHubUser = await _gitHubService.IsValidGitHubUserAsync(customerDto.GitHubUsername);
         if (!isValidGitHubUser)
         {
             var message = $"There is no GitHub user with username {customerDto.GitHubUsername}";
@@ -55,7 +55,7 @@ public class CustomerService : ICustomerService
     {
         var customer = customerDto.ToCustomer();
 
-        var isValidGitHubUser = await _gitHubService.IsValidGitHubUser(customer.GithubUsername);
+        var isValidGitHubUser = await _gitHubService.IsValidGitHubUserAsync(customer.GithubUsername);
         if (!isValidGitHubUser)
         {
             var message = $"There is no GitHub user with username {customer.GithubUsername}";
