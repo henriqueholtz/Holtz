@@ -1,9 +1,10 @@
-using System;
 using System.Text.Json;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 using Holtz.Sqs.Shared;
+using Holtz.Sqs.Shared.Interfaces;
 using Holtz.Sqs.Shared.Messages;
+using MediatR;
 using Microsoft.Extensions.Options;
 
 namespace Holtz.Sqs.Api.BackgroundServices;
@@ -12,11 +13,15 @@ public class AwsSqsConsumerService : BackgroundService
 {
     private readonly IAmazonSQS _amazonSQS;
     private readonly IOptions<QueueSettings> _queueSettings;
+    private readonly IMediator _mediator;
+    private readonly ILogger<AwsSqsConsumerService> _logger;
 
-    public AwsSqsConsumerService(IAmazonSQS amazonSQS, IOptions<QueueSettings> queueSettings)
+    public AwsSqsConsumerService(IAmazonSQS amazonSQS, IOptions<QueueSettings> queueSettings, IMediator mediator, ILogger<AwsSqsConsumerService> logger)
     {
         _amazonSQS = amazonSQS;
         _queueSettings = queueSettings;
+        _mediator = mediator;
+        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -39,23 +44,26 @@ public class AwsSqsConsumerService : BackgroundService
             {
                 Console.WriteLine($"[AwsSqsConsumerService] New message consumed (id: {message.MessageId})...");
                 string? messageTypeAsString = message.MessageAttributes["MessageType"]?.StringValue;
-                switch (messageTypeAsString)
+                string typeName = $"Holtz.Sqs.Application.Commands.{messageTypeAsString}Command";
+                var type = Type.GetType(typeName);
+
+                if (type is null)
                 {
-                    case nameof(CustomerCreated):
-                        var customerCreated = JsonSerializer.Deserialize<CustomerCreated>(message.Body);
-                        Console.WriteLine($"[AwsSqsConsumerService] Customer id {customerCreated?.Id} created.");
-                        break;
-                    case nameof(CustomerUpdated):
-                        var customerUpdated = JsonSerializer.Deserialize<CustomerUpdated>(message.Body);
-                        Console.WriteLine($"[AwsSqsConsumerService] Customer id {customerUpdated?.Id} updated.");
-                        break;
-                    case nameof(CustomerDeleted):
-                        var customerDeleted = JsonSerializer.Deserialize<CustomerDeleted>(message.Body);
-                        Console.WriteLine($"[AwsSqsConsumerService] Customer id {customerDeleted?.Id} deleted.");
-                        break;
-                    default:
-                        Console.WriteLine($"[AwsSqsConsumerService] Unknwon message type: {messageTypeAsString}");
-                        break;
+                    _logger.LogWarning($"[AwsSqsConsumerService] Unknown type: {messageTypeAsString}. TypeName: {typeName}.");
+                    continue;
+                }
+
+                var typedMessage = (ISqsMessageMarker)JsonSerializer.Deserialize(message.Body, type)!;
+
+                try
+                {
+                    await _mediator.Send(typedMessage, stoppingToken);
+
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"[AwsSqsConsumerService] Error caught during processing: {ex.Message}", ex);
+                    continue;
                 }
 
                 await _amazonSQS.DeleteMessageAsync(queueUrlResponse.QueueUrl, message.ReceiptHandle, stoppingToken);

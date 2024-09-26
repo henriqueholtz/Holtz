@@ -9,6 +9,7 @@
 - Middleware
 - Cancellation Tokens
 - BackgroundService
+- MediatR pattern using IMediatR
 
 ### Requirements
 

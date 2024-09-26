@@ -1,6 +1,8 @@
+using Holtz.Sqs.Shared.Interfaces;
+
 namespace Holtz.Sqs.Shared.Messages;
 
-public class CustomerUpdated
+public record CustomerUpdated : ISqsMessageMarker
 {
     public required Guid Id { get; init; }
     public required string FullName { get; init; }

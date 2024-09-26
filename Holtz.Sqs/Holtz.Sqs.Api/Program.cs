@@ -5,6 +5,7 @@ using Holtz.Sqs.Api.BackgroundServices;
 using Holtz.Sqs.Api.Middlewares;
 using Holtz.Sqs.Api.SqlTypeHandlers;
 using Holtz.Sqs.Application;
+using Holtz.Sqs.Application.Commands;
 using Holtz.Sqs.Application.Interfaces;
 using Holtz.Sqs.Domain.Interfaces;
 using Holtz.Sqs.Infraestructure.Database;
@@ -37,7 +38,13 @@ builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddSingleton<IGitHubService, GitHubService>();
 
+// Background Services
 builder.Services.AddHostedService<AwsSqsConsumerService>();
+
+// Setting up MediatR
+builder.Services.AddMediatR(config =>
+    config.RegisterServicesFromAssembly(typeof(CustomerCreatedCommandHandler).Assembly
+));
 
 builder.Services.AddHttpClient("GitHub", httpClient =>
 {
