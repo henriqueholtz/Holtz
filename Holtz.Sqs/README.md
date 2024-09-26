@@ -10,6 +10,7 @@
 - Cancellation Tokens
 - BackgroundService
 - MediatR pattern using IMediatR
+- DLQ (Dead Letter Queue) for errors
 
 ### Requirements
 
