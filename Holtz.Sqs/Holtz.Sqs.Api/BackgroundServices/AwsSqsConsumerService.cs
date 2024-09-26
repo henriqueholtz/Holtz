@@ -1,9 +1,10 @@
+using System.Reflection;
 using System.Text.Json;
 using Amazon.SQS;
 using Amazon.SQS.Model;
+using Holtz.Sqs.Application.Commands;
 using Holtz.Sqs.Shared;
 using Holtz.Sqs.Shared.Interfaces;
-using Holtz.Sqs.Shared.Messages;
 using MediatR;
 using Microsoft.Extensions.Options;
 
@@ -45,7 +46,8 @@ public class AwsSqsConsumerService : BackgroundService
                 Console.WriteLine($"[AwsSqsConsumerService] New message consumed (id: {message.MessageId})...");
                 string? messageTypeAsString = message.MessageAttributes["MessageType"]?.StringValue;
                 string typeName = $"Holtz.Sqs.Application.Commands.{messageTypeAsString}Command";
-                var type = Type.GetType(typeName);
+                Assembly assembly = typeof(CustomerCreatedCommand).Assembly;
+                var type = assembly.GetType(typeName, false, true);
 
                 if (type is null)
                 {
