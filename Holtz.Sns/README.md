@@ -1,27 +1,20 @@
-# Amazon SQS (Simple Queue Service)
+# Holtz.Sns
 
 - .NET 8
-- Amazon SQS
+- AWS SNS (Simple Notification Service)
+- AWS SQS (Simple Queue Service)
 - Terraform
-- Dapper
-- SQLite
-- FluentValidation
-- Middleware
-- Cancellation Tokens
-- BackgroundService
-- MediatR pattern using IMediatR
-- DLQ (Dead Letter Queue) for errors
 
-### Requirements
+## Requirements
 
+- .NET 8+
+- AWS account
 - AWS CLI
-- AWS Account
-- .NET 8
 - Terraform
 
 ### Setup
 
-1. Create an IAM user on your AWS account with the role "AmazonSQSFullAccess" and generate an access key to it;
+1. Create an IAM user on your AWS account with the role `AmazonSNSFullAccess` and generate an access key to it;
 2. Install all the requirements;
 3. Configure your AWS CLI with the access key using `aws configure`;
 4. Initialize your terraform using `terraform init`;
@@ -36,7 +29,7 @@ Also you should want to remove the user and/or its access key.
 ##### AWS Commands
 
 - `aws configure`
-- `aws sqs list-queues`
+- `aws sns list-topics`
 
 ##### Terraform Commands
 
