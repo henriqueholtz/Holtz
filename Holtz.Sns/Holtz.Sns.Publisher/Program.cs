@@ -17,7 +17,7 @@ var customer = new CustomerCreated
 
 var snsClient = new AmazonSimpleNotificationServiceClient();
 
-var topicArnResponse = await snsClient.FindTopicAsync("customers");
+var topicArnResponse = await snsClient.FindTopicAsync("customers_topic");
 
 var publishRequest = new PublishRequest
 {
@@ -32,3 +32,5 @@ var publishRequest = new PublishRequest
 };
 
 var response = await snsClient.PublishAsync(publishRequest);
+
+Console.WriteLine($"Message published to SNS. Status Code: {response.HttpStatusCode}...");

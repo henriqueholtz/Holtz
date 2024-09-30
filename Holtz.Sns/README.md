@@ -14,7 +14,7 @@
 
 ### Setup
 
-1. Create an IAM user on your AWS account with the role `AmazonSNSFullAccess` and generate an access key to it;
+1. Create an IAM user on your AWS account with the roles `AmazonSNSFullAccess` and `AmazonSQSFullAccess`. After creating the user, generate its access key;
 2. Install all the requirements;
 3. Configure your AWS CLI with the access key using `aws configure`;
 4. Initialize your terraform using `terraform init`;
@@ -30,6 +30,7 @@ Also you should want to remove the user and/or its access key.
 
 - `aws configure`
 - `aws sns list-topics`
+- `aws sqs list-queues`
 
 ##### Terraform Commands
 
