@@ -2,12 +2,13 @@
 using Amazon.SQS;
 using Amazon.SQS.Model;
 
-Console.WriteLine("Starting Holtz.Sns.Consumer...");
-
-
+// Option 1: dotnet run --project Holtz.Sns.Consumer/Holtz.Sns.Consumer.csproj
+// Option 2: dotnet run --project Holtz.Sns.Consumer/Holtz.Sns.Consumer.csproj customers2
+var queueName = args.Length == 1 ? args[0] : "customers";
+Console.WriteLine($"Starting Holtz.Sns.Consumer... Reading from queue {queueName}...");
 
 var sqsClient = new AmazonSQSClient();
-var queueUrlResponse = await sqsClient.GetQueueUrlAsync("customers");
+var queueUrlResponse = await sqsClient.GetQueueUrlAsync(queueName);
 
 var receiveMessageRequest = new ReceiveMessageRequest
 {
