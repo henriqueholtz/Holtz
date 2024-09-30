@@ -22,6 +22,8 @@ This is my main repository. Here I have some personal projects using c#. Each pr
 - [Holtz.RabbitMQ.SimpleConsole](/Holtz.RabbitMQ.SimpleConsole/)
 - [Holtz.WebSockets](/Holtz.WebSockets)
 - [Holtz.Versioning.Api](/Holtz.Versioning.Api)
+- [Holtz.Sqs](/Holtz.Sqs)
+- [Holtz.Sns](/Holtz.Sns)
 - [Holtz.Catalog.Microservices](/Holtz.Catalog.Microservices)
 
 ### TODOs
