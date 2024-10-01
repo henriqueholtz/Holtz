@@ -4,6 +4,14 @@
 - AWS SNS (Simple Notification Service)
 - AWS SQS (Simple Queue Service)
 - Terraform
+- Dapper
+- SQLite
+- FluentValidation
+- Middleware
+- Cancellation Tokens
+- BackgroundService
+- MediatR pattern using IMediatR
+- DLQ (Dead Letter Queue) for errors
 
 ## Requirements
 
