@@ -1,8 +1,11 @@
 using Amazon.SimpleNotificationService;
+using Amazon.SQS;
 using Dapper;
+using Holtz.Sns.Api.BackgroundServices;
 using Holtz.Sns.Api.Middlewares;
 using Holtz.Sns.Api.SqlTypeHandlers;
 using Holtz.Sns.Application;
+using Holtz.Sns.Application.Commands;
 using Holtz.Sns.Application.Interfaces;
 using Holtz.Sns.Domain.Interfaces;
 using Holtz.Sns.Infraestructure.Database;
@@ -25,15 +28,24 @@ builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
     new SqliteConnectionFactory(builder.Configuration.GetValue<string>("Database:ConnectionString")!));
 
 builder.Services.Configure<TopicSettings>(builder.Configuration.GetSection(TopicSettings.Key));
+builder.Services.Configure<QueueSettings>(builder.Configuration.GetSection(QueueSettings.Key));
 
 builder.Services.AddSingleton<DatabaseInitializer>();
 
 builder.Services.AddSingleton<IAmazonSimpleNotificationService, AmazonSimpleNotificationServiceClient>();
+builder.Services.AddSingleton<IAmazonSQS, AmazonSQSClient>();
 builder.Services.AddSingleton<ISnsMessenger, SnsMessenger>();
 builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddSingleton<IGitHubService, GitHubService>();
 
+// Background Services
+builder.Services.AddHostedService<AwsSqsConsumerService>();
+
+// Setting up MediatR
+builder.Services.AddMediatR(config =>
+    config.RegisterServicesFromAssembly(typeof(CustomerCreatedCommandHandler).Assembly
+));
 
 builder.Services.AddHttpClient("GitHub", httpClient =>
 {

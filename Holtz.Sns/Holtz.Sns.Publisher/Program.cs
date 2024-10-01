@@ -1,11 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using Holtz.Sns.Shared.Messages;
 
-Console.WriteLine("Starting Holtz.Sqs.Publisher...");
+Console.WriteLine("Starting Holtz.Sns.Publisher...");
 var customer = new CustomerCreated
 {
     Id = Guid.NewGuid(),
