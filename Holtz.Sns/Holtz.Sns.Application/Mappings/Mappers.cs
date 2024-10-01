@@ -1,0 +1,106 @@
+using Holtz.Sns.Application.Dtos;
+using Holtz.Sns.Domain;
+using Holtz.Sns.Shared.Messages;
+
+namespace Holtz.Sns.Application.Mappings;
+
+public static class Mappers
+{
+    public static CustomerDto ToCustomerDto(this CustomerRequestDto request)
+    {
+        return new CustomerDto
+        {
+            Id = Guid.NewGuid(),
+            Email = request.Email,
+            GitHubUsername = request.GitHubUsername,
+            FullName = request.FullName,
+            BirthDate = request.BirthDate
+        };
+    }
+
+    public static CustomerDto ToCustomerDto(this UpdateCustomerRequestDto request)
+    {
+        return new CustomerDto
+        {
+            Id = request.Id,
+            Email = request.Customer.Email,
+            GitHubUsername = request.Customer.GitHubUsername,
+            FullName = request.Customer.FullName,
+            BirthDate = request.Customer.BirthDate
+        };
+    }
+
+    public static CustomerResponseDto ToCustomerResponseDto(this CustomerDto customer)
+    {
+        return new CustomerResponseDto
+        {
+            Id = customer.Id,
+            Email = customer.Email,
+            GitHubUsername = customer.GitHubUsername,
+            FullName = customer.FullName,
+            BirthDate = customer.BirthDate
+        };
+    }
+
+    public static GetAllCustomersResponseDto ToCustomersResponseDto(this IEnumerable<CustomerDto> customers)
+    {
+        return new GetAllCustomersResponseDto
+        {
+            Customers = customers.Select(x => new CustomerResponseDto
+            {
+                Id = x.Id,
+                Email = x.Email,
+                GitHubUsername = x.GitHubUsername,
+                FullName = x.FullName,
+                BirthDate = x.BirthDate
+            })
+        };
+    }
+
+    public static CustomerDto ToCustomerDto(this Customer customer)
+    {
+        return new CustomerDto
+        {
+            Id = customer.Id,
+            Email = customer.Email,
+            GitHubUsername = customer.GitHubUsername,
+            FullName = customer.FullName,
+            BirthDate = customer.BirthDate
+        };
+    }
+    public static Customer ToCustomer(this CustomerDto customerDto)
+    {
+        return new Customer
+        {
+            Id = customerDto.Id,
+            Email = customerDto.Email,
+            GitHubUsername = customerDto.GitHubUsername,
+            FullName = customerDto.FullName,
+            BirthDate = customerDto.BirthDate
+        };
+    }
+
+    public static CustomerCreated ToCustomerCreatedMessage(this Customer customer)
+    {
+        return new CustomerCreated
+        {
+            Id = customer.Id,
+            Email = customer.Email,
+            FullName = customer.FullName,
+            GitHubUsername = customer.GitHubUsername,
+            BirthDate = customer.BirthDate
+        };
+    }
+
+    public static CustomerUpdated ToCustomerUpdatedMessage(this Customer customer)
+    {
+        return new CustomerUpdated
+        {
+            Id = customer.Id,
+            Email = customer.Email,
+            FullName = customer.FullName,
+            GitHubUsername = customer.GitHubUsername,
+            BirthDate = customer.BirthDate
+        };
+    }
+}

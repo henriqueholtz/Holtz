@@ -7,8 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Holtz.Sns.Shared\Holtz.Sns.Shared.csproj" />
+    <ProjectReference Include="..\Holtz.Sns.Infraestructure\Holtz.Sns.Infraestructure.csproj" />
+    <ProjectReference Include="..\Holtz.Sns.Application\Holtz.Sns.Application.csproj" />
   </ItemGroup>
 
 </Project>
