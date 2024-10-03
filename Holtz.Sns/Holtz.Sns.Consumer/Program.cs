@@ -3,7 +3,7 @@ using Amazon.SQS;
 using Amazon.SQS.Model;
 
 // Option 1: dotnet run --project Holtz.Sns.Consumer/Holtz.Sns.Consumer.csproj
-// Option 2: dotnet run --project Holtz.Sns.Consumer/Holtz.Sns.Consumer.csproj customers2
+// Option 2: dotnet run --project Holtz.Sns.Consumer/Holtz.Sns.Consumer.csproj customers_deleted
 var queueName = args.Length == 1 ? args[0] : "customers";
 Console.WriteLine($"Starting Holtz.Sns.Consumer... Reading from queue {queueName}...");
 
