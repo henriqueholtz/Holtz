@@ -2,7 +2,12 @@
 
 - .NET 8
 - AWS SNS (Simple Notification Service)
+  - Topics
+  - Subscriptions
+  - Subscription filter policy
 - AWS SQS (Simple Queue Service)
+  - Pub/Sub
+  - DLQ (Dead Letter Queue) for errors
 - Terraform
 - Dapper
 - SQLite
@@ -11,7 +16,6 @@
 - Cancellation Tokens
 - BackgroundService
 - MediatR pattern using IMediatR
-- DLQ (Dead Letter Queue) for errors
 
 ## Requirements
 
