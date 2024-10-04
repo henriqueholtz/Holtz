@@ -10,5 +10,5 @@ public class Customer
 
     public required string Email { get; init; }
 
-    public required DateTime DateOfBirth { get; init; }
+    public required DateTime BirthDate { get; init; }
 }
