@@ -13,7 +13,8 @@ public class DatabaseInitializer
 
     public async Task InitializeAsync()
     {
-        using var connection = await _connectionFactory.CreateConnectionAsync();
+        CancellationTokenSource cts = new CancellationTokenSource();
+        using var connection = await _connectionFactory.CreateConnectionAsync(cts.Token);
         await connection.ExecuteAsync(@"CREATE TABLE IF NOT EXISTS Customers (
         Id UUID PRIMARY KEY, 
         GitHubUsername TEXT NOT NULL,
