@@ -74,7 +74,7 @@ public class CustomerRepository : ICustomerRepository
             return null;
 
         var itemAsDocument = Document.FromAttributeMap(response.Item);
-        return JsonSerializer.Deserialize<Customer>(itemAsDocument);
+        return JsonSerializer.Deserialize<Customer>(itemAsDocument.ToJson());
     }
 
     public async Task<bool> UpdateAsync(Customer customer, CancellationToken cancellationToken)
