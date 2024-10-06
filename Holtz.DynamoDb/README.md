@@ -2,3 +2,30 @@
 
 - .NET 8
 - AWS DynamoDb
+- Terraform
+
+## Requirements
+
+- .NET 8+
+- AWS account
+- AWS CLI
+- Terraform
+
+### Setup
+
+1. Create an IAM user on your own AWS account with the role `AmazonDynamoDBFullAccess`. After creating the user, generate its access key;
+2. Install all the requirements;
+3. Configure your AWS CLI with the access key using `aws configure`;
+4. Initialize your terraform using `terraform init`;
+5. Apply your terraform using `terraform apply` (you need to verify carefully and type "yes" and only then the resources will be created on AWS)
+
+### Teardown
+
+After playing around with the application you'll want to teardown everything. To remove all AWS-related resources you just need to run `terraform destroy`, verify and apply it.
+
+Also you should want to remove the user and/or its access key.
+
+##### AWS Commands
+
+- `aws configure`
+- `aws dynamodb list-tables`
