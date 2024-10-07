@@ -1,8 +1,27 @@
+using Holtz.S3.Api.Interfaces;
+using Holtz.S3.Api.Repositories;
+using Holtz.S3.Api.Services;
+using Microsoft.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IGitHubService, GitHubService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+builder.Services.AddHttpClient("GitHub", httpClient =>
+{
+    httpClient.BaseAddress = new Uri(builder.Configuration.GetValue<string>("GitHub:ApiBaseUrl")!);
+    httpClient.DefaultRequestHeaders.Add(
+        HeaderNames.Accept, "application/vnd.github.v3+json");
+    httpClient.DefaultRequestHeaders.Add(
+        HeaderNames.UserAgent, $"Course-{Environment.MachineName}");
+});
 
 var app = builder.Build();
 
@@ -13,6 +32,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapControllers();
 app.UseHttpsRedirection();
 
 await app.RunAsync();
