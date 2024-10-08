@@ -61,13 +61,21 @@ if (app.Environment.IsDevelopment())
         await using (var scope = app.Services.CreateAsyncScope())
         {
             var _dynamoDbClient = scope.ServiceProvider.GetRequiredService<IAmazonDynamoDB>();
-
-            // verify if the table already exists
-            var response = await _dynamoDbClient.DescribeTableAsync(new DescribeTableRequest
+            bool shouldCreateTable = false;
+            try
             {
-                TableName = tableName
-            });
-            if (response.Table.TableStatus != TableStatus.ACTIVE)
+                // verify if the table already exists
+                await _dynamoDbClient.DescribeTableAsync(new DescribeTableRequest
+                {
+                    TableName = tableName
+                });
+            }
+            catch (ResourceNotFoundException)
+            {
+                shouldCreateTable = true;
+            }
+
+            if (shouldCreateTable)
             {
                 string pkName = "pk";
                 string skName = "sk";
