@@ -6,6 +6,8 @@ using Holtz.DynamoDb.Application;
 using Holtz.DynamoDb.Application.Interfaces;
 using Holtz.DynamoDb.Domain.Interfaces;
 using Holtz.DynamoDb.Infraestructure.Repositories;
+using Holtz.DynamoDb.Shared;
+using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,8 @@ builder.Services.AddFluentValidationAutoValidation(x =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<DynamoDbConfiguration>(builder.Configuration.GetSection(DynamoDbConfiguration.Key));
 
 #region Configure DynamoDb
 if (bool.TryParse(builder.Configuration["DynamoDb:UseLocal"]?.ToString() ?? "false", out bool useDynamoDbLocal) && useDynamoDbLocal)
@@ -57,7 +61,8 @@ if (app.Environment.IsDevelopment())
     #region Setting up dynamoDb table
     if (useDynamoDbLocal)
     {
-        string tableName = "customers";
+        var dynamoDbConfig = app.Services.GetRequiredService<IOptions<DynamoDbConfiguration>>();
+        string tableName = dynamoDbConfig.Value.TableName;
         await using (var scope = app.Services.CreateAsyncScope())
         {
             var _dynamoDbClient = scope.ServiceProvider.GetRequiredService<IAmazonDynamoDB>();

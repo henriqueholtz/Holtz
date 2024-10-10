@@ -1,12 +1,13 @@
-GET http://localhost:5068/api/customers HTTP/1.1
+
+GET http://localhost:5068/api/customers HTTP/1.2
 
 ### 
 
-GET http://localhost:5068/api/customers/6ef6cdfa-86ca-420f-9163-761b102045f8 HTTP/1.1
+GET http://localhost:5068/api/customers/262e1612-fe5b-46c9-b882-d205c57d815e HTTP/1.2
 
 ###
 
-POST http://localhost:5068/api/customers HTTP/1.1
+POST http://localhost:5068/api/customers HTTP/1.2
 content-type: application/json
 
 {
@@ -18,7 +19,7 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:5068/api/customers/6ef6cdfa-86ca-420f-9163-761b102045f8 HTTP/1.1
+PUT http://localhost:5068/api/customers/6ef6cdfa-86ca-420f-9163-761b102045f8 HTTP/1.2
 content-type: application/json
 
 {
@@ -30,4 +31,4 @@ content-type: application/json
 
 ###
 
-DELETE http://localhost:5068/api/customers/6ef6cdfa-86ca-420f-9163-761b102045f8 HTTP/1.1
+DELETE http://localhost:5068/api/customers/6ef6cdfa-86ca-420f-9163-761b102045f8 HTTP/1.2

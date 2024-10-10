@@ -5,17 +5,22 @@ using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
 using Holtz.DynamoDb.Domain;
 using Holtz.DynamoDb.Domain.Interfaces;
+using Holtz.DynamoDb.Shared;
+using Microsoft.Extensions.Options;
 
 namespace Holtz.DynamoDb.Infraestructure.Repositories;
 
 public class CustomerRepository : ICustomerRepository
 {
     private readonly IAmazonDynamoDB _dynamoDB;
-    private readonly string _tableName = "customers";
+    private readonly IOptions<DynamoDbConfiguration> _dynamoDbConfiguration;
+    private readonly string _tableName;
 
-    public CustomerRepository(IAmazonDynamoDB dynamoDB)
+    public CustomerRepository(IAmazonDynamoDB dynamoDB, IOptions<DynamoDbConfiguration> dynamoDbConfiguration)
     {
         _dynamoDB = dynamoDB;
+        _dynamoDbConfiguration = dynamoDbConfiguration;
+        _tableName = _dynamoDbConfiguration.Value.TableName;
     }
 
     public async Task<bool> CreateAsync(Customer customer, CancellationToken cancellationToken)
