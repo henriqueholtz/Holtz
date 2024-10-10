@@ -57,9 +57,21 @@ public class CustomerRepository : ICustomerRepository
         return response.HttpStatusCode == HttpStatusCode.OK;
     }
 
-    public Task<IEnumerable<Customer>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Customer>> GetAllAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        // Warning: Using ScanRequest you can reach a high level of costs
+        var scanRequest = new ScanRequest
+        {
+            TableName = _tableName
+        };
+        var response = await _dynamoDB.ScanAsync(scanRequest);
+        return response.Items
+            .Select(x =>
+            {
+                var attributeMap = Document.FromAttributeMap(x);
+                var json = attributeMap.ToJson();
+                return JsonSerializer.Deserialize<Customer>(json);
+            })!;
     }
 
     public async Task<Customer?> GetAsync(Guid id, CancellationToken cancellationToken)
