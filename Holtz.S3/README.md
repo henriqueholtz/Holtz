@@ -2,6 +2,8 @@
 
 - .NET 8
 - AWS S3
+- SQLite
+- Dapper
 
 ## Requirements
 

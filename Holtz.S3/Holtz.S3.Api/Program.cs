@@ -1,6 +1,9 @@
+using Dapper;
+using Holtz.S3.Api.Database;
 using Holtz.S3.Api.Interfaces;
 using Holtz.S3.Api.Repositories;
 using Holtz.S3.Api.Services;
+using Holtz.S3.Api.SqlTypeHandlers;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IGitHubService, GitHubService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+SqlMapper.AddTypeHandler(new GuidTypeHandler());
+SqlMapper.RemoveTypeMap(typeof(Guid));
+SqlMapper.RemoveTypeMap(typeof(Guid?));
+builder.Services.AddSingleton<DatabaseInitializer>();
+builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
+    new SqliteConnectionFactory(builder.Configuration.GetValue<string>("Database:ConnectionString")!));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,5 +44,8 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 app.UseHttpsRedirection();
+
+var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();
+await databaseInitializer.InitializeAsync();
 
 await app.RunAsync();
