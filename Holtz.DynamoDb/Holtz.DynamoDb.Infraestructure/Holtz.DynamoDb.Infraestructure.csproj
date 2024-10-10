@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Holtz.DynamoDb.Domain\Holtz.DynamoDb.Domain.csproj" />
+    <ProjectReference Include="..\Holtz.DynamoDb.Shared\Holtz.DynamoDb.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

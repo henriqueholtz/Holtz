@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Holtz.DynamoDb.Application\Holtz.DynamoDb.Application.csproj" />
     <ProjectReference Include="..\Holtz.DynamoDb.Infraestructure\Holtz.DynamoDb.Infraestructure.csproj" />
+    <ProjectReference Include="..\Holtz.DynamoDb.Shared\Holtz.DynamoDb.Shared.csproj" />
   </ItemGroup>
 
 </Project>

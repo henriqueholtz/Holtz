@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.DynamoDb.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.DynamoDb.Api", "Holtz.DynamoDb.Api\Holtz.DynamoDb.Api.csproj", "{0E3BD5B0-0C05-429B-BB3F-89E1CEC6FE1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.DynamoDb.Shared", "Holtz.DynamoDb.Shared\Holtz.DynamoDb.Shared.csproj", "{024A06AA-59FA-4F6A-BC05-EED99D623764}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{0E3BD5B0-0C05-429B-BB3F-89E1CEC6FE1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E3BD5B0-0C05-429B-BB3F-89E1CEC6FE1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E3BD5B0-0C05-429B-BB3F-89E1CEC6FE1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{024A06AA-59FA-4F6A-BC05-EED99D623764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{024A06AA-59FA-4F6A-BC05-EED99D623764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{024A06AA-59FA-4F6A-BC05-EED99D623764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{024A06AA-59FA-4F6A-BC05-EED99D623764}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
