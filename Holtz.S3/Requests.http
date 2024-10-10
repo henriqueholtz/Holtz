@@ -31,3 +31,17 @@ content-type: application/json
 ###
 
 DELETE http://localhost:5251/api/customers/91cc3d27-3e59-47b5-8c3b-ca8fdadc35ca HTTP/1.2
+
+###
+
+POST http://localhost:5251/api/customers/91cc3d27-3e59-47b5-8c3b-ca8fdadc35ca/image HTTP/1.2
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="Data"; filename="image.jpg"
+Content-Type: image/jpeg
+
+< ./Holtz.S3.Api/Images/image.jpg
+--boundary--
+
+###
