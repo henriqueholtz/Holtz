@@ -1,4 +1,6 @@
+using Amazon.S3;
 using Dapper;
+using Holtz.S3.Api.Configurations;
 using Holtz.S3.Api.Database;
 using Holtz.S3.Api.Interfaces;
 using Holtz.S3.Api.Repositories;
@@ -12,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IGitHubService, GitHubService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerImageService, CustomerImageService>();
+builder.Services.AddSingleton<IAmazonS3, AmazonS3Client>();
+
+builder.Services.Configure<S3Settings>(builder.Configuration.GetSection(S3Settings.Key));
 
 SqlMapper.AddTypeHandler(new GuidTypeHandler());
 SqlMapper.RemoveTypeMap(typeof(Guid));
