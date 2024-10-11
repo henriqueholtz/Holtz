@@ -50,3 +50,5 @@ Content-Type: image/jpeg
 --boundary--
 
 ###
+
+DELETE http://localhost:5251/api/customers/2ad834b0-8649-4619-88ed-072adc23b3e6/image HTTP/1.2

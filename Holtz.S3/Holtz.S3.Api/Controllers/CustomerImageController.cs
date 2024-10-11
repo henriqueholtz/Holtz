@@ -42,9 +42,15 @@ namespace Holtz.S3.Api.Controllers
         }
 
         [HttpDelete("customers/{id:guid}/image")]
-        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var response = await _customerImageService.DeleteImageAsync(id, cancellationToken);
+            return response.HttpStatusCode switch
+            {
+                HttpStatusCode.NoContent => Ok(),
+                HttpStatusCode.NotFound => NotFound(),
+                _ => BadRequest()
+            };
         }
     }
 }

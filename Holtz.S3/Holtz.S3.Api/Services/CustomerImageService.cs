@@ -19,12 +19,16 @@ public class CustomerImageService : ICustomerImageService
         _bucketName = _s3Settings.Value.BucketName;
     }
 
-    public Task<DeleteObjectResponse> DeleteImageAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<DeleteObjectResponse> DeleteImageAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-    }
+        var deleteObjectRequest = new DeleteObjectRequest
+        {
+            BucketName = _bucketName,
+            Key = GetS3Key(id)
+        };
 
-    private string GetS3Key(Guid id) => $"images/{id}";
+        return await _amazonS3.DeleteObjectAsync(deleteObjectRequest, cancellationToken);
+    }
 
     public async Task<GetObjectResponse> GetImageAsync(Guid id, CancellationToken cancellationToken)
     {
@@ -53,4 +57,6 @@ public class CustomerImageService : ICustomerImageService
 
         return await _amazonS3.PutObjectAsync(putObjetRequest, cancellationToken);
     }
+
+    private string GetS3Key(Guid id) => $"images/{id}";
 }
