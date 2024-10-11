@@ -1,3 +1,4 @@
+
 GET http://localhost:5251/api/customers HTTP/1.2
 
 ### 
@@ -34,7 +35,11 @@ DELETE http://localhost:5251/api/customers/91cc3d27-3e59-47b5-8c3b-ca8fdadc35ca 
 
 ###
 
-POST http://localhost:5251/api/customers/91cc3d27-3e59-47b5-8c3b-ca8fdadc35ca/image HTTP/1.2
+GET http://localhost:5251/api/customers/2ad834b0-8649-4619-88ed-072adc23b3e6/image HTTP/1.2
+
+###
+
+POST http://localhost:5251/api/customers/2ad834b0-8649-4619-88ed-072adc23b3e6/image HTTP/1.2
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary

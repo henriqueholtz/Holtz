@@ -24,9 +24,17 @@ public class CustomerImageService : ICustomerImageService
         throw new NotImplementedException();
     }
 
-    public Task<GetObjectResponse> GetImageAsync(Guid id, CancellationToken cancellationToken)
+    private string GetS3Key(Guid id) => $"images/{id}";
+
+    public async Task<GetObjectResponse> GetImageAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var getObjectRequest = new GetObjectRequest
+        {
+            BucketName = _bucketName,
+            Key = GetS3Key(id)
+        };
+
+        return await _amazonS3.GetObjectAsync(getObjectRequest, cancellationToken);
     }
 
     public async Task<PutObjectResponse> UploadImageAsync(Guid id, IFormFile file, CancellationToken cancellationToken)
@@ -34,7 +42,7 @@ public class CustomerImageService : ICustomerImageService
         var putObjetRequest = new PutObjectRequest
         {
             BucketName = _bucketName,
-            Key = $"image/{id}",
+            Key = GetS3Key(id),
             InputStream = file.OpenReadStream(),
             ContentType = file.ContentType,
             Metadata = {

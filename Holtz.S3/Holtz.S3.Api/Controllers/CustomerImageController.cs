@@ -1,4 +1,5 @@
 using System.Net;
+using Amazon.S3;
 using Holtz.S3.Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,9 +28,17 @@ namespace Holtz.S3.Api.Controllers
         }
 
         [HttpGet("customers/{id:guid}/image")]
-        public async Task<IActionResult> GetAsync([FromRoute] Guid id)
+        public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _customerImageService.GetImageAsync(id, cancellationToken);
+                return File(response.ResponseStream, response.Headers.ContentType);
+            }
+            catch (AmazonS3Exception)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("customers/{id:guid}/image")]
