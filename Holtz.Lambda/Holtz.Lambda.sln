@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Holtz.Lambda.Simple", "Holtz.Lambda.Simple", "{59FB78E5-B92C-47ED-BABF-98D461278015}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C35D6517-36CA-4E2B-9EA8-D6703E7CF59F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.Lambda.Simple", "Holtz.Lambda.Simple\src\Holtz.Lambda.Simple\Holtz.Lambda.Simple.csproj", "{99024626-BEC0-4B64-BED4-D4DFEF2D9B04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CC959CF8-88A8-4DC0-A878-780174061D60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.Lambda.Simple.Tests", "Holtz.Lambda.Simple\test\Holtz.Lambda.Simple.Tests\Holtz.Lambda.Simple.Tests.csproj", "{AB7610C0-AA81-4B78-9859-3F10971F8417}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99024626-BEC0-4B64-BED4-D4DFEF2D9B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99024626-BEC0-4B64-BED4-D4DFEF2D9B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99024626-BEC0-4B64-BED4-D4DFEF2D9B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99024626-BEC0-4B64-BED4-D4DFEF2D9B04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7610C0-AA81-4B78-9859-3F10971F8417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7610C0-AA81-4B78-9859-3F10971F8417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7610C0-AA81-4B78-9859-3F10971F8417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7610C0-AA81-4B78-9859-3F10971F8417}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C35D6517-36CA-4E2B-9EA8-D6703E7CF59F} = {59FB78E5-B92C-47ED-BABF-98D461278015}
+		{99024626-BEC0-4B64-BED4-D4DFEF2D9B04} = {C35D6517-36CA-4E2B-9EA8-D6703E7CF59F}
+		{CC959CF8-88A8-4DC0-A878-780174061D60} = {59FB78E5-B92C-47ED-BABF-98D461278015}
+		{AB7610C0-AA81-4B78-9859-3F10971F8417} = {CC959CF8-88A8-4DC0-A878-780174061D60}
+	EndGlobalSection
+EndGlobal
