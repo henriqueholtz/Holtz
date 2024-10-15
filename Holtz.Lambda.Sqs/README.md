@@ -10,7 +10,7 @@
 
 ## Setup
 
-1. Create an IAM user on your AWS account with the roles `AWSLambda_FullAccess` and `IAMFullAccess` and generate an access key to it;
+1. Create an IAM user on your AWS account with the roles `AWSLambda_FullAccess`, `AmazonSQSFullAccess` and `IAMFullAccess` and generate an access key to it;
 2. Install all the requirements;
 3. Configure your AWS CLI with the access key using `aws configure`;
 4. Pack the lambda using `cd src/Holtz.Lambda.Sqs/ && dotnet lambda package -o ./publish/HoltzLambdaSqs.zip`
