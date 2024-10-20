@@ -1,5 +1,12 @@
 # Holtz.Lambda.Sqs
 
+This is a simple AWS Lambda function built with c#. It's triggered through an AWS SQS message.
+
+:heavy_check_mark: .NET 8
+:heavy_check_mark: AWS Lambda
+:heavy_check_mark: Terraform
+:heavy_check_mark: Unit tests
+
 ### Requirements
 
 - AWS CLI
