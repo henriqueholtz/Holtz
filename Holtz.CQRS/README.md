@@ -1,9 +1,8 @@
-# CQRS & MediatR Pattern
+# Holtz.CQRS
 
-Command Query Responsibility Segregation & MediatR pattern using:
+This is an web api built with `CQRS (Command and Query Responsibility Segregation)` which is a pattern that separates read and update operations. But it also includes:
 
 - :heavy_check_mark: **.NET 8**
-- :heavy_check_mark: **CQRS**
 - :heavy_check_mark: **MediatR**
 - :heavy_check_mark: **Code First**
 - :heavy_check_mark: **Entity Framework Core**
@@ -17,7 +16,7 @@ Command Query Responsibility Segregation & MediatR pattern using:
 
 ## Requirements
 
-- .NET 8+
+- .NET SDK 8+
 
 ## How to run
 
