@@ -1,10 +1,12 @@
 # Holtz.S3
 
-- .NET 8
-- AWS S3
-- SQLite
-- Dapper
-- Terraform
+This is a simple Web Api built with c# and .NET 8 to show an integration with Amazon S3. It also uses Dapper (ORM) + SQLite and Terraform.
+
+- :heavy_check_mark: .NET 8
+- :heavy_check_mark: AWS S3
+- :heavy_check_mark: SQLite
+- :heavy_check_mark: Dapper
+- :heavy_check_mark: Terraform
 
 ## Requirements
 
