@@ -22,10 +22,13 @@ namespace Holtz.FusionCache.Api.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get(string cache = "test")
+        public async Task<IEnumerable<WeatherForecast>> Get(string cacheKey = "test", bool skipCache = false)
         {
+            if (skipCache)
+                await _fusionCache.RemoveAsync(cacheKey);
+
             return _fusionCache.GetOrSet<IEnumerable<WeatherForecast>>(
-                cache, (ct) =>
+                cacheKey, (ct) =>
                 {
                     return Enumerable.Range(1, 5).Select(index => new WeatherForecast
                     {

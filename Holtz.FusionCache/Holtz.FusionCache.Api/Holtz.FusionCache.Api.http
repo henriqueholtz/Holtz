@@ -1,6 +1,10 @@
-@Holtz.FusionCache.Api_HostAddress = http://localhost:5291
 
-GET {{Holtz.FusionCache.Api_HostAddress}}/weatherforecast/
+GET http://localhost:5291/weatherforecast
+Accept: application/json
+
+###
+
+GET http://localhost:5291/weatherforecast?skipCache=true
 Accept: application/json
 
 ###
