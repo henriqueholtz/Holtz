@@ -1,0 +1,24 @@
+name: Holtz.Lambda.DynamoDb
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'Holtz.Lambda.DynamoDb/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'Holtz.Lambda.DynamoDb/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
+      - name: Tests
+        run: dotnet test Holtz.Lambda.DynamoDb/test/Holtz.Lambda.DynamoDb.Tests/Holtz.Lambda.DynamoDb.Tests.csproj
