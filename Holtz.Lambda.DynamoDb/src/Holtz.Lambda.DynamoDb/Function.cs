@@ -24,7 +24,7 @@ public class Function
                 context.Logger.LogInformation($"OldImage: {oldImage}");
             }
 
-            string newImage = JsonSerializer.Serialize(record.Dynamodb.OldImage);
+            string newImage = JsonSerializer.Serialize(record.Dynamodb.NewImage);
             context.Logger.LogInformation($"NewImage: {newImage}");
         }
 
