@@ -15,15 +15,26 @@ This is my main repository. Here I have some personal projects using c#. Each pr
 - Useful Nuget packages
   - [Refit](./Holtz.Refit/)
   - [FusionCache](./Holtz.FusionCache/)
+  - [Dapper](./Holtz.Dapper/)
+- AWS
+  - [Holtz.DynamoDb](./Holtz.DynamoDb/)
+  - [Holtz.Lambda.DynamoDb](./Holtz.Lambda.DynamoDb/)
+  - [Holtz.Lambda.Sqs](./Holtz.Lambda.Sqs/)
+  - [Holtz.Lambda.WebApi](./Holtz.Lambda.WebApi/)
+  - [Holtz.S3](./Holtz.S3/)
+  - [Holtz.Sns](./Holtz.Sns/)
+  - [Holtz.Sqs](./Holtz.Sqs/)
+- Databases
+  - [Holtz.PostgreSQL](./Holtz.PostreSQL/)
+  - [Holtz.DynamoDb](./Holtz.DynamoDb/)
 
 ### Projects
 
+- [Holtz.AspireStarter](/Holtz.AspireStarter)
 - [Holtz.CQRS](/Holtz.CQRS)
 - [Holtz.RabbitMQ.SimpleConsole](/Holtz.RabbitMQ.SimpleConsole/)
 - [Holtz.WebSockets](/Holtz.WebSockets)
 - [Holtz.Versioning.Api](/Holtz.Versioning.Api)
-- [Holtz.Sqs](/Holtz.Sqs)
-- [Holtz.Sns](/Holtz.Sns)
 - [Holtz.Catalog.Microservices](/Holtz.Catalog.Microservices)
 
 ### TODOs
