@@ -13,6 +13,7 @@ This is an web api built with `CQRS (Command and Query Responsibility Segregatio
 - :heavy_check_mark: **Middleware**
 - :heavy_check_mark: **FluentValidation**
 - :heavy_check_mark: **Docker support**
+- :heavy_check_mark: **.NET Aspire**
 
 ## Requirements
 
