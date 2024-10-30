@@ -12,7 +12,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddOutputCache();
 
-builder.Services.AddHttpClient<WeatherApiClient>(client=> client.BaseAddress = new("http://apiservice"));
+builder.Services.AddHttpClient<WeatherApiClient>(client => client.BaseAddress = new("http://localhost:5593"));
 
 var app = builder.Build();
 
@@ -29,7 +29,7 @@ app.UseOutputCache();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-    
+
 app.MapDefaultEndpoints();
 
 app.Run();
