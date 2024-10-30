@@ -7,7 +7,7 @@ string rabbitMqName = "holtz-rabbitmq"; // Needs to be the same in AppHost
 builder.AddRabbitMQ(rabbitMqName);
 
 // Add service defaults & Aspire components.
-builder.AddServiceDefaults(); 
+builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.Services.AddProblemDetails();
@@ -24,7 +24,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
