@@ -29,6 +29,6 @@ public class ProgramTests
     private string[] RunMainAndGetConsoleOutput()
     {
         Program.Main(new string[] { });
-        return _consoleOutput.ToString().Split("\r\n");
+        return _consoleOutput.ToString().Split(Environment.NewLine);
     }
 }
