@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  coredns:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: coredns/coredns:1.9.4
+    container_name: coredns
+    ports:
+      - '1053:1053/udp'
+      - '1053:1053/tcp'
+    volumes:
+      - './Corefile:/etc/coredns/Corefile'
+    command: '-conf /etc/coredns/Corefile'
+    networks:
+      - dnsnet
+
+  ubuntu-dns:
+    image: ubuntu
+    container_name: ubuntu-dns
+    command: sleep infinity
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+    networks:
+      - dnsnet
+    depends_on:
+      - coredns
+
+networks:
+  dnsnet:
+    driver: bridge

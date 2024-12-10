@@ -1,0 +1,9 @@
+. {
+    hosts {
+        10.0.0.105 myinternalapi.com
+        fallthrough
+    }
+    forward . 8.8.8.8 8.8.4.4
+    log
+    errors
+}
