@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM coredns/coredns:1.9.4
+FROM --platform=$BUILDPLATFORM coredns/coredns:1.12.0
 
 # Copy Corefile into the image
 COPY Corefile /etc/coredns/Corefile

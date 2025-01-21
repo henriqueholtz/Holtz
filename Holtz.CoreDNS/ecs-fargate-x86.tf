@@ -13,7 +13,7 @@ resource "aws_ecs_task_definition" "coredns_x86_fargate_task" {
   container_definitions = jsonencode([
     {
       name      = "coredns"
-      image     = "henriqueholtz/holtz-core-dns:latest"
+      image     = "henriqueholtz/holtz-core-dns:multi-arch"
       portMappings = [
         {
           containerPort = 53
