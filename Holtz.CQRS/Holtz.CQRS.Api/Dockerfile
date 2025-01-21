@@ -20,3 +20,13 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Holtz.CQRS.Api.dll"]
+
+################### Build and run ###################
+
+# docker build -t holtz-cqrs-api:dev2 -f ./Holtz.CQRS.API/Dockerfile --build-arg BUILD_CONFIGURATION=Debug ..
+# docker run -p 5000:5000 --name holtz-cqrs-api -e ASPNETCORE_ENVIRONMENT=Development holtz-cqrs-api:dev
+
+
+################### Build and run as arm64 ####################
+
+# docker buildx build --platform=linux/arm64 -t holtz-cqrs-api:dev-arm64 -f ./Holtz.CQRS.API/Dockerfile ..
