@@ -40,7 +40,9 @@ dig @127.0.0.1 -p 1053 myinternalapi.com
   - `apt update && apt install dnsutils curl -y`
   - `curl google.com`
 
-#### ECS Fargate (x86)
+#### ECS Fargate (x86 && arm64)
+
+Note: `arm64` is getting the error `exec /coredns: exec format error`
 
 - `terraform init`
 - `terraform apply`

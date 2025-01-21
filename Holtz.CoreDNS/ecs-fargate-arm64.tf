@@ -1,5 +1,6 @@
-resource "aws_ecs_task_definition" "coredns_x86_fargate_task" {
-  family                   = "holtz-coredns-x86-fargate"
+
+resource "aws_ecs_task_definition" "coredns_arm64_fargate_task" {
+  family                   = "holtz-coredns-arm64-fargate"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -7,13 +8,13 @@ resource "aws_ecs_task_definition" "coredns_x86_fargate_task" {
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   runtime_platform {
     operating_system_family = "LINUX"
-    cpu_architecture        = "X86_64"
+    cpu_architecture        = "ARM64"
   }
 
   container_definitions = jsonencode([
     {
-      name      = "coredns"
-      image     = "henriqueholtz/holtz-core-dns:latest"
+      name      = "coredns-arm64"
+      image     = "henriqueholtz/holtz-core-dns:multi-arch"
       portMappings = [
         {
           containerPort = 53
@@ -32,17 +33,17 @@ resource "aws_ecs_task_definition" "coredns_x86_fargate_task" {
         options = {
           "awslogs-group"         = aws_cloudwatch_log_group.ecs_log_group.name
           "awslogs-region"        = "us-east-1"
-          "awslogs-stream-prefix" = "coredns"
+          "awslogs-stream-prefix" = "coredns-arm"
         }
       }
     }
   ])
 }
 
-resource "aws_ecs_service" "coredns_service_x86_fargate" {
-  name            = "coredns-x86-fargate"
+resource "aws_ecs_service" "coredns_service_arm64_fargate" {
+  name            = "coredns-arm64-fargate"
   cluster         = aws_ecs_cluster.coredns_cluster.id
-  task_definition = aws_ecs_task_definition.coredns_x86_fargate_task.arn
+  task_definition = aws_ecs_task_definition.coredns_arm64_fargate_task.arn
   launch_type     = "FARGATE"
 
   network_configuration {
