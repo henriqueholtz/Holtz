@@ -24,3 +24,23 @@ https://dev.to/robbmanes/running-coredns-as-a-dns-server-in-a-container-1d0
 nslookup myinternalapi.com 127.0.0.1:1053
 dig @127.0.0.1 -p 1053 myinternalapi.com
 ```
+
+### ECS
+
+- Create an IAM user with the following permissions, and then create its access key
+  - `AmazonECS_FullAccess`
+  - `AmazonVPCFullAccess`
+  - `IAMFullAccess`
+  - `CloudWatch` `logs:*`
+- Configure it using `aws configure` (needs AWS CLI to be installed)
+- Chose one option bellow and use terraform to apply and create the resources
+- Test using a local container pointing to ECS FARGATE task
+  - `docker run --rm -d -it --name ubuntu --dns="<IP>" ubuntu sleep infinity`
+  - `docker exec -it ubuntu bash`
+  - `apt update && apt install dnsutils curl -y`
+  - `curl google.com`
+
+#### ECS Fargate (x86)
+
+- `terraform init`
+- `terraform apply`
