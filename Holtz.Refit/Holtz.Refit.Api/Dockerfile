@@ -23,3 +23,9 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Holtz.Refit.Api.dll"]
+
+# docker build -f Holtz.Refit.Api/Dockerfile -t holtz.refit.api:latest .
+# docker run --rm -it -p 8085:8080 --name holtz.refit.api holtz.refit.api
+
+# DockerHub: build and push am64 + arm64
+# docker buildx build --push --platform linux/amd64,linux/arm64 -f Holtz.Refit.Api/Dockerfile -t henriqueholtz/holtz.refit.api:multi-arch .
