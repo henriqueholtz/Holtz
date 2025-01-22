@@ -1,0 +1,30 @@
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:8.0
+ARG BUILD_CONFIGURATION=Release
+EXPOSE 80
+
+# Install the New Relic agent
+USER root
+RUN apt-get update && apt-get install -y wget ca-certificates gnupg curl sudo \
+    && echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | tee /etc/apt/sources.list.d/newrelic.list \
+    && wget https://download.newrelic.com/548C16BF.gpg \
+    && apt-key add 548C16BF.gpg \
+    && apt-get update \
+    && apt-get install -y newrelic-dotnet-agent \
+    && rm -rf /var/lib/apt/lists/*
+
+# Enable the agent (needs NR APIKEY)
+ENV CORECLR_ENABLE_PROFILING=1 \
+    CORECLR_PROFILER={36032161-FFC0-4B61-B559-F6C5D41BAE5A} \
+    CORECLR_NEWRELIC_HOME=/usr/local/newrelic-dotnet-agent \
+    CORECLR_PROFILER_PATH=/usr/local/newrelic-dotnet-agent/libNewRelicProfiler.so \
+    ASPNETCORE_HTTP_PORTS=80 \
+    TZ=America/Sao_Paulo
+
+
+USER app
+WORKDIR /app
+
+
+# DockerHub: Build and push (Arm64 + Amd64)
+# docker buildx build --push --platform=linux/amd64,linux/arm64 -t henriqueholtz/holtz-docker-image-base:aspnet_8.0 -f ./Dockerfile.Net8.AspNet .
+
