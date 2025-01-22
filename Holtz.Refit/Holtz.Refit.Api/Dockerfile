@@ -1,6 +1,6 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
@@ -29,3 +29,4 @@ ENTRYPOINT ["dotnet", "Holtz.Refit.Api.dll"]
 
 # DockerHub: build and push am64 + arm64
 # docker buildx build --push --platform linux/amd64,linux/arm64 -f Holtz.Refit.Api/Dockerfile -t henriqueholtz/holtz.refit.api:multi-arch .
+# docker buildx build --push --platform linux/amd64,linux/arm64 -f Holtz.Refit.Api/Dockerfile -t henriqueholtz/holtz.refit.api:multi-arch-with-custom-base .
