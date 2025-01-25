@@ -1,28 +1,19 @@
-# Depends on https://github.com/henriqueholtz/Holtz/tree/master/Holtz.DockerImageBase
-
-FROM henriqueholtz/holtz-docker-image-base:aspnet_8.0 AS base
-USER app
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
-
-FROM --platform=$BUILDPLATFORM henriqueholtz/holtz-docker-image-base:sdk_8.0 AS build
+FROM --platform=$BUILDPLATFORM henriqueholtz/holtz-docker-image-base:sdk_8.0 AS publish
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
 COPY ["Holtz.Refit.Api/Holtz.Refit.Api.csproj", "Holtz.Refit.Api/"]
 RUN dotnet restore "./Holtz.Refit.Api/./Holtz.Refit.Api.csproj"
 COPY . .
 WORKDIR "/src/Holtz.Refit.Api"
-RUN dotnet build "./Holtz.Refit.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
-
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./Holtz.Refit.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
-WORKDIR /app
+FROM henriqueholtz/holtz-docker-image-base:aspnet_8.0 AS final
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Holtz.Refit.Api.dll"]
+ENTRYPOINT ["sh", "-c", "dnsmasq -k & dotnet Holtz.Refit.Api.dll"]
 
 # DockerHub: build and push am64 + arm64
 # docker buildx build --push --platform linux/amd64,linux/arm64 -f Holtz.Refit.Api/Dockerfile.CustomImage -t henriqueholtz/holtz.refit.api:multi-arch .
+
+# Build and run locally
+# docker buildx build --load --platform linux/arm64 -f Holtz.Refit.Api/Dockerfile.CustomImage -t holtz.refit.api:arm64 .
+# docker run -p 8081:8080 --rm --name holtz-refit-api-arm64 holtz.refit.api:arm64
+# docker exec -it holtz-refit-api-arm64 bash
