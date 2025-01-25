@@ -6,6 +6,9 @@
 - :heavy_check_mark: **External API** (Using [random-data-api.com](https://random-data-api.com/documentation))
 - :heavy_check_mark: **Integration testing**
 - :heavy_check_mark: **WireMock**
+- :heavy_check_mark: **Multi Architecture support: Arm64 (Graviton) and Amd64 (x86_64)**
+- :heavy_check_mark: **Terraform**
+- :heavy_check_mark: **AWS ECS FARGATE**
 
 ### ECS Support (FARGATE Arm64 and x86)
 
