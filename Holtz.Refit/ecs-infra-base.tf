@@ -6,22 +6,45 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   name = "ecs-task-execution-role"
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "ecs-tasks.amazonaws.com"
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action = "sts:AssumeRole"
+          Effect = "Allow"
+          Principal = {
+            Service = "ecs-tasks.amazonaws.com"
+          }
         }
-      }
+      ]
+    })
+}
+
+resource "aws_iam_role_policy" "ecs_task_execution_inline_policy" {
+  name   = "ecs_task_execution_ssmmessages_policy"
+  role   = aws_iam_role.ecs_task_execution_role.name
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "ssmmessages:*",
+            "Resource": "*"
+        }
     ]
   })
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy" {
+  for_each = toset([
+    "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy", 
+    # "arn:aws:iam::aws:policy/AmazonEC2FullAccess", 
+    # "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  ])
+  policy_arn = each.value
+
   role       = aws_iam_role.ecs_task_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 resource "aws_cloudwatch_log_group" "ecs_log_group" {
@@ -33,6 +56,10 @@ resource "aws_ecs_cluster" "holtz_refit_cluster" {
   name = "holtz-refit"
 }
 
+resource "aws_service_discovery_http_namespace" "holtz_refit_namespace" {
+  name        = "holtz-refit-namespace"
+  description = "Holtz.Refit Namespace for Service Discovery"
+}
 
 resource "aws_security_group" "holtz_refit_sg" {
   name_prefix = "holtz-refit-sg"

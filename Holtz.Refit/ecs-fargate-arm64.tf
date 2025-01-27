@@ -6,6 +6,8 @@ resource "aws_ecs_task_definition" "holtz_refit_arm64_fargate_task" {
   cpu                      = "256"
   memory                   = "512"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
+  
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture        = "ARM64"
@@ -14,12 +16,13 @@ resource "aws_ecs_task_definition" "holtz_refit_arm64_fargate_task" {
   container_definitions = jsonencode([
     {
       name      = "holtz-refit64"
-      image     = "henriqueholtz/holtz.refit.api:multi-arch"
+      image     = "henriqueholtz/holtz.refit.api:multi-arch-2"
       portMappings = [
         {
           containerPort = 8080
           hostPort      = 8080
           protocol      = "http"
+          name          = "holtz-refit-port"
         }
       ]
       essential = true
@@ -40,11 +43,25 @@ resource "aws_ecs_service" "holtz_refit_service_arm64_fargate" {
   cluster         = aws_ecs_cluster.holtz_refit_cluster.id
   task_definition = aws_ecs_task_definition.holtz_refit_arm64_fargate_task.arn
   launch_type     = "FARGATE"
+  desired_count   = 1
+  enable_execute_command = true
 
   network_configuration {
     subnets         = aws_subnet.holtz_refit_subnet[*].id
     security_groups = [aws_security_group.holtz_refit_sg.id]
     assign_public_ip = true
   }
-  desired_count = 1
+
+  service_connect_configuration {
+    enabled   = true
+    namespace = aws_service_discovery_http_namespace.holtz_refit_namespace.arn
+    service {
+      discovery_name = "holtz-refit"
+      port_name      = "holtz-refit-port"
+      client_alias {
+        dns_name = "random-data-api3.com"
+        port     = 8080
+      }
+    }
+  }
 }
