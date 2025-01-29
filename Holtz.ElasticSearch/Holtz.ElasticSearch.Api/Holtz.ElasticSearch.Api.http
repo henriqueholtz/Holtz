@@ -1,0 +1,6 @@
+@Holtz.ElasticSearch.Api_HostAddress = http://localhost:5182
+
+GET {{Holtz.ElasticSearch.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

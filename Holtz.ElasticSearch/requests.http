@@ -1,0 +1,32 @@
+### Create the index
+POST http://localhost:5182/api/users/create-index?indexName=users2 HTTP/1.1
+content-type: application/json
+
+### Add a user
+POST http://localhost:5182/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1515,
+    "firstName": "Henrique",
+    "lastName": "Holtz"
+}
+
+### GET all users
+GET http://localhost:5182/api/users HTTP/1.1
+
+### GET a user
+GET http://localhost:5182/api/users/1515 HTTP/1.1
+
+### Update a user
+PUT http://localhost:5182/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1515,
+    "firstName": "Henrique",
+    "lastName": "Holtz Updated"
+}
+
+### Delete a user
+DELETE http://localhost:5182/api/users/1515 HTTP/1.1
