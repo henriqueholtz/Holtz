@@ -1,8 +1,9 @@
-### Create the index
+# @name createIndex
 POST http://localhost:5182/api/users/create-index?indexName=users2 HTTP/1.1
 content-type: application/json
 
-### Add a user
+### 
+# @name addUser
 POST http://localhost:5182/api/users HTTP/1.1
 content-type: application/json
 
@@ -12,13 +13,19 @@ content-type: application/json
     "lastName": "Holtz"
 }
 
-### GET all users
+###
+@userId = {{ addUser.request.body.id }}
+
+###
+# @name getAllUsers
 GET http://localhost:5182/api/users HTTP/1.1
 
-### GET a user
-GET http://localhost:5182/api/users/1515 HTTP/1.1
+### 
+# @name getUser
+GET http://localhost:5182/api/users/{{userId}} HTTP/1.1
 
-### Update a user
+### 
+# @name updateUser
 PUT http://localhost:5182/api/users HTTP/1.1
 content-type: application/json
 
@@ -28,5 +35,6 @@ content-type: application/json
     "lastName": "Holtz Updated"
 }
 
-### Delete a user
-DELETE http://localhost:5182/api/users/1515 HTTP/1.1
+### 
+# @name deleteUser
+DELETE http://localhost:5182/api/users/{{userId}} HTTP/1.1
