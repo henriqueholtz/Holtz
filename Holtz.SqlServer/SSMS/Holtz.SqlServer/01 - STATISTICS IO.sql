@@ -1,4 +1,4 @@
-USE [AdventureWorks2022]
+USE [AdventureWorksDW2022]
 
 /*
 
@@ -9,10 +9,12 @@ USE [AdventureWorks2022]
 		R: Any improvement at "Logical Reads" is a performance upgrade!
 
 */
-
 SET STATISTICS IO ON
 
-SELECT * FROM Production.Product 
-	WHERE ProductID > 740
+SELECT TOP 100 * FROM FactInternetSales
+	WHERE ProductKey > 300
 
 SET STATISTICS IO OFF
+
+/* Show about physical reads */
+--DBCC DROPCLEANBUFFERS;

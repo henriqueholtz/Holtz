@@ -1,4 +1,4 @@
-USE [AdventureWorks2022]
+USE [AdventureWorksDW2022]
 
 /*
 
@@ -8,7 +8,7 @@ USE [AdventureWorks2022]
 
 SET STATISTICS Time ON
 
-SELECT * FROM Production.Product 
-	WHERE ProductID > 740
+SELECT TOP 100 * FROM FactInternetSales
+	WHERE ProductKey > 300
 
 SET STATISTICS Time OFF

@@ -1,7 +1,7 @@
 services:
-  sqlserver-adventureworks2022-oltp:
+  sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver-adventureworks2022-oltp
+    container_name: sqlserver
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=YourStrong!Passw0rd
@@ -10,7 +10,7 @@ services:
       - '1433:1433'
     volumes:
       - ./bak-files:/var/opt/mssql/backup
-      - sqlserver-adventureworks2022-oltp-data:/var/opt/mssql
+      - sqlserver-data:/var/opt/mssql
     healthcheck:
       test:
         [
@@ -34,13 +34,13 @@ services:
     volumes:
       - ./init-restore.sql:/docker-entrypoint-initdb.d/init.sql
     depends_on:
-      sqlserver-adventureworks2022-oltp:
+      sqlserver:
         condition: service_healthy
     command: >
       bash -c '
-      /opt/mssql-tools/bin/sqlcmd -S sqlserver-adventureworks2022-oltp -U sa -P YourStrong!Passw0rd -d master -i docker-entrypoint-initdb.d/init.sql;
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P YourStrong!Passw0rd -d master -i docker-entrypoint-initdb.d/init.sql;
       echo "All done!";
       '
 
 volumes:
-  sqlserver-adventureworks2022-oltp-data:
+  sqlserver-data:

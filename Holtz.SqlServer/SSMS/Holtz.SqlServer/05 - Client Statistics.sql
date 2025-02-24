@@ -1,4 +1,4 @@
-USE [AdventureWorks2022]
+USE [AdventureWorksDW2022]
 
 /*
 	"Client Statistics": Client-side metrics
@@ -15,5 +15,5 @@ USE [AdventureWorks2022]
 
 
 
-SELECT * FROM Person.Person
-	WHERE BusinessEntityID > 7500
+SELECT TOP 100 * FROM FactInternetSales
+	WHERE ProductKey > 300

@@ -1,45 +1,35 @@
-USE [AdventureWorks2022]
+USE [AdventureWorksDW2022]
 
 /*
 
 	"Actual Execution Plan": Detailed execution plan
+		- Optimal when looking for query optmization
 		- Actual steps taken by SQL Server Engine
+	Show:
 		- Actual row counts
 		- CPU usage
 		- I/O costs
+		- Query cost
 		- Operations taken (like table scan, index seek, index scan)
-		- Optimal when looking for query optmization
 
 	1. Click to turn on "Include Actual Execution Plan" (or press CTRL + M)
-	
-	- TODO: Add most common scenarios like index seek, index scan, table scan
-
 */
 
 
 -- Query with Index Seek
-SELECT BusinessEntityID, FirstName, LastName
-	FROM Person.Person
-	WHERE LastName = 'Smith';
+SELECT ProductKey, EnglishProductName FROM DimProduct WHERE ProductKey = 123;
 
 
--- Query with Table Scan
-SELECT BusinessEntityID, FirstName, LastName
-	FROM Person.Person
-	WHERE MiddleName = 'A';
+-- Query with Index Scan
+SELECT * FROM DimProduct WHERE Color = 'Black';
+
+-- Query to simulate a table scan
+SELECT * INTO dbo.FactInternetSales_Heap FROM dbo.FactInternetSales;
+SELECT * FROM dbo.FactInternetSales_Heap;
 
 
-
--- Query with Merge joib, index scan, sort and index seek
-SELECT p.BusinessEntityID, p.FirstName, p.LastName, e.JobTitle
-	FROM Person.Person p
-	INNER JOIN HumanResources.Employee e ON p.BusinessEntityID = e.BusinessEntityID
-	WHERE p.LastName = 'Smith';
-
-
-
--- Nested loops, index scan and index seek
-SELECT p.BusinessEntityID, p.FirstName, p.LastName, e.JobTitle
-	FROM Person.Person p
-	INNER JOIN HumanResources.Employee e ON p.BusinessEntityID = e.BusinessEntityID;
-
+-- Query wutg Nested Loops, index scan and index seek
+SELECT TOP 1000 * FROM FactProductInventory fpi
+	JOIN  DimProduct dp ON fpi.ProductKey = dp.ProductKey
+	WHERE YEAR(MovementDate) = 2012
+	

@@ -9,7 +9,7 @@
           <Server>localhost,1433</Server>
           <UserName>sa</UserName>
           <Authentication>SQL</Authentication>
-          <InitialDB>AdventureWorks2022</InitialDB>
+          <InitialDB>AdventureWorksDW2022</InitialDB>
           <LoginTimeout>30</LoginTimeout>
           <TrustServerCertificate>False</TrustServerCertificate>
           <HostNameInServerCertificate />
@@ -52,11 +52,23 @@
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>05 - Client Statistics.sql</FullPath>
         </FileNode>
-        <FileNode Name="06 - Index.sql">
+        <FileNode Name="06 - Performance Tips.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:localhost,1433:False:sa</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>localhost,1433</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
-          <FullPath>06 - Index.sql</FullPath>
+          <FullPath>06 - Performance Tips.sql</FullPath>
+        </FileNode>
+        <FileNode Name="07 - Index.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:localhost,1433:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>localhost,1433</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>07 - Index.sql</FullPath>
+        </FileNode>
+        <FileNode Name="08 - Optimization.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:localhost,1433:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>localhost,1433</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>08 - Optimization.sql</FullPath>
         </FileNode>
         <FileNode Name="10 - AI.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:localhost,1433:False:sa</AssociatedConnectionMoniker>

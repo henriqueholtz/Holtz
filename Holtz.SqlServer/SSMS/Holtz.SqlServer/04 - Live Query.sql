@@ -1,4 +1,4 @@
-USE [AdventureWorks2022]
+USE [AdventureWorksDW2022]
 
 /*
 	"Live Query Statistics": Real time insights:
@@ -13,18 +13,7 @@ USE [AdventureWorks2022]
 */
 
 
-SELECT * FROM Sales.SalesOrderDetail
-	ORDER BY LineTotal DESC;
+SELECT * FROM FactProductInventory fpi
+	JOIN  DimProduct dp ON fpi.ProductKey = dp.ProductKey
+	WHERE YEAR(MovementDate) = 2012
 
-
-SELECT soh.SalesOrderID, c.CustomerID, c.PersonID, SUM(sod.LineTotal) AS TotalSales
-	FROM Sales.SalesOrderHeader soh
-	JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
-	JOIN Sales.Customer c ON soh.CustomerID = c.CustomerID
-	GROUP BY soh.SalesOrderID, c.CustomerID, c.PersonID
-	ORDER BY TotalSales DESC;
-
-SELECT soh.SalesOrderID, soh.OrderDate, c.CustomerID, 
-       (SELECT COUNT(*) FROM Sales.SalesOrderDetail sod WHERE sod.SalesOrderID = soh.SalesOrderID) AS ItemCount
-	FROM Sales.SalesOrderHeader soh
-	JOIN Sales.Customer c ON soh.CustomerID = c.CustomerID;
