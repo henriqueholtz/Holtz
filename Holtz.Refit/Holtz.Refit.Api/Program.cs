@@ -26,6 +26,8 @@ builder.Services.AddRefitClient<IRandomDataApi>()
 
 var app = builder.Build();
 
+app.MapGet("/", () => "Hello Holtz.Refit.Api!");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

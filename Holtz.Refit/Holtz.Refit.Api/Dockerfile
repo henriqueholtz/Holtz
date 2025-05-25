@@ -28,4 +28,4 @@ ENTRYPOINT ["dotnet", "Holtz.Refit.Api.dll"]
 # docker run --rm -it -p 8085:8080 --name holtz.refit.api holtz.refit.api
 
 # DockerHub: build and push am64 + arm64
-# docker buildx build --push --platform linux/amd64,linux/arm64 -f Holtz.Refit.Api/Dockerfile -t henriqueholtz/holtz.refit.api:multi-arch .
+# docker buildx build --push --platform linux/amd64,linux/arm64 -f ./Holtz.Refit.Api/Dockerfile -t henriqueholtz/holtz.refit.api:multi-arch .
