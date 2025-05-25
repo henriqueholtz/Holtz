@@ -10,6 +10,6 @@ output "vpc_id" {
   value = aws_vpc.holtz_codedeploy_vpc.id
 }
 
-output "nlb_dns_name" {
-  value = aws_lb.nlb.dns_name
+output "alb_dns_name" {
+  value = aws_lb.alb.dns_name
 }

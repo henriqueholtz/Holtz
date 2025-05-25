@@ -1,7 +1,7 @@
-resource "aws_lb" "nlb" {
-  name               = "holtz-codedeploy-nlb"
+resource "aws_lb" "alb" {
+  name               = "holtz-codedeploy-alb"
   internal           = false # Internet-facing
-  load_balancer_type = "network"
+  load_balancer_type = "application"
   enable_deletion_protection = false
 
   subnet_mapping {
@@ -12,26 +12,41 @@ resource "aws_lb" "nlb" {
   }
 }
 
-resource "aws_lb_listener" "nlb_listener" {
-  load_balancer_arn = aws_lb.nlb.arn
+resource "aws_lb_listener" "alb_listener" {
+  load_balancer_arn = aws_lb.alb.arn
   port              = 8080
-  protocol          = "TCP"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.nlb_target_group.arn #Will be created below.
+    target_group_arn = aws_lb_target_group.alb_target_group.arn #Will be created below.
   }
 }
 
-resource "aws_lb_target_group" "nlb_target_group" {
-  name        = "holtz-codedeploy-nlb-tg"
+resource "aws_lb_target_group" "alb_target_group" {
+  name        = "holtz-codedeploy-alb-tg"
   port        = 8080
-  protocol    = "TCP"
+  protocol    = "HTTP"
   vpc_id      = aws_vpc.holtz_codedeploy_vpc.id 
   target_type = "ip" # Options: ["instance" "ip" "lambda" "alb"]
 
   health_check {
-    protocol = "TCP" #Or HTTP/HTTPS if your proxy supports it.
+    protocol = "HTTP"
+    path     = "/"
+    port     = "traffic-port"
+  }
+}
+
+resource "aws_lb_target_group" "alb_target_group_green" {
+  name        = "holtz-codedeploy-alb-tg-green"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.holtz_codedeploy_vpc.id
+  target_type = "ip"
+
+  health_check {
+    protocol = "HTTP"
+    path     = "/"
     port     = "traffic-port"
   }
 }

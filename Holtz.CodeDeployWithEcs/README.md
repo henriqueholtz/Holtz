@@ -7,3 +7,4 @@ AWS Required Permissions
 - `IAMFullAccess`
 - `ElasticLoadBalancingFullAccess`
 - `CloudWatchLogsFullAccess`
+- `AWSCodeDeployFullAccess`

@@ -52,8 +52,12 @@ resource "aws_ecs_service" "holtz_codedeploy_service_arm64_fargate" {
     assign_public_ip = true
   }
 
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  }
+
   load_balancer {
-    target_group_arn = aws_lb_target_group.nlb_target_group.arn
+    target_group_arn = aws_lb_target_group.alb_target_group.arn
     container_name   = "holtz-codedeploy64"
     container_port   = 8080
   }
