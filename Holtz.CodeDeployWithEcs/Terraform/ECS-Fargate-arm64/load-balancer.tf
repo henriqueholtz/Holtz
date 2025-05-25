@@ -3,6 +3,7 @@ resource "aws_lb" "alb" {
   internal           = false # Internet-facing
   load_balancer_type = "application"
   enable_deletion_protection = false
+  security_groups    = [aws_security_group.holtz_codedeploy_sg.id]
 
   subnet_mapping {
     subnet_id = aws_subnet.holtz_codedeploy_subnet[0].id
