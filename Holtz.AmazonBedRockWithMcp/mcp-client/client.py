@@ -3,6 +3,7 @@ import sys
 from typing import Optional, List, Dict, Any
 from contextlib import AsyncExitStack
 from dataclasses import dataclass
+from message import Message
 
 # to interact with MCP
 from mcp import ClientSession, StdioServerParameters
@@ -10,70 +11,30 @@ from mcp.client.stdio import stdio_client
 
 # to interact with Amazon Bedrock
 import boto3
-
-@dataclass
-class Message:
-    role: str
-    content: List[Dict[str, Any]]
-
-    @classmethod
-    def user(cls, text: str) -> 'Message':
-        return cls(role="user", content=[{"text": text}])
-
-    @classmethod
-    def assistant(cls, text: str) -> 'Message':
-        return cls(role="assistant", content=[{"text": text}])
-
-    @classmethod
-    def tool_result(cls, tool_use_id: str, content: dict) -> 'Message':
-        return cls(
-            role="user",
-            content=[{
-                "toolResult": {
-                    "toolUseId": tool_use_id,
-                    "content": [{"json": {"text": content[0].text}}]
-                }
-            }]
-        )
-
-    @classmethod
-    def tool_request(cls, tool_use_id: str, name: str, input_data: dict) -> 'Message':
-        return cls(
-            role="assistant",
-            content=[{
-                "toolUse": {
-                    "toolUseId": tool_use_id,
-                    "name": name,
-                    "input": input_data
-                }
-            }]
-        )
-
-    @staticmethod
-    def to_bedrock_format(tools_list: List[Dict]) -> List[Dict]:
-        return [{
-            "toolSpec": {
-                "name": tool["name"],
-                "description": tool["description"],
-                "inputSchema": {
-                    "json": {
-                        "type": "object",
-                        "properties": tool["input_schema"]["properties"],
-                        "required": tool["input_schema"]["required"]
-                    }
-                }
-            }
-        } for tool in tools_list]
-    
+ 
 class MCPClient:
+    """
+    A client that connects to an MCP server and uses Amazon Bedrock for AI interactions.
+    Handles the communication between the user, MCP tools, and the Bedrock AI model.
+    """
     MODEL_ID = "anthropic.claude-3-sonnet-20240229-v1:0"
     
     def __init__(self):
+        """
+        Initialize the MCP client with empty session and create a Bedrock client.
+        """
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
         self.bedrock = boto3.client(service_name='bedrock-runtime', region_name='us-east-1')
 
     async def connect_to_server(self, server_script_path: str):
+        """
+        Connect to the MCP server using the specified script.
+        Args:
+            server_script_path: Path to the server script (.py or .js file)
+        Raises:
+            ValueError: If the server script is not a .py or .js file
+        """
         if not server_script_path.endswith(('.py', '.js')):
             raise ValueError("Server script must be a .py or .js file")
 
@@ -89,9 +50,20 @@ class MCPClient:
         print("\nConnected to server with tools:", [tool.name for tool in response.tools])
 
     async def cleanup(self):
+        """
+        Clean up resources by closing the async exit stack.
+        """
         await self.exit_stack.aclose()
 
     def _make_bedrock_request(self, messages: List[Dict], tools: List[Dict]) -> Dict:
+        """
+        Make a request to Amazon Bedrock with the given messages and tools.
+        Args:
+            messages: List of conversation messages
+            tools: List of available tools
+        Returns:
+            Response from Bedrock
+        """
         return self.bedrock.converse(
             modelId=self.MODEL_ID,
             messages=messages,
@@ -100,6 +72,13 @@ class MCPClient:
         )
 
     async def process_query(self, query: str) -> str:
+        """
+        Process a user query through the MCP server and Bedrock.
+        Args:
+            query: The user's input query
+        Returns:
+            The final response text
+        """
         # (1)
         messages = [Message.user(query).__dict__]
         # (2)
@@ -123,6 +102,15 @@ class MCPClient:
         )
     
     async def _process_response(self, response: Dict, messages: List[Dict], bedrock_tools: List[Dict]) -> str:
+        """
+        Process the response from Bedrock, handling tool calls and conversation flow.
+        Args:
+            response: The response from Bedrock
+            messages: The conversation history
+            bedrock_tools: List of available tools
+        Returns:
+            The final response text after processing all turns
+        """
         # (1)
         final_text = []
         MAX_TURNS=10
@@ -166,6 +154,14 @@ class MCPClient:
         return "\n\n".join(final_text)
 
     async def _handle_tool_call(self, tool_info: Dict, messages: List[Dict]) -> List[str]:
+        """
+        Handle a tool call request from Bedrock.
+        Args:
+            tool_info: Information about the tool call
+            messages: The conversation history
+        Returns:
+            List of strings describing the tool call and its result
+        """
         # (1)
         tool_name = tool_info['name']
         tool_args = tool_info['input']
@@ -182,10 +178,14 @@ class MCPClient:
         return [f"[Calling tool {tool_name} with args {tool_args}]"]
 
     async def chat_loop(self):
+        """
+        Main chat loop that handles user input and displays responses.
+        Continues until the user types 'quit'.
+        """
         print("\nMCP Client Started!\nType your queries or 'quit' to exit.")
         while True:
             try:
-                query = input("\nQuery: ").strip()
+                query = input("\nType your query or 'quit' to leave: ").strip()
                 if query.lower() == 'quit':
                     break
                 response = await self.process_query(query)
@@ -193,17 +193,3 @@ class MCPClient:
             except Exception as e:
                 print(f"\nError: {str(e)}")
 
-async def main():
-    if len(sys.argv) < 2:
-        print("Usage: python client.py <path_to_server_script>")
-        sys.exit(1)
-
-    client = MCPClient()
-    try:
-        await client.connect_to_server(sys.argv[1])
-        await client.chat_loop()
-    finally:
-        await client.cleanup()
-
-if __name__ == "__main__":
-    asyncio.run(main())
