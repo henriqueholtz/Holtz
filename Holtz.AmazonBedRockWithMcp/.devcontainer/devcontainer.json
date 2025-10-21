@@ -17,7 +17,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "/bin/bash -c \"python -m venv .venv && source .venv/bin/activate && cp .env.example .env\"",
+	"postCreateCommand": "/bin/bash -c \"python -m venv .venv && source .venv/bin/activate && cp .env.example .env && uv sync\"",
 
 	// Configure tool-specific properties.
 	"customizations": {
