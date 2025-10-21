@@ -39,5 +39,9 @@ This is my main repository. Here I have some personal projects using c#. Each pr
 
 ### TODOs
 
+- gRPC
+- GraphQL
+- WebSockets
+- SSE
 - Add gihub actions to run test a specific project when its path changes
 - Add Docker support
