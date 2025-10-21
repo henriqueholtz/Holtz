@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Holtz.SemanticKernel.SimpleConsole": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
