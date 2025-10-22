@@ -1,5 +1,7 @@
 # Holtz.SemanticKernel
 
+https://github.com/microsoft/semantic-kernel/tree/main/dotnet
+
 ## TODOs
 
 - Simple chat
