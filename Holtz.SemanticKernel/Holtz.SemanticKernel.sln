@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.SemanticKernel.SimpleConsole", "Holtz.SemanticKernel.SimpleConsole\Holtz.SemanticKernel.SimpleConsole.csproj", "{644255C1-280D-46B6-A039-CE94DCF8C273}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.SemanticKernel.SimpleConsoleWithOpenTelemetry", "Holtz.SemanticKernel.SimpleConsoleWithOpenTelemetry\Holtz.SemanticKernel.SimpleConsoleWithOpenTelemetry.csproj", "{21B4A4A4-63B8-4056-8F1B-9964546B3363}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holtz.SemanticKernel.Shared", "Holtz.SemanticKernel.Shared\Holtz.SemanticKernel.Shared.csproj", "{78176274-836A-4FDD-B166-FC209769113C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{644255C1-280D-46B6-A039-CE94DCF8C273}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{644255C1-280D-46B6-A039-CE94DCF8C273}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{644255C1-280D-46B6-A039-CE94DCF8C273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B4A4A4-63B8-4056-8F1B-9964546B3363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B4A4A4-63B8-4056-8F1B-9964546B3363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B4A4A4-63B8-4056-8F1B-9964546B3363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B4A4A4-63B8-4056-8F1B-9964546B3363}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78176274-836A-4FDD-B166-FC209769113C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78176274-836A-4FDD-B166-FC209769113C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78176274-836A-4FDD-B166-FC209769113C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78176274-836A-4FDD-B166-FC209769113C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
