@@ -26,6 +26,6 @@
 
         public string PublicKey { get; set; }
         public string PrivateKey { get; set; }
-        public string OpenTelemetryEndpoint { get; set; } = "http://localhost:3000/api/public/otel/v1/traces";
+        public string BaseUrl { get; set; } = "http://localhost:3000";
     }
 }

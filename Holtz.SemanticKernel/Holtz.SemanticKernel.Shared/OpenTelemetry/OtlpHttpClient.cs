@@ -88,7 +88,7 @@ namespace Holtz.SemanticKernel.Shared.OpenTelemetry
 
         public static async Task<HttpResponseMessage> SendTracesJsonAsync(object payload)
         {
-            var endpoint = SettingsHelper.Settings.Langfuse.OpenTelemetryEndpoint;
+            var endpoint = $"{SettingsHelper.Settings.Langfuse.BaseUrl}/api/public/otel/v1/traces";
             var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
             using var content = new StringContent(json, Encoding.UTF8, "application/json");
             // OTLP servers expect application/json for OTLP/JSON
