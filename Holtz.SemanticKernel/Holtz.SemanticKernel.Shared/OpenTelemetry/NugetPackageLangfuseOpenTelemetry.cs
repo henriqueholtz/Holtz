@@ -5,6 +5,9 @@ using OpenTelemetry.Trace;
 
 namespace Holtz.SemanticKernel.Shared.OpenTelemetry
 {
+    /// <summary>
+    /// https://github.com/carllapierre/langfuse-otel-dotnet
+    /// </summary>
     public static class NugetPackageLangfuseOpenTelemetry
     {
         public static TracerProvider SetupTracerProvider()

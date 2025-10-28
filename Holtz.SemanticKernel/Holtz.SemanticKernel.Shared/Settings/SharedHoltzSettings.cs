@@ -3,6 +3,7 @@
     public class SharedHoltzSettings
     {
         public SharedOllamaSettings Ollama { get; set; }
+        public SharedOpenAISettings OpenAI { get; set; }
         public LangfuseSettings Langfuse{ get; set; }
     }
 
@@ -10,6 +11,11 @@
     {
         public double Temperature { get; set; }
         public string ModelId { get; set; }
+    }
+
+    public class SharedOpenAISettings : SharedLlmSettings
+    {
+        public string ApiKey { get; set; }
     }
 
     public class SharedOllamaSettings : SharedLlmSettings
