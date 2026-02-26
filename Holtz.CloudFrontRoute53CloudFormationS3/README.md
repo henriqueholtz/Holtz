@@ -19,6 +19,26 @@ A CloudFormation template that creates a cost-optimized infrastructure for servi
                                 └─────────────────┘
 ```
 
+### Full DNS Flow (with CloudFlare)
+
+```mermaid
+flowchart LR
+    User[User] -->|HTTPS Request| CloudFlare[CloudFlare DNS]
+    CloudFlare -->|NS Records| Route53[Route53 Hosted Zone]
+    Route53 -->|A Alias Record| CloudFront[CloudFront CDN]
+    CloudFront -->|OAI Request| S3[S3 Bucket\nPrivate]
+    
+    subgraph "AWS"
+    Route53
+    CloudFront
+    S3
+    end
+    
+    subgraph "CloudFlare"
+    CloudFlare
+    end
+```
+
 ## Resources Created
 
 | Resource | Type | Description |
@@ -60,56 +80,104 @@ A CloudFormation template that creates a cost-optimized infrastructure for servi
 - AWS CLI installed and configured (`aws configure`)
 - An AWS account with appropriate permissions
 - A globally unique S3 bucket name
-- An existing Route53 Hosted Zone for your domain
-- An ACM Certificate in us-east-1 for your custom domain
+- An existing Route53 **public** Hosted Zone for your domain
+- An ACM Certificate in **us-east-1** for your custom domain (must be validated)
 
-### Create ACM Certificate (if needed)
+## Complete Setup Guide (CloudFlare + Route53)
+
+This guide covers the full setup when your domain is managed by CloudFlare but you want to use Route53 for DNS.
+
+### Step 1: Request ACM Certificate
 
 ```bash
 # Request certificate in us-east-1 (required for CloudFront)
 aws acm request-certificate \
-  --domain-name images.example.com \
+  --domain-name your-domain.com \
+  --subject-alternative-names "*.your-domain.com" \
   --validation-method DNS \
   --region us-east-1
+```
 
-# Note the Certificate ARN from the output
-# Add the CNAME validation records to your Route53 hosted zone
-# Wait for validation to complete (check status)
+Note the Certificate ARN from the output.
+
+### Step 2: Get ACM Validation Records
+
+```bash
 aws acm describe-certificate \
-  --certificate-arn arn:aws:acm:us-east-1:123456789012:certificate/abc123 \
+  --certificate-arn arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID \
+  --region us-east-1 \
+  --query 'Certificate.DomainValidationOptions'
+```
+
+This returns CNAME name and value for validation.
+
+### Step 3: Add ACM Validation to CloudFlare
+
+1. Go to CloudFlare → your-domain.com → DNS
+2. Add a CNAME record:
+   - **Name**: `_your-acm-cname-name` (from Step 2)
+   - **Value**: `_your-acm-cname-value.acm-validations.aws.`
+   - **Proxy status**: DNS only (gray cloud)
+3. Wait 5-10 minutes
+
+### Step 4: Verify ACM Certificate Status
+
+```bash
+aws acm describe-certificate \
+  --certificate-arn arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID \
   --region us-east-1 \
   --query 'Certificate.Status'
 ```
 
-### Get Hosted Zone ID
+Must return `ISSUED` before proceeding.
+
+### Step 5: Create Route53 Hosted Zone
+
+```bash
+aws route53 create-hosted-zone \
+  --name your-domain.com \
+  --caller-reference "your-domain-$(date +%s)"
+```
+
+Note the NS records from the output.
+
+### Step 6: Update CloudFlare NS Records
+
+In CloudFlare (for your parent domain):
+1. Go to DNS settings
+2. Update NS records to point to Route53 nameservers:
+   - `ns-xxx.awsdns-y.com`
+   - `ns-xxx.awsdns-y.net`
+   - `ns-xxx.awsdns-y.org`
+   - `ns-xxx.awsdns-y.co.uk`
+
+### Step 7: Get Hosted Zone ID
 
 ```bash
 aws route53 list-hosted-zones \
-  --query 'HostedZones[?Name==`example.com.`].Id' \
+  --query 'HostedZones[?Name==`your-domain.com.`].Id' \
   --output text
 ```
 
-## Deployment
+Returns `/hostedzone/Z1234567890ABC` (use only `Z1234567890ABC`).
+
+---
+
+### Automated: Deploy with cfn-deploy.sh
 
 ```bash
-# Make the script executable
 chmod +x cfn-deploy.sh
 
-# Deploy with all required parameters
 ./cfn-deploy.sh \
   -b your-unique-bucket-name \
-  -d images.example.com \
+  -d your-domain.com \
   -z Z1234567890ABC \
-  -c arn:aws:acm:us-east-1:123456789012:certificate/abc123
-
-# Optional: specify AWS region
-./cfn-deploy.sh \
-  -b your-unique-bucket-name \
-  -d images.example.com \
-  -z Z1234567890ABC \
-  -c arn:aws:acm:us-east-1:123456789012:certificate/abc123 \
-  -r us-east-1
+  -c arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID
 ```
+
+This creates: S3 bucket, CloudFront distribution, Route53 A record.
+
+---
 
 ## Usage
 
@@ -158,8 +226,9 @@ aws s3 sync ./images/ s3://your-unique-bucket-name/
 
 ## Cleanup
 
+### Automated: Delete Stack with cfn-destroy.sh
+
 ```bash
-# Make the script executable
 chmod +x cfn-destroy.sh
 
 # Delete stack (bucket must be empty)
@@ -172,9 +241,50 @@ chmod +x cfn-destroy.sh
 ./cfn-destroy.sh -b your-unique-bucket-name -r us-east-1
 ```
 
+### Manual: Complete Removal
+
+If you want to remove everything completely:
+
+1. **Delete CloudFormation stack** (see above)
+
+2. **Delete Route53 Hosted Zone** (if created for this project):
+   ```bash
+   aws route53 delete-hosted-zone --id /hostedzone/Z1234567890ABC
+   ```
+
+3. **Delete ACM Certificate**:
+   ```bash
+   aws acm delete-certificate \
+     --certificate-arn arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID \
+     --region us-east-1
+   ```
+
+4. **Restore CloudFlare NS Records** (if you changed them):
+   - Go to CloudFlare → DNS
+   - Update NS records back to CloudFlare nameservers
+   - Remove ACM validation CNAME record
+
 ## Troubleshooting
 
-### 403 Forbidden Error
+### Quick Check with cfn-check.sh
+
+Run the check script to diagnose common issues:
+
+```bash
+chmod +x cfn-check.sh
+./cfn-check.sh
+```
+
+This script checks:
+- Stack status (CREATE_COMPLETE, etc.)
+- S3 bucket and objects
+- CloudFront distribution status
+- Image accessibility via CloudFront URL
+- DNS resolution for custom domain
+
+### Common Issues
+
+#### 403 Forbidden Error
 
 1. Verify bucket policy is applied correctly
 2. Ensure OAI is properly configured
@@ -214,6 +324,7 @@ S3 bucket names are globally unique. Use a unique name with your account ID:
 .
 ├── README.md
 ├── cfn-deploy.sh
+├── cfn-check.sh
 ├── cfn-destroy.sh
 └── cloudformation/
     └── stack.yaml
