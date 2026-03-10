@@ -7,20 +7,21 @@ TEMPLATE_FILE="${SCRIPT_DIR}/cloudformation/stack.yaml"
 STACK_NAME="image-serving-stack"
 
 usage() {
-    echo "Usage: $0 -b <bucket-name> -d <domain-name> -z <hosted-zone-id> -c <certificate-arn> [-r <aws-region>]"
+    echo "Usage: $0 -b <bucket-name> -d <domain-name> [-r <aws-region>]"
     echo ""
-    echo "Deploy CloudFormation stack for image serving with S3 + CloudFront + Route53"
+    echo "Deploy CloudFormation stack for image serving with S3 + CloudFront + Route53 + ACM"
+    echo ""
+    echo "NOTE: This stack must be deployed in us-east-1 (ACM for CloudFront requires it)."
+    echo "      After deployment, add the output NameServers as NS records in CloudFlare."
     echo ""
     echo "Options:"
-    echo "  -b, --bucket-name      S3 bucket name (required, must be globally unique)"
-    echo "  -d, --domain-name      Custom domain name (required, e.g., images.example.com)"
-    echo "  -z, --hosted-zone-id   Route53 Hosted Zone ID (required)"
-    echo "  -c, --certificate-arn  ACM Certificate ARN (required, must be in us-east-1)"
-    echo "  -r, --region           AWS region (default: from AWS CLI config)"
-    echo "  -h, --help             Show this help message"
+    echo "  -b, --bucket-name    S3 bucket name (required, must be globally unique)"
+    echo "  -d, --domain-name    Custom domain name (required, e.g., images.example.com)"
+    echo "  -r, --region         AWS region (default: from AWS CLI config)"
+    echo "  -h, --help           Show this help message"
     echo ""
     echo "Example:"
-    echo "  $0 -b my-images-bucket -d images.example.com -z Z1234567890ABC -c arn:aws:acm:us-east-1:123456789012:certificate/abc123"
+    echo "  $0 -b my-images-bucket -d images.example.com -r us-east-1"
     exit 1
 }
 
@@ -43,8 +44,6 @@ validate_domain_name() {
 
 BUCKET_NAME=""
 DOMAIN_NAME=""
-HOSTED_ZONE_ID=""
-CERTIFICATE_ARN=""
 AWS_REGION=""
 
 while [[ $# -gt 0 ]]; do
@@ -55,14 +54,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         -d|--domain-name)
             DOMAIN_NAME="$2"
-            shift 2
-            ;;
-        -z|--hosted-zone-id)
-            HOSTED_ZONE_ID="$2"
-            shift 2
-            ;;
-        -c|--certificate-arn)
-            CERTIFICATE_ARN="$2"
             shift 2
             ;;
         -r|--region)
@@ -89,16 +80,6 @@ if [[ -z "$DOMAIN_NAME" ]]; then
     usage
 fi
 
-if [[ -z "$HOSTED_ZONE_ID" ]]; then
-    echo "Error: Hosted Zone ID is required"
-    usage
-fi
-
-if [[ -z "$CERTIFICATE_ARN" ]]; then
-    echo "Error: ACM Certificate ARN is required"
-    usage
-fi
-
 validate_bucket_name "$BUCKET_NAME"
 validate_domain_name "$DOMAIN_NAME"
 
@@ -113,15 +94,17 @@ if [[ -n "$AWS_REGION" ]]; then
 fi
 
 echo "Deploying CloudFormation stack..."
-echo "  Stack Name:       $STACK_NAME"
-echo "  Bucket Name:      $BUCKET_NAME"
-echo "  Domain Name:      $DOMAIN_NAME"
-echo "  Hosted Zone ID:   $HOSTED_ZONE_ID"
-echo "  Certificate ARN:  $CERTIFICATE_ARN"
-echo "  Template:         $TEMPLATE_FILE"
+echo "  Stack Name:  $STACK_NAME"
+echo "  Bucket Name: $BUCKET_NAME"
+echo "  Domain Name: $DOMAIN_NAME"
+echo "  Template:    $TEMPLATE_FILE"
 if [[ -n "$AWS_REGION" ]]; then
-    echo "  Region:           $AWS_REGION"
+    echo "  Region:      $AWS_REGION"
 fi
+echo ""
+echo "NOTE: While the stack deploys, watch the AWS Console for the Route53 hosted zone."
+echo "      As soon as it appears, add the NameServers output as NS records in CloudFlare."
+echo "      CloudFormation will wait for ACM certificate validation before continuing."
 echo ""
 
 aws cloudformation deploy \
@@ -131,8 +114,6 @@ aws cloudformation deploy \
     --parameter-overrides \
         BucketName="$BUCKET_NAME" \
         DomainName="$DOMAIN_NAME" \
-        HostedZoneId="$HOSTED_ZONE_ID" \
-        AcmCertificateArn="$CERTIFICATE_ARN" \
     --capabilities CAPABILITY_NAMED_IAM
 
 echo ""

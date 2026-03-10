@@ -69,6 +69,18 @@ aws cloudformation describe-stacks \
     --query 'Stacks[0].Outputs' \
     --output table
 
+NAME_SERVERS=$(aws cloudformation describe-stacks \
+    $REGION_ARG \
+    --stack-name "$STACK_NAME" \
+    --query 'Stacks[0].Outputs[?OutputKey==`NameServers`].OutputValue' \
+    --output text)
+
+if [[ -n "$NAME_SERVERS" ]]; then
+    echo ""
+    echo "Route53 Name Servers (add as NS records in CloudFlare):"
+    echo "  $NAME_SERVERS"
+fi
+
 BUCKET_NAME=$(aws cloudformation describe-stacks \
     $REGION_ARG \
     --stack-name "$STACK_NAME" \

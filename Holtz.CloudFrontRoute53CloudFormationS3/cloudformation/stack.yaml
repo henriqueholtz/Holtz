@@ -1,5 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: S3 bucket with CloudFront distribution and Route53 for secure image serving
+# NOTE: This stack must be deployed in us-east-1 — ACM certificates used by CloudFront must be in that region.
+# After deployment, add the output NameServers as NS records in CloudFlare to delegate DNS for DomainName to Route 53.
+# CloudFormation will wait for ACM certificate validation, so add the NS records in CloudFlare as soon as the
+# Route 53 hosted zone is created (visible in the AWS Console while the stack is still deploying).
+Description: S3 bucket with CloudFront distribution, Route53 hosted zone, and ACM certificate for secure image serving
 
 Parameters:
   BucketName:
@@ -12,14 +16,22 @@ Parameters:
     Description: Custom domain name for CloudFront (e.g., images.example.com)
     AllowedPattern: '^[a-z0-9][a-z0-9.-]*[a-z0-9]$'
     ConstraintDescription: Domain name must be a valid domain
-  HostedZoneId:
-    Type: AWS::Route53::HostedZone::Id
-    Description: Route53 Hosted Zone ID for the domain
-  AcmCertificateArn:
-    Type: String
-    Description: ACM Certificate ARN for the custom domain (must be in us-east-1)
 
 Resources:
+  HostedZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: !Ref DomainName
+
+  AcmCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      ValidationMethod: DNS
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: !Ref HostedZone
+
   ImageBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -66,7 +78,7 @@ Resources:
         PriceClass: PriceClass_100
         HttpVersion: http2
         ViewerCertificate:
-          AcmCertificateArn: !Ref AcmCertificateArn
+          AcmCertificateArn: !Ref AcmCertificate
           SslSupportMethod: sni-only
           MinimumProtocolVersion: TLSv1.2_2021
         DefaultCacheBehavior:
@@ -90,7 +102,7 @@ Resources:
   Route53Record:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneId: !Ref HostedZoneId
+      HostedZoneId: !Ref HostedZone
       Name: !Ref DomainName
       Type: A
       AliasTarget:
@@ -99,6 +111,11 @@ Resources:
         EvaluateTargetHealth: false
 
 Outputs:
+  NameServers:
+    Description: Route 53 name servers — add these as NS records in CloudFlare to delegate DNS for this domain
+    Value: !Join
+      - ', '
+      - !GetAtt HostedZone.NameServers
   BucketName:
     Description: S3 Bucket Name
     Value: !Ref ImageBucket

@@ -12,23 +12,25 @@
 ## Custom DNS (via CloudFlare)
 
 - `talkient.app` is managed via CloudFlare
-- 1x CNAME to allow ACM issue/generate the certificate
-- 4x NS
+- 4x NS records delegating the subdomain to Route53 (set manually in CloudFlare after stack deploy)
 
 ## Amazon Certificate Manager
 
-- Request a public certificate for a subdomain
+- Public certificate for the subdomain — created and DNS-validated automatically via CloudFormation
 - No export (disabled)
 - Eligible for automatic renewal
 
-## Rote 53
+## Route 53
 
-- Public hosted zone for a subdomain (manual)
+- Public hosted zone for the subdomain — created automatically via CloudFormation
+- DNS validation CNAME record for ACM is added automatically by CloudFormation
 
 ## CloudFormation
 
 Resources:
 
+- HostedZone
+- AcmCertificate
 - CloudFrontDistribution
 - CloudFrontOAI
 - ImageBucket + ImageBucketPolicy

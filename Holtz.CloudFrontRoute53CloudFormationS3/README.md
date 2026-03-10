@@ -43,6 +43,8 @@ flowchart LR
 
 | Resource | Type | Description |
 |----------|------|-------------|
+| HostedZone | AWS::Route53::HostedZone | Public hosted zone for the custom domain |
+| AcmCertificate | AWS::CertificateManager::Certificate | SSL/TLS certificate (DNS-validated via Route53) |
 | ImageBucket | AWS::S3::Bucket | Private S3 bucket for image storage |
 | ImageBucketPolicy | AWS::S3::BucketPolicy | Allows CloudFront OAI to read objects |
 | CloudFrontOAI | AWS::CloudFront::CloudFrontOriginAccessIdentity | Secure access identity |
@@ -80,102 +82,43 @@ flowchart LR
 - AWS CLI installed and configured (`aws configure`)
 - An AWS account with appropriate permissions
 - A globally unique S3 bucket name
-- An existing Route53 **public** Hosted Zone for your domain
-- An ACM Certificate in **us-east-1** for your custom domain (must be validated)
+- A domain managed in CloudFlare
 
-## Complete Setup Guide (CloudFlare + Route53)
+## Setup Guide (CloudFlare + Route53)
 
-This guide covers the full setup when your domain is managed by CloudFlare but you want to use Route53 for DNS.
+The CloudFormation stack automatically creates the Route53 hosted zone and ACM certificate. The only manual step is adding NS delegation records in CloudFlare.
 
-### Step 1: Request ACM Certificate
+> **Important:** This stack must be deployed in **us-east-1** — ACM certificates for CloudFront must be in that region.
 
-```bash
-# Request certificate in us-east-1 (required for CloudFront)
-aws acm request-certificate \
-  --domain-name your-domain.com \
-  --subject-alternative-names "*.your-domain.com" \
-  --validation-method DNS \
-  --region us-east-1
-```
-
-Note the Certificate ARN from the output.
-
-### Step 2: Get ACM Validation Records
-
-```bash
-aws acm describe-certificate \
-  --certificate-arn arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID \
-  --region us-east-1 \
-  --query 'Certificate.DomainValidationOptions'
-```
-
-This returns CNAME name and value for validation.
-
-### Step 3: Add ACM Validation to CloudFlare
-
-1. Go to CloudFlare → your-domain.com → DNS
-2. Add a CNAME record:
-   - **Name**: `_your-acm-cname-name` (from Step 2)
-   - **Value**: `_your-acm-cname-value.acm-validations.aws.`
-   - **Proxy status**: DNS only (gray cloud)
-3. Wait 5-10 minutes
-
-### Step 4: Verify ACM Certificate Status
-
-```bash
-aws acm describe-certificate \
-  --certificate-arn arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID \
-  --region us-east-1 \
-  --query 'Certificate.Status'
-```
-
-Must return `ISSUED` before proceeding.
-
-### Step 5: Create Route53 Hosted Zone
-
-```bash
-aws route53 create-hosted-zone \
-  --name your-domain.com \
-  --caller-reference "your-domain-$(date +%s)"
-```
-
-Note the NS records from the output.
-
-### Step 6: Update CloudFlare NS Records
-
-In CloudFlare (for your parent domain):
-1. Go to DNS settings
-2. Update NS records to point to Route53 nameservers:
-   - `ns-xxx.awsdns-y.com`
-   - `ns-xxx.awsdns-y.net`
-   - `ns-xxx.awsdns-y.org`
-   - `ns-xxx.awsdns-y.co.uk`
-
-### Step 7: Get Hosted Zone ID
-
-```bash
-aws route53 list-hosted-zones \
-  --query 'HostedZones[?Name==`your-domain.com.`].Id' \
-  --output text
-```
-
-Returns `/hostedzone/Z1234567890ABC` (use only `Z1234567890ABC`).
-
----
-
-### Automated: Deploy with cfn-deploy.sh
+### Step 1: Deploy the stack
 
 ```bash
 chmod +x cfn-deploy.sh
 
 ./cfn-deploy.sh \
   -b your-unique-bucket-name \
-  -d your-domain.com \
-  -z Z1234567890ABC \
-  -c arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID
+  -d images.example.com \
+  -r us-east-1
 ```
 
-This creates: S3 bucket, CloudFront distribution, Route53 A record.
+This creates: Route53 hosted zone, ACM certificate, S3 bucket, CloudFront distribution, and Route53 A alias record.
+
+### Step 2: Add NS records in CloudFlare
+
+While the stack is deploying (it will pause waiting for ACM certificate validation), watch the AWS Console for the Route53 hosted zone to be created. Then:
+
+1. Run the check script or look at the CloudFormation stack events in the console to get the nameservers:
+   ```bash
+   ./cfn-check.sh -r us-east-1
+   ```
+2. Go to **CloudFlare → your domain → DNS**
+3. Add 4 **NS records** for your subdomain (e.g., `images.example.com`) pointing to the Route53 nameservers from the stack output:
+   - **Type**: NS
+   - **Name**: `images` (or the subdomain part)
+   - **Value**: `ns-xxx.awsdns-y.com` (one record per nameserver)
+   - **Proxy status**: DNS only (gray cloud)
+
+Once DNS propagates, ACM validates automatically and the stack finishes deploying.
 
 ---
 
@@ -245,24 +188,11 @@ chmod +x cfn-destroy.sh
 
 If you want to remove everything completely:
 
-1. **Delete CloudFormation stack** (see above)
+1. **Delete CloudFormation stack** (see above) — this also deletes the Route53 hosted zone and ACM certificate automatically.
 
-2. **Delete Route53 Hosted Zone** (if created for this project):
-   ```bash
-   aws route53 delete-hosted-zone --id /hostedzone/Z1234567890ABC
-   ```
-
-3. **Delete ACM Certificate**:
-   ```bash
-   aws acm delete-certificate \
-     --certificate-arn arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID \
-     --region us-east-1
-   ```
-
-4. **Restore CloudFlare NS Records** (if you changed them):
+2. **Remove NS delegation from CloudFlare**:
    - Go to CloudFlare → DNS
-   - Update NS records back to CloudFlare nameservers
-   - Remove ACM validation CNAME record
+   - Remove the NS records you added for the subdomain
 
 ## Troubleshooting
 
@@ -299,11 +229,14 @@ This script checks:
      --paths "/*"
    ```
 
-### Certificate Validation Failed
+### Stack Stuck Waiting for Certificate Validation
 
-1. Ensure ACM certificate is in us-east-1 region
-2. Verify DNS validation records are added to Route53
-3. Wait for validation to complete (can take several minutes)
+CloudFormation automatically creates the ACM DNS validation record in Route53, but ACM cannot validate until Route53 is authoritative for the domain. Fix:
+
+1. Get the Route53 nameservers from the check script or the AWS Console (CloudFormation → stack events)
+2. Add NS delegation records for your subdomain in CloudFlare (DNS only, gray cloud)
+3. Wait for DNS propagation (usually a few minutes)
+4. ACM will validate automatically and the stack will continue
 
 ### Domain Not Resolving
 

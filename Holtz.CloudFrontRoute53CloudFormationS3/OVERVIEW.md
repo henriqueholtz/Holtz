@@ -68,8 +68,8 @@ DNS: test.talkient.app ──► CloudFront Domain ──► S3 Bucket
 |-----------|-------|-------------|
 | BucketName | henriqueholtz-cloudfront-test | Globally unique S3 bucket name |
 | DomainName | test.talkient.app | Custom domain for CloudFront |
-| HostedZoneId | (from Route53) | Route53 Hosted Zone ID |
-| AcmCertificateArn | (from ACM) | SSL certificate for HTTPS |
+
+> Route53 Hosted Zone and ACM Certificate are created automatically by the stack (no longer input parameters).
 
 ---
 
@@ -162,7 +162,7 @@ CloudFrontDistribution:
       PriceClass: PriceClass_100
       HttpVersion: http2
       ViewerCertificate:
-        AcmCertificateArn: !Ref AcmCertificateArn
+        AcmCertificateArn: !Ref AcmCertificate
         SslSupportMethod: sni-only
         MinimumProtocolVersion: TLSv1.2_2021
       DefaultCacheBehavior:
@@ -300,7 +300,7 @@ The stack uses the managed cache policy `658327ea-f89d-4fab-a63d-7e88639e58f6` (
 Route53Record:
   Type: AWS::Route53::RecordSet
   Properties:
-    HostedZoneId: !Ref HostedZoneId
+    HostedZoneId: !Ref HostedZone
     Name: !Ref DomainName
     Type: A
     AliasTarget:
@@ -381,10 +381,10 @@ Description: S3 bucket with CloudFront distribution and Route53 for secure image
 Parameters:           # Input values (customizable at deployment)
   - BucketName
   - DomainName
-  - HostedZoneId
-  - AcmCertificateArn
 
 Resources:            # AWS resources to create
+  - HostedZone
+  - AcmCertificate
   - ImageBucket
   - ImageBucketPolicy
   - CloudFrontOAI
@@ -439,7 +439,7 @@ Outputs:              # Return values after stack creation
 
 ```yaml
 ViewerCertificate:
-  AcmCertificateArn: !Ref AcmCertificateArn
+  AcmCertificateArn: !Ref AcmCertificate
   SslSupportMethod: sni-only
   MinimumProtocolVersion: TLSv1.2_2021
 ```
@@ -832,16 +832,9 @@ Parameters:
     # • Valid domain name pattern
     # • Supports subdomains
 
-  HostedZoneId:
-    Type: AWS::Route53::HostedZone::Id
-    Description: Route53 Hosted Zone ID for the domain
-    # • AWS-specific parameter type
-    # • Validates against existing hosted zones
-
-  AcmCertificateArn:
-    Type: String
-    Description: ACM Certificate ARN for the custom domain (must be in us-east-1)
-    # • Must exist in us-east-1
+  # HostedZoneId and AcmCertificateArn are no longer parameters — both are
+  # created as resources by the stack (AWS::Route53::HostedZone and
+  # AWS::CertificateManager::Certificate with DNS validation via Route53).
     # • Must be validated (ISSUED status)
 ```
 
@@ -1036,9 +1029,11 @@ aws s3 get-bucket-policy --bucket BUCKET_NAME --output json
 # Check CloudFront distribution
 aws cloudfront get-distribution --id DISTRIBUTION_ID
 
-# Verify Route53 record
+# Verify Route53 record (get hosted zone ID from stack outputs)
+HOSTED_ZONE_ID=$(aws cloudformation describe-stacks --stack-name image-serving-stack \
+  --query 'Stacks[0].Outputs[?OutputKey==`HostedZoneId`].OutputValue' --output text)
 aws route53 list-resource-record-sets \
-  --hosted-zone-id HOSTED_ZONE_ID \
+  --hosted-zone-id "$HOSTED_ZONE_ID" \
   --query "ResourceRecordSets[?Type=='A']"
 
 # Test image download
@@ -1204,13 +1199,11 @@ aws cloudfront create-invalidation \
 CloudFormation Template: stack.yaml
 ────────────────────────────────────────────────────────────────────────────
 
-Parameters (4)
-├── BucketName        → S3 bucket name
-├── DomainName        → Custom domain for CloudFront
-├── HostedZoneId      → Route53 hosted zone
-└── AcmCertificateArn → SSL certificate (must be us-east-1)
+Parameters (2)
+├── BucketName → S3 bucket name
+└── DomainName → Custom domain for CloudFront
 
-Resources (5)
+Resources (7)
 ├── ImageBucket (AWS::S3::Bucket)
 │   ├── Properties
 │   │   ├── BucketName
