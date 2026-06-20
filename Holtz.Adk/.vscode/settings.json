@@ -1,0 +1,11 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python",
+  "python.terminal.activateEnvironment": true,
+  "terminal.integrated.env.linux": {
+    "PYTHONPATH": "${workspaceFolder}",
+    "ADK_SUPPRESS_EXPERIMENTAL_FEATURE_WARNINGS": "1"
+  },
+  "python.analysis.extraPaths": ["${workspaceFolder}"],
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.typeCheckingMode": "basic"
+}
